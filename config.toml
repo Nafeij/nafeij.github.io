@@ -4,5 +4,69 @@ title = 'Nafeij'
 theme = 'hugo-theme-shell'
 
 [Params]
+    [Params.Navbar]
+    use = false
     [Params.Terminal]
-    scheme = 'Afterglow'
+    scheme = 'VSCodeDark+'
+    userName = 'nafeij'
+    pcName = 'desktop'
+    workDir = 'home'
+    profile = 'info.md'
+    commandDelay = 40
+    description = "/description.md"
+    [Params.Extensions]
+    use = true
+    ext = ".txt" # extension to add after single page
+    # Additions stop here
+        
+    # Note: This is for the meta description, which is different from the "description" displayed in the terminal.
+    description = "Jiefan's Portfolio"
+    [Params.Tree]
+
+    folderName = "stack"
+    # Note: ["ACTIVITY", "URL or PATH TO YOUR MARKDOWN FILE"]
+    # files = [ 
+    #     ["HTML" , "https://example.org"],
+    #     ["CSS" , "https://example.org"],
+    #     ["Javascript" , "https://example.org"],
+    #     ["Python" , "https://example.org"],
+    #     ["Java" , "https://example.org"],
+    #     ["C++" , "https://example.org"],
+    #     ["Haskell" , "https://example.org"],
+    # ]
+
+    [[Params.Tree.files]]
+    lang = "HTML"
+    [[Params.Tree.files]]
+    lang = "CSS"
+    [[Params.Tree.files]]
+    lang = "Javascript"
+    [[Params.Tree.files.ele]]
+    lang = "Reactjs"
+    [[Params.Tree.files.ele]]
+    lang = "Hugo"
+    [[Params.Tree.files]]
+    lang = "Python"
+    [[Params.Tree.files]]
+    lang = "Java"
+
+
+    [Params.Tree1]
+    folderName = "projects/active"
+    # Note: ["ACTIVITY", "URL or PATH TO YOUR MARKDOWN FILE"]
+    files = [ 
+        ["Knuckleclone, ported dicegame from COTL", "https://github.com/Nafeij/kbclone"],
+        ["winPy, sliding window datagram protocol", "https://example.org"],
+        ["BS3 Fixpack, patch for Banner Saga 3", "https://github.com/Nafeij/Nafeij-s-BS3-Fixpack"],
+    ]
+    [Params.Tree2]
+    folderName = "contacts"
+    # Note: ["ACTIVITY", "URL or PATH TO YOUR MARKDOWN FILE"]
+    files = [ 
+        ["Reddit", "https://reddit.com/u/nafeij/"],
+        ["Github", "https://github.com/Nafeij/"],
+        ["LinkedIn", "https://www.linkedin.com/in/wang-jiefan-ab0213229/"],
+        ["Email", "mailto:wng.jiefan@gmail.com?body=from%20portfolio"],
+    ]
+    
+    
