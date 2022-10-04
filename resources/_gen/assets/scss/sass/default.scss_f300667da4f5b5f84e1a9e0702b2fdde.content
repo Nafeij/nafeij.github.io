@@ -9,7 +9,7 @@ body {
   overflow: auto;
   font-family: "Inconsolata", monospace;
   font-size: 4vmin;
-  line-height: 4.1vmin;
+  line-height: 4.7vmin;
   font-weight: normal; }
 
 body {
@@ -20,8 +20,8 @@ body {
   align-items: center; }
 
 #content {
-  min-width: 82vmin;
-  min-height: 82vmin; }
+  min-width: 90vmin;
+  min-height: 60vmin; }
 
 ::-webkit-scrollbar {
   width: 10px; }
@@ -34,12 +34,20 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 0 1px white; }
 
-.cursor, #cd:after, #whoami:after, #cat:after, #tree:after {
+.cursor, #cd:after, #whoami:after, #cat:after, #tree:after, #tree1:after, #tree2:after {
   visibility: var(--cursor-visibility);
   content: "|";
   overflow: hidden;
   color: white;
   animation: blink 500ms linear infinite alternate; }
+
+a {
+  text-decoration: none;
+  font-weight: 800;
+  font-style: italic; }
+
+p {
+  margin: 0; }
 
 @keyframes blink {
   0% {
@@ -50,6 +58,6 @@ body {
 @media only screen and (min-width: 768px) {
   body {
     font-size: 2.5vmin;
-    line-height: 2.6vmin; }
+    line-height: 3vmin; }
   #content {
     min-width: 60vmin; } }

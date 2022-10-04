@@ -7,7 +7,7 @@ theme = 'hugo-theme-shell'
     [Params.Navbar]
     use = false
     [Params.Terminal]
-    scheme = 'VSCodeDark+'
+    scheme = 'MonokaiProRistretto'
     userName = 'nafeij'
     pcName = 'desktop'
     workDir = 'home'
@@ -44,7 +44,7 @@ theme = 'hugo-theme-shell'
     [[Params.Tree.files.ele]]
     lang = "Reactjs"
     [[Params.Tree.files.ele]]
-    lang = "Hugo"
+    lang = "Vuejs"
     [[Params.Tree.files]]
     lang = "Python"
     [[Params.Tree.files]]
@@ -52,12 +52,12 @@ theme = 'hugo-theme-shell'
 
 
     [Params.Tree1]
-    folderName = "projects/active"
+    folderName = "projs/active"
     # Note: ["ACTIVITY", "URL or PATH TO YOUR MARKDOWN FILE"]
     files = [ 
-        ["Knuckleclone, ported dicegame from COTL", "https://github.com/Nafeij/kbclone"],
-        ["winPy, sliding window datagram protocol", "https://example.org"],
-        ["BS3 Fixpack, patch for Banner Saga 3", "https://github.com/Nafeij/Nafeij-s-BS3-Fixpack"],
+        ["Knuckleclone", "dicegame ported from COTL", "https://github.com/Nafeij/kbclone"],
+        ["winPy" , "sliding window datagram protocol", "https://example.org"],
+        ["BS3 Fixpack" , "patch for Banner Saga 3", "https://github.com/Nafeij/Nafeij-s-BS3-Fixpack"],
     ]
     [Params.Tree2]
     folderName = "contacts"
