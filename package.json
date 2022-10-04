@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "hugo-bin": "^0.92.2",
+    "hugo-bin-extended": "^0.101.0"
+  },
+  "scripts": {
+    "build": "hugo",
+    "create": "hugo new",
+    "serve": "hugo server",
+    "start": "hugo serve"
+  }
+}

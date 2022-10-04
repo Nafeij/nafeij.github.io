@@ -1,0 +1,8 @@
+baseURL = 'http://nafeij.me'
+languageCode = 'en-us'
+title = 'Nafeij'
+theme = 'hugo-theme-shell'
+
+[Params]
+    [Params.Terminal]
+    scheme = 'Afterglow'
