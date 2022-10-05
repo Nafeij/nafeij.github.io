@@ -98,9 +98,17 @@
             {{ end }}
             
             {{ if eq (add $index 1) (len $.Site.Params.Tree2.files) }}
-            {{ $leaf2 = printf "<span id='terminal'>%s└── <a href='%s' target='_blank' rel='noopener noreferrer'>%s</a></span>" $leaf2 $link $ac | safeHTML}}
+                {{ if eq (substr $link -4 4) ".pdf" }}
+                    {{ $leaf2 = printf "<span id='terminal'>%s└── <a href='%s' download>%s</a></span>" $leaf2 $link $ac | safeHTML}}
+                {{ else }}
+                    {{ $leaf2 = printf "<span id='terminal'>%s└── <a href='%s' target='_blank' rel='noopener noreferrer'>%s</a></span>" $leaf2 $link $ac | safeHTML}}
+                {{ end }}
             {{ else }}
-            {{ $leaf2 = printf "<span id='terminal'>%s├── <a href='%s' target='_blank' rel='noopener noreferrer'>%s</a></span><br>" $leaf2 $link $ac | safeHTML}}
+                {{ if eq (substr $link -4 4) ".pdf" }}
+                    {{ $leaf2 = printf "<span id='terminal'>%s├── <a href='%s' download>%s</a></span><br>" $leaf2 $link $ac | safeHTML}}
+                {{ else }}
+                    {{ $leaf2 = printf "<span id='terminal'>%s├── <a href='%s' target='_blank' rel='noopener noreferrer'>%s</a></span><br>" $leaf2 $link $ac | safeHTML}}
+                {{ end }}
             {{ end }}
         {{ end }}
     {{ end }}

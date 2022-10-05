@@ -67,6 +67,7 @@ theme = 'hugo-theme-shell'
         ["Github", "https://github.com/Nafeij/"],
         ["LinkedIn", "https://www.linkedin.com/in/wang-jiefan-ab0213229/"],
         ["Email", "mailto:wng.jiefan@gmail.com?body=from%20portfolio"],
+        ["Resume", "/Resume_Jiefan.pdf"],
     ]
     
     
