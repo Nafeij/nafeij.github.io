@@ -79,9 +79,9 @@
             {{ end }}
             
             {{ if eq (add $index 1) (len $.Site.Params.Tree1.files) }}
-            {{ $leaf1 = printf "<span id='terminal'>%s└── <a href='%s'>%s</a>, %s</span>" $leaf1 $link $ac $desc | safeHTML}}
+            {{ $leaf1 = printf "<span id='terminal'>%s└── <a href='%s' target='_blank' rel='noopener noreferrer'>%s</a>, %s</span>" $leaf1 $link $ac $desc | safeHTML}}
             {{ else }}
-            {{ $leaf1 = printf "<span id='terminal'>%s├── <a href='%s'>%s</a>, %s</span><br>" $leaf1 $link $ac $desc | safeHTML}}
+            {{ $leaf1 = printf "<span id='terminal'>%s├── <a href='%s' target='_blank' rel='noopener noreferrer'>%s</a>, %s</span><br>" $leaf1 $link $ac $desc | safeHTML}}
             {{ end }}
         {{ end }}
 
@@ -98,9 +98,9 @@
             {{ end }}
             
             {{ if eq (add $index 1) (len $.Site.Params.Tree2.files) }}
-            {{ $leaf2 = printf "<span id='terminal'>%s└── <a href='%s'>%s</a></span>" $leaf2 $link $ac | safeHTML}}
+            {{ $leaf2 = printf "<span id='terminal'>%s└── <a href='%s' target='_blank' rel='noopener noreferrer'>%s</a></span>" $leaf2 $link $ac | safeHTML}}
             {{ else }}
-            {{ $leaf2 = printf "<span id='terminal'>%s├── <a href='%s'>%s</a></span><br>" $leaf2 $link $ac | safeHTML}}
+            {{ $leaf2 = printf "<span id='terminal'>%s├── <a href='%s' target='_blank' rel='noopener noreferrer'>%s</a></span><br>" $leaf2 $link $ac | safeHTML}}
             {{ end }}
         {{ end }}
     {{ end }}
