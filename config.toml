@@ -42,13 +42,19 @@ theme = 'hugo-theme-shell'
     [[Params.Tree.files]]
     lang = "Javascript"
     [[Params.Tree.files.ele]]
-    lang = "Reactjs"
+    lang = "ReactJS"
     [[Params.Tree.files.ele]]
-    lang = "Vuejs"
+    lang = "VueJS"
     [[Params.Tree.files]]
     lang = "Python"
+    [[Params.Tree.files.ele]]
+    lang = "NumPy"
+    [[Params.Tree.files.ele]]
+    lang = "PyTorch"
     [[Params.Tree.files]]
     lang = "Java"
+    [[Params.Tree.files]]
+    lang = "PostgreSQL"
 
 
     [Params.Tree1]
