@@ -18,14 +18,14 @@ theme = 'hugo-theme-shell'
     use = true
     ext = ".txt" # extension to add after single page
     # Additions stop here
-        
+
     # Note: This is for the meta description, which is different from the "description" displayed in the terminal.
     description = "Jiefan's Portfolio"
     [Params.Tree]
 
     folderName = "stack"
     # Note: ["ACTIVITY", "URL or PATH TO YOUR MARKDOWN FILE"]
-    # files = [ 
+    # files = [
     #     ["HTML" , "https://example.org"],
     #     ["CSS" , "https://example.org"],
     #     ["Javascript" , "https://example.org"],
@@ -60,20 +60,19 @@ theme = 'hugo-theme-shell'
     [Params.Tree1]
     folderName = "projs/active"
     # Note: ["ACTIVITY", "URL or PATH TO YOUR MARKDOWN FILE"]
-    files = [ 
+    files = [
         ["Knuckleclone", "dicegame ported from COTL", "https://github.com/Nafeij/kbclone"],
-        ["winPy" , "sliding window datagram protocol", "https://example.org"],
+        ["PySlidingWindow" , "sliding window datagram protocol", "https://github.com/Nafeij/PySlidingWindow/"],
         ["BS3 Fixpack" , "patch for Banner Saga 3", "https://github.com/Nafeij/Nafeij-s-BS3-Fixpack"],
     ]
     [Params.Tree2]
     folderName = "contacts"
     # Note: ["ACTIVITY", "URL or PATH TO YOUR MARKDOWN FILE"]
-    files = [ 
+    files = [
         ["Reddit", "https://reddit.com/u/nafeij/"],
         ["Github", "https://github.com/Nafeij/"],
         ["LinkedIn", "https://www.linkedin.com/in/wang-jiefan-ab0213229/"],
         ["Email", "mailto:wng.jiefan@gmail.com?body=from%20portfolio"],
         ["Resume", "/Resume_Jiefan.pdf"],
     ]
-    
-    
+
