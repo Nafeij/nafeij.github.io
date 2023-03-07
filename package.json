@@ -1,12 +1,37 @@
 {
-  "devDependencies": {
-    "hugo-bin": "^0.92.2",
-    "hugo-bin-extended": "^0.101.0"
-  },
+  "name": "nafeij.github.io",
+  "version": "1.0.0",
+  "private": true,
+  "description": "nafeij.github.io",
+  "author": "Wang Jiefan",
+  "keywords": [
+    "gatsby"
+  ],
   "scripts": {
-    "build": "hugo",
-    "create": "hugo new",
-    "serve": "hugo server",
-    "start": "hugo serve"
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@mdx-js/react": "^2.3.0",
+    "gatsby": "^5.7.0",
+    "gatsby-plugin-image": "^3.7.0",
+    "gatsby-plugin-mdx": "^5.7.0",
+    "gatsby-plugin-sass": "^6.7.0",
+    "gatsby-plugin-sharp": "^5.7.0",
+    "gatsby-source-filesystem": "^5.7.0",
+    "gatsby-transformer-sharp": "^5.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sass": "^1.58.3"
+  },
+  "devDependencies": {
+    "@types/node": "^18.14.0",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "typescript": "^4.9.5"
   }
 }
