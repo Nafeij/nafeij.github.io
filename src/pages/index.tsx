@@ -1,14 +1,23 @@
-import type { HeadFC, PageProps } from "gatsby"
-import React, { FC } from "react"
-import FlexCards from "../components/FlexCards"
-import "../styles/index.sass"
+import type { HeadFC, PageProps } from "gatsby";
+import React, { FC } from "react";
+import FlyList from "../components/FlyList";
+import "../styles/global.css";
 
 const IndexPage: FC<PageProps> = () => (
-  <div className="flex w-screen h-100vh justify-center items-center">
-    <FlexCards/>
+  <div id="main" className="min-h-screen fex flex-col">
+    <div id="content" className="mx-auto max-w-screen-xl px-14">
+      <section className="flex justify-center items-start flex-col min-h-screen">
+        <FlyList
+          lines={[
+            <code className="text-4xl">Hello. I'm</code>,
+            <h1 id="title" className="text-7xl font-bold">Wang Jiefan.</h1>,
+            <p>I make responsive websites and apps.</p>,
+          ]}/>
+      </section>
+    </div>
   </div>
 );
 
-export default IndexPage
+export default IndexPage;
 
-export const Head: HeadFC = () => <title>Home Page</title>
+export const Head: HeadFC = () => <title>Home Page</title>;

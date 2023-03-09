@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#title {
+    @apply font-bold;
+    font-size: clamp(2.7rem, 8vw, 6rem);
+    margin-bottom: 3%;
+    white-space: nowrap;
+}
