@@ -19,3 +19,7 @@
         top: 100%;
     }
 }
+
+#title {
+    background-image: url("../images/blobBack.svg");
+}

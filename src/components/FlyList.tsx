@@ -5,7 +5,7 @@ export default function FlyList({ lines, className }: { lines: ReactNode[], clas
   return (
     <div className={"flex flex-col" + (className ?? "")}>
       {lines.map((word, index) => (
-        <div key={index} className="inline-block -mt-0.5 animate-in fade-in slide-in-from-bottom-3 fill-mode-backwards" style={{animationDelay : index * 100 + "ms"}}>{word}</div>))
+        <div key={index} className="inline-block animate-in fade-in slide-in-from-bottom-3 fill-mode-backwards" style={{animationDelay : index * 100 + "ms"}}>{word}</div>))
         }
     </div>
   );

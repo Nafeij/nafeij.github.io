@@ -1,7 +1,6 @@
 import type { HeadFC, PageProps } from "gatsby";
 import React, { FC } from "react";
 import FlyList from "../components/FlyList";
-import PopText from "../components/PopText";
 import "../styles/global.css";
 
 const IndexPage: FC<PageProps> = () => (
@@ -11,7 +10,7 @@ const IndexPage: FC<PageProps> = () => (
         <FlyList
           lines={[
             <code className="text-4xl">Hello. I'm</code>,
-            <PopText>Wang Jiefan</PopText>,
+            <h1 id="title" className="text-[clamp(2.7rem,8vw,10rem)] font-bold -mt-3 bg-clip-text bg-cover text-transparent">Wang Jiefan</h1>,
             <p>I make responsive websites and apps.</p>,
           ]}/>
       </section>

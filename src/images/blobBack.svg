@@ -1,46 +1,85 @@
-<svg id="visual" viewBox="0 0 900 450" width="900" height="450" xmlns="http://www.w3.org/2000/svg"
+<svg id="visual" viewBox="0 0 900 450" xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
-    <style>
-        @keyframes blobx {
-            0%, 100% {
-                transform: translateX(0);
-            }
-            50% {
-                transform: translateX(100%);
-            }
-        }
-
-        @keyframes bloby {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(100%);
-            }
-        }
-    </style>
     <defs>
         <filter id="blur1" x="-10%" y="-10%" width="120%" height="120%">
             <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
             <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
-            <feGaussianBlur stdDeviation="149" result="effect1_foregroundBlur"></feGaussianBlur>
+            <feGaussianBlur stdDeviation="100" result="effect1_foregroundBlur"></feGaussianBlur>
         </filter>
     </defs>
     <rect width="900" height="450" fill="#6600FF"></rect>
     <g filter="url(#blur1)">
-        <circle cx="367" cy="340" fill="#00CC99" r="332"></circle>
-        <circle cx="751" cy="240" fill="#6600FF" r="332"></circle>
-        <circle cx="13" cy="184" fill="#00CC99" r="332"></circle>
-        <circle cx="412" cy="59" fill="#00CC99" r="332"></circle>
-        <circle cx="767" cy="48" fill="#6600FF" r="332"></circle>
-        <circle cx="193" cy="352" fill="#00CC99" r="332"></circle>
+        <circle cx="0" cy="0" fill="#00CC99" r="50%">
+            <animate
+                attributeName="cx"
+                values="-50%;150%;-50%"
+                dur="18s"
+                repeatCount="indefinite" />
+            <animate
+                attributeName="cy"
+                values="-50%;150%;-50%"
+                dur="12s"
+                repeatCount="indefinite" />
+        </circle>
+        <circle cx="0" cy="0" fill="#6600FF" r="50%">
+            <animate
+                attributeName="cx"
+                values="150%;-50%;150%"
+                dur="12s"
+                repeatCount="indefinite" />
+            <animate
+                attributeName="cy"
+                values="-50%;150%;-50%"
+                dur="18s"
+                repeatCount="indefinite" />
+        </circle>
+        <circle cx="0" cy="0" fill="#6600FF" r="50%">
+            <animate
+                attributeName="cx"
+                values="150%;-50%;150%"
+                dur="14s"
+                repeatCount="indefinite" />
+            <animate
+                attributeName="cy"
+                values="150%;-50%;150%"
+                dur="16s"
+                repeatCount="indefinite" />
+        </circle>
+        <circle cx="0" cy="0" fill="#00CC99" r="50%">
+            <animate
+                attributeName="cx"
+                values="-50%;150%;-50%"
+                dur="16s"
+                repeatCount="indefinite" />
+            <animate
+                attributeName="cy"
+                values="150%;-50%;150%"
+                dur="14s"
+                repeatCount="indefinite" />
+        </circle>
+        <circle cx="0" cy="0" fill="#00CC99" r="50%">
+            <animate
+                attributeName="cx"
+                values="50%;-150%;50%;150%;50%"
+                dur="10s"
+                repeatCount="indefinite" />
+            <animate
+                attributeName="cy"
+                values="50%;-150%;50%;150%;50%"
+                dur="20s"
+                repeatCount="indefinite" />
+        </circle>
+        <circle cx="0" cy="0" fill="#00CC99" r="50%">
+            <animate
+                attributeName="cx"
+                values="50%;150%;50%;-150%;50%"
+                dur="20s"
+                repeatCount="indefinite" />
+            <animate
+                attributeName="cy"
+                values="50%;150%;50%;-150%;50%"
+                dur="10s"
+                repeatCount="indefinite" />
+        </circle>
     </g>
-    <script>
-        const circles = document.querySelectorAll("#visual circle");
-        console.log('test')
-
-        circles.forEach((circle, i) => {
-            circle.style.animation = `blobx ${Math.random() * 10}s infinite, bloby ${Math.random() * 10}s infinite`;
-        });
-    </script>
 </svg>
