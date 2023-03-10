@@ -5,6 +5,10 @@
 #title {
     @apply font-bold;
     font-size: clamp(2.7rem, 8vw, 6rem);
-    margin-bottom: 3%;
-    white-space: nowrap;
+    background-image: url(../images/blurry-gradient.svg);
+    -webkit-background-clip: text;
+}
+
+#title:hover {
+    color: transparent;
 }
