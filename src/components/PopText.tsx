@@ -1,11 +1,33 @@
 import React from "react";
 
-export default function PopText({ children }: { children: React.ReactNode }) {
+const circles = [
+  {
+    cx : "0",
+    cy : "0",
+    fill : "#00CC99",
+  },
+  {
+    cx : "0",
+    cy : "100%",
+    fill : "#6600FF",
+  },
+  {
+    cx : "100%",
+    cy : "0",
+    fill : "#6600FF",
+  },
+  {
+    cx : "100%",
+    cy : "100%",
+    fill : "#00CC99",
+  }
+];
+export default function PopText({ children }: { children: String }) {
   return (
-    <svg viewBox="0 0 900 600">
+    <svg viewBox="0 0 430 100" height="clamp(2.7rem,8vw,10rem)">
       <defs>
         <filter id="blur1" x="-10%" y="-10%" width="120%" height="120%">
-          <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+          <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -13,30 +35,46 @@ export default function PopText({ children }: { children: React.ReactNode }) {
             result="shape"
           ></feBlend>
           <feGaussianBlur
-            stdDeviation="161"
+            stdDeviation="20"
             result="effect1_foregroundBlur"
           ></feGaussianBlur>
         </filter>
-        <clipPath id="textClip">
-          <text
-            id="title"
-            className="font-bold mb-2 whitespace-nowrap bg-clip-text hover:text-transparent"
-          >
-            {children}
-          </text>
-        </clipPath>
       </defs>
-      <g clip-path="url(#textClip)">
-        <rect width="900" height="600" fill="#6600FF"></rect>
+      <clipPath id="clip0">
+        <text
+          id="title"
+          className="font-bold whitespace-nowrap text-[73px]"
+          y="1em"
+        >
+          {children}
+        </text>
+      </clipPath>
+      <g clipPath="url(#clip0)">
+        <rect className="w-full h-full" fill="#6600FF" />
         <g filter="url(#blur1)">
-            <circle cx="205" cy="46" fill="#00CC99" r="357"></circle>
-            <circle cx="546" cy="427" fill="#6600FF" r="357"></circle>
-            <circle cx="778" cy="583" fill="#00CC99" r="357"></circle>
-            <circle cx="278" cy="215" fill="#00CC99" r="357"></circle>
-            <circle cx="500" cy="15" fill="#6600FF" r="357"></circle>
-            <circle cx="246" cy="520" fill="#00CC99" r="357"></circle>
+          {
+            circles.map((circle,i) => (<circle key={i} {...circle} r="30%">
+              <animate
+                attributeName="cx"
+                values="-30%;130%;-30%"
+                dur={Math.random() * 10 + 10 + "s"}
+                repeatCount="indefinite" />
+              <animate
+                attributeName="cy"
+                values="-30%;130%;-30%"
+                dur={Math.random() * 10 + 10 + "s"}
+                repeatCount="indefinite" />
+            </circle>))
+          }
         </g>
       </g>
     </svg>
   );
+}
+function genAnim() {
+  return {
+    animation: `blobx ${Math.random() * 10 + 10}s infinite, bloby ${
+      Math.random() * 10 + 10
+    }s infinite`,
+  };
 }

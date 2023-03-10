@@ -2,13 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-#title {
-    @apply font-bold;
-    font-size: clamp(2.7rem, 8vw, 6rem);
-    background-image: url(../images/blurry-gradient.svg);
-    -webkit-background-clip: text;
+@keyframes blobx {
+    0%, 100% {
+        left: 0;
+    }
+    50% {
+        left: 100%;
+    }
 }
 
-#title:hover {
-    color: transparent;
+@keyframes bloby {
+    0%, 100% {
+        top: 0;
+    }
+    50% {
+        top: 100%;
+    }
 }
