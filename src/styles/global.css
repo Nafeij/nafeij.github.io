@@ -2,24 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "source_sans_probold";
+  src: url("../assets/fonts/sourcesanspro-bold-webfont.woff2") format("woff2"),
+    url("../assets/fonts/sourcesanspro-bold-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --light: #e8e8e8;
+  --light-warm: #eeddcc;
+  --pip: #181818
+}
+
 @keyframes blobx {
-    0%, 100% {
-        left: 0;
-    }
-    50% {
-        left: 100%;
-    }
+  0%,
+  100% {
+    left: 0;
+  }
+  50% {
+    left: 100%;
+  }
 }
 
 @keyframes bloby {
-    0%, 100% {
-        top: 0;
-    }
-    50% {
-        top: 100%;
-    }
-}
-
-#title {
-    background-image: url("../images/blobBack.svg");
+  0%,
+  100% {
+    top: 0;
+  }
+  50% {
+    top: 100%;
+  }
 }
