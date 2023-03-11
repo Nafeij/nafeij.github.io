@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import styled, { useTheme } from "styled-components";
+import styled, { DefaultTheme, useTheme } from "styled-components";
 import prefsReducedMotion from "../hooks/reducedMotion";
 
 const ClipText = styled.text`
@@ -100,7 +100,7 @@ const Amazing = ({
 }) => (
   <svg
     id="Amazing"
-    viewBox="0 0 950 230"
+    viewBox="0 0 1000 230"
     height={height}
     onAnimationEnd={animCallback}
   >
@@ -252,10 +252,8 @@ const Exciting = ({
 );
 
 const FancyTitle = ({ height }: { height: string }) => {
-  const blobColor1 = "#00CC99";
-  const blobColor2 = "#6600FF";
-  const [iter, setIter] = useState(2);
-  const { text }: { text: string } = useTheme();
+  const [iter, setIter] = useState(1);
+  const { text, blobColor1, blobColor2 }: DefaultTheme = useTheme();
   const animateBlob = !prefsReducedMotion();
   return (
     <>

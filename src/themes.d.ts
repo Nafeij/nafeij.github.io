@@ -6,5 +6,7 @@ declare module 'styled-components' {
      isDark: boolean;
      button: string;
      background: string;
+     blobColor1: string;
+     blobColor2: string;
   }
 }

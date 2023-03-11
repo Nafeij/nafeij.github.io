@@ -62,8 +62,8 @@ svg#Amazing {
   100% {
     opacity: 0;
   }
-  25%,
-  75% {
+  20%,
+  80% {
     opacity: 1;
   }
 }
@@ -124,13 +124,8 @@ svg#Amazing {
 }
 
 @keyframes BackgroundSpread {
-  0% {
-      width: 0;
-      height: 0;
-  }
   100% {
-      width: 282.84vmax;
-      height: 282.84vmax;
+    clip-path: circle(283% at 100% 0%);
   }
 }
 
