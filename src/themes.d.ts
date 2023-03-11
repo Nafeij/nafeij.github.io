@@ -5,5 +5,6 @@ declare module 'styled-components' {
      text: string;
      isDark: boolean;
      button: string;
+     background: string;
   }
 }
