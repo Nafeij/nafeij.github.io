@@ -4,7 +4,7 @@
         <filter id="blur1" x="-10%" y="-10%" width="120%" height="120%">
             <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
             <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
-            <feGaussianBlur stdDeviation="100" result="effect1_foregroundBlur"></feGaussianBlur>
+            <feGaussianBlur stdDeviation="60" result="effect1_foregroundBlur"></feGaussianBlur>
         </filter>
     </defs>
     <rect width="600" height="200" fill="#6600FF"></rect>

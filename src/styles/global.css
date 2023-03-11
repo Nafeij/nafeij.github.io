@@ -13,25 +13,24 @@
 :root {
   --light: #e8e8e8;
   --light-warm: #eeddcc;
-  --pip: #181818
+  --pip: #181818;
+  --dark: #0f0f0f;
 }
 
-@keyframes blobx {
-  0%,
-  100% {
-    left: 0;
-  }
-  50% {
-    left: 100%;
-  }
+svg #Inspiring path {
+  fill-opacity: 0;
+  stroke-width: 6px;
+  paint-order: "stroke";
+  stroke-dasharray: 600px;
+  stroke-dashoffset: 600px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: draw-stroke 5s linear forwards;
 }
-
-@keyframes bloby {
-  0%,
+@keyframes draw-stroke {
   100% {
-    top: 0;
-  }
-  50% {
-    top: 100%;
+    fill-opacity: 1;
+    stroke-dashoffset: 0;
+    stroke-opacity: 0;
   }
 }
