@@ -1,23 +1,28 @@
-import React from "react";
+/** @jsx jsx */
+import { jsx } from "@emotion/react";
 import FlyList from "../FlyList";
-import styled from "styled-components";
+import { useTheme } from "styled-components";
 import FancyTitle from "../FancyTitle";
-
-const BuildSomething = styled.code`
-  color: ${({ theme: { text } }) => text};
-`;
+import Section from "../sections/Section";
 
 export default function Title() {
+  const theme = useTheme();
   return (
-    <section className="flex justify-center items-start flex-col min-h-screen">
+    <Section>
       <FlyList
         lines={[
-          <BuildSomething className="text-[clamp(1.4rem,3vw,3rem)]">
+          <p
+            css={`
+              font-size: clamp(1.4rem, 3vw, 3rem);
+              font-family: ui-monospace, "Roboto Mono", monospace;
+              color: ${theme.text};
+            `}
+          >
             Build something
-          </BuildSomething>,
-          <FancyTitle height="clamp(5rem,15vw,14rem)" />,
+          </p>,
+          <FancyTitle />,
         ]}
       />
-    </section>
+    </Section>
   );
 }

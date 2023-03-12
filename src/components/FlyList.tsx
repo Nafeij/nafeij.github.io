@@ -1,14 +1,29 @@
-import { ReactNode } from "@mdx-js/react/lib";
-import React from "react";
+/** @jsx jsx */
+import { jsx, css } from "@emotion/react";
+import tw from "twin.macro";
+import { ReactNode } from "react";
 import usePrefersReducedMotion from "../hooks/reducedMotion";
 
-export default function FlyList({ lines, className }: { lines: ReactNode[], className? : String }) {
+export default function FlyList({ lines }: { lines: ReactNode[] }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   return (
-    <div className={"flex flex-col" + (className ?? "")}>
+    <div tw="flex flex-col ">
       {lines.map((word, index) => (
-        <div key={index} className={`inline-block ${prefersReducedMotion ? "" : "animate-in fade-in slide-in-from-bottom-3 fill-mode-backwards"}`} style={{animationDelay : prefersReducedMotion ? "none" : index * 100 + "ms"}}>{word}</div>))
-        }
+        <div
+          key={index}
+          tw="inline-block"
+          css={[
+            tw`inline-block`,
+            prefersReducedMotion &&
+              css`
+                animationdelay: ${index * 300}ms;
+                ${tw`animate-in fade-in slide-in-from-bottom-3 fill-mode-backwards`}
+              `,
+          ]}
+        >
+          {word}
+        </div>
+      ))}
     </div>
   );
 }

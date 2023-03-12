@@ -1,24 +1,17 @@
-import React from "react";
+/** @jsx jsx */
+import { jsx } from "@emotion/react";
 import { useState } from "react";
 import styled, { DefaultTheme, useTheme } from "styled-components";
 import prefsReducedMotion from "../hooks/reducedMotion";
 
-const ClipText = styled.text`
-  font-family: "source_sans_probold";
-  font-weight: bold;
-  font-size: 230px;
-`;
-
 const Inspiring = ({
-  height,
   fillColor,
   animCallback,
 }: {
-  height: string | number;
   fillColor: string;
   animCallback: () => void;
 }) => (
-  <svg viewBox="0 0 1043 239" height={height} id="Inspiring">
+  <svg viewBox="0 0 1043 239" height="100%" id="Inspiring">
     <path
       d="M10 10H87.4697V15.2188H66.0148V171.086H87.4697V176.305H10V171.086H31.339V15.2188H10V10Z"
       fill={fillColor}
@@ -86,24 +79,17 @@ const Inspiring = ({
 );
 
 const Amazing = ({
-  height,
   blobColor1,
   blobColor2,
   animCallback,
   animateBlob,
 }: {
-  height: string | number;
   blobColor1: string;
   blobColor2: string;
   animCallback: () => void;
   animateBlob: boolean;
 }) => (
-  <svg
-    id="Amazing"
-    viewBox="0 0 1000 230"
-    height={height}
-    onAnimationEnd={animCallback}
-  >
+  <svg id="Amazing" viewBox="0 0 1000 230" height="100%" onAnimationEnd={animCallback}>
     <defs>
       <filter id="blur1" x="-10%" y="-10%" width="120%" height="120%">
         <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
@@ -120,7 +106,7 @@ const Amazing = ({
       </filter>
     </defs>
     <clipPath id="textClip" className="filled-heading">
-      <ClipText y=".75em">Amazing.</ClipText>
+      <text css='font-family: "source_sans_probold";font-size: 230px;' tw="font-bold" y=".75em">Amazing.</text>
     </clipPath>
     <g clipPath="url(#textClip)">
       <g id="group1">
@@ -250,16 +236,16 @@ const Exciting = ({
     <SpanStyled aria-hidden="true">Exciting.</SpanStyled>
   </H1Styled>
 );
+const height = "clamp(5rem,15vw,14rem)"
 
-const FancyTitle = ({ height }: { height: string }) => {
-  const [iter, setIter] = useState(1);
+const FancyTitle = () => {
+  const [iter, setIter] = useState(Math.floor(Math.random() * 3));
   const { text, blobColor1, blobColor2 }: DefaultTheme = useTheme();
   const animateBlob = !prefsReducedMotion();
   return (
-    <>
+    <div css={`height : ${height};aspect-ratio: 1043/239;`}>
       {iter === 0 && (
         <Inspiring
-          height={height}
           fillColor={text}
           animCallback={() => {
             setIter(1);
@@ -268,7 +254,6 @@ const FancyTitle = ({ height }: { height: string }) => {
       )}
       {iter === 1 && (
         <Amazing
-          height={height}
           blobColor1={blobColor1}
           blobColor2={blobColor2}
           animCallback={() => {
@@ -286,7 +271,7 @@ const FancyTitle = ({ height }: { height: string }) => {
           }}
         />
       )}
-    </>
+    </div>
   );
 };
 
