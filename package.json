@@ -14,6 +14,10 @@
     "rules": {
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn"
+    },
+    "sourceType": "module",
+    "env": {
+      "es6": true
     }
   },
   "scripts": {
@@ -25,11 +29,15 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.21.0",
+    "@emotion/babel-plugin-jsx-pragmatic": "^0.2.0",
     "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@heroicons/react": "^2.0.16",
     "@mdx-js/react": "^2.3.0",
-    "babel-plugin-styled-components": "^2.0.7",
+    "babel-plugin-macros": "^3.1.0",
     "gatsby": "^5.7.0",
+    "gatsby-plugin-emotion": "^8.7.0",
     "gatsby-plugin-image": "^3.7.0",
     "gatsby-plugin-mdx": "^5.7.0",
     "gatsby-plugin-sharp": "^5.7.0",
@@ -40,8 +48,7 @@
     "react-dom": "^18.2.0",
     "react-is": "16.8",
     "sass": "^1.58.3",
-    "styled-components": "^5.3.8",
-    "twin.macro": "^3.1.0"
+    "scrollreveal": "^4.0.9"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
@@ -49,24 +56,24 @@
     "@types/node": "^18.14.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
-    "@types/styled-components": "^5.1.26",
+    "@types/scrollreveal": "^0.0.8",
     "autoprefixer": "^10.4.14",
     "babel-plugin-twin": "^1.1.0",
     "eslint": "^8.35.0",
     "eslint-plugin-flowtype": "^8.0.3",
     "eslint-plugin-react-hooks": "^4.6.0",
     "file-loader": "^6.2.0",
-    "gatsby-plugin-styled-components": "^6.7.0",
     "postcss": "^8.4.21",
     "postcss-import": "^15.1.0",
     "react": "^18.2.0",
     "tailwindcss": "^3.2.7",
     "tailwindcss-animate": "^1.0.5",
+    "twin.macro": "^3.1.0",
     "typescript": "^4.9.5"
   },
   "babelMacros": {
     "twin": {
-      "preset": "styled-components"
+      "preset": "emotion"
     }
   },
   "babel": {
@@ -75,7 +82,6 @@
     ],
     "plugins": [
       "@emotion/babel-plugin",
-      "babel-plugin-styled-components",
       "babel-plugin-twin",
       "babel-plugin-macros"
     ]

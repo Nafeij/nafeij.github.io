@@ -1,48 +1,66 @@
 /** @jsx jsx */
-import { jsx } from "@emotion/react";
-
-import React, { createContext, useCallback } from "react";
-import styled, { ThemeProvider } from "styled-components";
+import { jsx, css } from "@emotion/react";
+import tw from "twin.macro";
+import React, { Fragment, useEffect } from "react";
 import usePrefersReducedMotion from "../hooks/reducedMotion";
 import GlobalStyle from "../styles/GlobalStyle";
-import { darkTheme, theme } from "../styles/theme";
+import { ThemeContext } from "../styles/ThemeContext";
 
-export const ToggleContext = createContext(function () {});
+const bgLight = css`
+  background: fixed radial-gradient(ellipse at center, var(--bg-light1) 0%, var(--bg-light2) 100%);
+`;
+
+const bgDark = css`
+  background: fixed var(--bg-dark1) radial-gradient(ellipse at center, var(--bg-dark2) 8%, transparent 8%);
+  background-size: 8vmin 8vmin;
+`;
+
+const styles ={
+  main : ({isDark} : {isDark : boolean}) => [
+    tw`transition-none isolate`,
+    css`counter-reset: section;`,
+    isDark ? bgDark : bgLight,
+  ],
+  mask : ({isDark} : {isDark : boolean}) => [
+    tw`fixed h-full w-full top-0 left-0`,
+    css`
+      clip-path: circle(0% at 100% 0%);
+      animation: BackgroundSpread 700ms backwards;
+      z-index: -1;
+    `,
+    isDark ? bgDark : bgLight ,
+  ],
+}
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [dark, setDark] = React.useState(true);
-  const [delayDark, setDelayDark] = React.useState(true);
+  const { theme } = React.useContext(ThemeContext);
   const reducedMotion = usePrefersReducedMotion();
 
-  const toggleDark = useCallback(() => {
-    setDark(!dark);
-    (reducedMotion && setDelayDark(!delayDark)) ||
+  function isDark() {
+    return theme === "dark";
+  }
+
+  const [delayDark, setDelayDark] = React.useState(isDark());
+
+  useEffect(() => {
+    (reducedMotion && setDelayDark(isDark())) ||
       setTimeout(() => {
-        setDelayDark(!delayDark);
+        setDelayDark(isDark());
       }, 600);
-  }, [dark, delayDark]);
+  }, [theme]);
 
   return (
-    <ThemeProvider theme={dark ? darkTheme : theme}>
+    <Fragment>
       <GlobalStyle />
       <div
-        tw="transition-none isolate [counter-reset: section]"
-        css={`${delayDark ? darkTheme.background : theme.background}`}
+        css={styles.main({isDark : delayDark})}
       >
-        <ToggleContext.Provider value={toggleDark}>
-          {children}
-        </ToggleContext.Provider>
+        {children}
         <div
-          tw="fixed h-full w-full top-0 left-0"
-          css={`
-            clip-path: circle(0% at 100% 0%);
-            animation: BackgroundSpread 700ms backwards;
-            z-index: -1;
-            ${dark ? darkTheme.background : theme.background}
-          `}
-          key={dark + ""}
+          css={styles.mask({isDark : isDark()})}
+          key={theme}
         />
       </div>
-    </ThemeProvider>
+    </Fragment>
   );
 }
