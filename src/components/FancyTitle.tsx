@@ -1,15 +1,11 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/react';
-import styled from '@emotion/styled';
-import tw from 'twin.macro';
+import { jsx, css } from "@emotion/react";
+import styled from "@emotion/styled";
+import { usePrefersReducedMotion } from "@hooks";
 import { useState } from "react";
-import prefsReducedMotion from "../hooks/reducedMotion";
+import tw from "twin.macro";
 
-const Inspiring = ({
-  animCallback,
-}: {
-  animCallback: () => void;
-}) => (
+const Inspiring = ({ animCallback }: { animCallback: () => void }) => (
   <svg viewBox="0 0 1043 239" height="100%" id="Inspiring">
     <path
       d="M10 10H87.4697V15.2188H66.0148V171.086H87.4697V176.305H10V171.086H31.339V15.2188H10V10Z"
@@ -72,7 +68,12 @@ const Amazing = ({
   animCallback: () => void;
   animateBlob: boolean;
 }) => (
-  <svg id="Amazing" viewBox="0 0 1000 230" height="100%" onAnimationEnd={animCallback}>
+  <svg
+    id="Amazing"
+    viewBox="0 0 1000 230"
+    height="100%"
+    onAnimationEnd={animCallback}
+  >
     <defs>
       <filter id="blur1" x="-10%" y="-10%" width="120%" height="120%">
         <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
@@ -89,11 +90,18 @@ const Amazing = ({
       </filter>
     </defs>
     <clipPath id="textClip" className="filled-heading">
-      <text css={[
-        css`font-family: "source_sans_probold";font-size: 230px;`,
-        tw`font-bold`
-      ]}
-      y=".75em">Amazing.</text>
+      <text
+        css={[
+          css`
+            font-family: "source_sans_probold";
+            font-size: 230px;
+          `,
+          tw`font-bold`,
+        ]}
+        y=".75em"
+      >
+        Amazing.
+      </text>
     </clipPath>
     <g clipPath="url(#textClip)">
       <g id="group1">
@@ -184,14 +192,14 @@ const SpanStyled = styled.span`
   top: 0;
   left: 0;
 
-  &:first-child {
+  &:first-of-type {
     animation: glitch 2s 6;
     clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
     transform: translate(-0.025em, -0.0125em);
     opacity: 0.8;
   }
 
-  &:last-child {
+  &:last-of-type {
     animation: glitch 1s 12;
     clip-path: polygon(0 80%, 100% 20%, 100% 100%, 0 100%);
     transform: translate(0.0125em, 0.025em);
@@ -217,13 +225,18 @@ const Exciting = ({
     <SpanStyled aria-hidden="true">Exciting.</SpanStyled>
   </H1Styled>
 );
-const height = "clamp(5rem,15vw,14rem)"
+const height = "clamp(5rem,15vw,14rem)";
 
 const FancyTitle = () => {
   const [iter, setIter] = useState(Math.floor(Math.random() * 3));
-  const animateBlob = !prefsReducedMotion();
+  const animateBlob = !usePrefersReducedMotion();
   return (
-    <div css={css`height : ${height};aspect-ratio: 1043/239;`}>
+    <div
+      css={css`
+        height: ${height};
+        aspect-ratio: 1043/239;
+      `}
+    >
       {iter === 0 && (
         <Inspiring
           animCallback={() => {
