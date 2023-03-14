@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/react';
-import Section from "./Section";
+import { jsx } from "@emotion/react";
+import { Section } from "@components";
 
 export default function About() {
   return (

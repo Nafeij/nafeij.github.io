@@ -1,15 +1,19 @@
-import React from "react";
-import { Global, css } from "@emotion/react";
+/** @jsx jsx */
+import { Fragment } from "react";
+import { jsx, css, Global } from "@emotion/react";
 import { GlobalStyles as BaseStyles } from "twin.macro";
 
+import { Fonts, TransitionStyle } from "@styles";
+
 const CustomStyles = css`
+
+  ${Fonts}
 
   :root {
     --bg-light1: #e8e8e8;
     --bg-light2: #eeddcc;
     --bg-dark1: #0f0f0f;
     --bg-dark2: #181818;
-
   }
 
   .light {
@@ -195,13 +199,15 @@ const CustomStyles = css`
       animation: fade-in-out 12s linear forwards !important;
     }
   }
+
+  ${TransitionStyle}
 `;
 
 export default function GlobalStyle() {
   return (
-    <>
+    <Fragment>
       <BaseStyles />
       <Global styles={CustomStyles} />
-    </>
+    </Fragment>
   );
 }

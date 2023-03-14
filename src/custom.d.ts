@@ -7,3 +7,6 @@ declare module "*.jpg" {
   const content: string;
   export default content;
 }
+
+declare module '*.woff';
+declare module '*.woff2';

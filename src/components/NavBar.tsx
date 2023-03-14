@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
 import { useContext } from "react";
-import { ThemeContext } from "../styles/ThemeContext";
-import logo from "../assets/images/profilepic.jpg";
+import { ThemeContext } from "@styles";
+import logo from "@images/profilepic.jpg";
 import { SunIcon } from "@heroicons/react/24/outline";
 import { MoonIcon } from "@heroicons/react/24/solid";
 import tw from 'twin.macro';

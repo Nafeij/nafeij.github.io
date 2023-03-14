@@ -1,5 +1,5 @@
-const React = require("react");
-import { ThemeProvider } from "./src/styles/ThemeContext";
+import { ThemeProvider } from '@styles'
+const React = require('react')
 
 export const wrapRootElement = ({ element }) => (
   <ThemeProvider>{element}</ThemeProvider>

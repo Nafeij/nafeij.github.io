@@ -2,9 +2,8 @@
 import { jsx, css } from "@emotion/react";
 import tw from "twin.macro";
 import React, { Fragment, useEffect } from "react";
-import usePrefersReducedMotion from "../hooks/reducedMotion";
-import GlobalStyle from "../styles/GlobalStyle";
-import { ThemeContext } from "../styles/ThemeContext";
+import { usePrefersReducedMotion } from "@hooks";
+import { GlobalStyle, ThemeContext } from "@styles";
 
 const bgLight = css`
   background: fixed radial-gradient(ellipse at center, var(--bg-light1) 0%, var(--bg-light2) 100%);

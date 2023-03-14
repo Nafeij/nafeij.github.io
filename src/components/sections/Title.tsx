@@ -1,8 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
-import FlyList from "../FlyList";
-import FancyTitle from "../FancyTitle";
-import Section from "../sections/Section";
+import { FlyList, Section, FancyTitle } from '@components';
 
 export default function Title() {
   return (

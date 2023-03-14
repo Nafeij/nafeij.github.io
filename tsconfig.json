@@ -21,7 +21,7 @@
     // "emitDecoratorMetadata": true,                    /* Emit design-type metadata for decorated declarations in source files. */
     // "jsxFactory": "",                                 /* Specify the JSX factory function used when targeting React JSX emit, e.g. 'React.createElement' or 'h' */
     // "jsxFragmentFactory": "",                         /* Specify the JSX Fragment reference used for fragments when targeting React JSX emit e.g. 'React.Fragment' or 'Fragment'. */
-    "jsxImportSource":  "@emotion/react",                            /* Specify module specifier used to import the JSX factory functions when using `jsx: react-jsx*`.` */
+    "jsxImportSource": "@emotion/react" /* Specify module specifier used to import the JSX factory functions when using `jsx: react-jsx*`.` */,
     // "reactNamespace": "",                             /* Specify the object invoked for `createElement`. This only applies when targeting `react` JSX emit. */
     // "noLib": true,                                    /* Disable including any library files, including the default lib.d.ts. */
     // "useDefineForClassFields": true,                  /* Emit ECMAScript-standard-compliant class fields. */
@@ -30,8 +30,16 @@
     "module": "esnext" /* Specify what module code is generated. */,
     // "rootDir": "./",                                  /* Specify the root folder within your source files. */
     "moduleResolution": "node" /* Specify how TypeScript looks up a file from a given module specifier. */,
-    // "baseUrl": "./",                                  /* Specify the base directory to resolve non-relative module names. */
-    // "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
+    "baseUrl": "./" /* Specify the base directory to resolve non-relative module names. */,
+    "paths": {
+      "@components": ["src/components"],
+      "@pages": ["src/pages"],
+      "@util": ["src/util"],
+      "@hooks": ["src/hooks"],
+      "@styles": ["src/styles"],
+      "@images": ["src/assets/images"],
+      "@fonts": ["src/assets/fonts"],
+    } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like `./node_modules/@types`. */
     // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */
@@ -108,4 +116,10 @@
     "./plugins/**/*",
     "src/custom.d.ts"
   ],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
+  "ts-node-dev": {
+    "require": ["tsconfig-paths/register"]
+  }
 }
