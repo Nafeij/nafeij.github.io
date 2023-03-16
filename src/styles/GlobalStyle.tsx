@@ -14,6 +14,10 @@ const CustomStyles = css`
     --bg-light2: #eeddcc;
     --bg-dark1: #0f0f0f;
     --bg-dark2: #181818;
+
+    --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+
+    --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
   }
 
   .light {
@@ -30,7 +34,7 @@ const CustomStyles = css`
   .dark {
     --bg-primary: var(--bg-dark1);
     --bg-secondary: var(--bg-dark2);
-    --text-primary: #ffffff;
+    --text-primary: #e0e0e0;
     --text-secondary: #f1f5f9;
     --color-primary: #2563eb;
 
@@ -38,17 +42,17 @@ const CustomStyles = css`
     --blob2: #6600ff;
   }
 
-  *,
-  html,
-  body {
-    transition: 0.25s ease-in-out;
+
+
+  *:not(body):not(html) {
+    transition: var(--transition);
   }
 
   /* Scrollbar Styles */
   html {
     scroll-behavior: smooth;
     scrollbar-width: thin;
-    scrollbar-color: transparent var(--bg-primary);
+    scrollbar-color: var(--text-primary) transparent;
   }
   ::-webkit-scrollbar {
     width: 12px;
@@ -58,7 +62,7 @@ const CustomStyles = css`
   }
   ::-webkit-scrollbar-thumb {
     background-color: transparent;
-    border: 3px solid var(--bg-primary);
+    border: 3px solid var(--text-primary);
     border-radius: 10px;
   }
 

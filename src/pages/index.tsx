@@ -2,14 +2,18 @@ import type { HeadFC, PageProps } from "gatsby";
 import React, { FC } from "react";
 
 import { Layout, NavBar, Title, About } from "@components";
+import { GlobalStyle } from "@styles";
 
 const IndexPage: FC<PageProps> = () => {
   return (
-    <Layout>
-      <NavBar />
-      <Title />
-      <About />
-    </Layout>
+    <>
+      <GlobalStyle />
+      <Layout>
+        <NavBar />
+        <Title />
+        <About />
+      </Layout>
+    </>
   );
 };
 

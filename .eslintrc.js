@@ -8,7 +8,8 @@ module.exports = {
     'standard-with-typescript',
     'plugin:import/errors',
     'plugin:import/warnings',
-    'plugin:import/typescript'
+    'plugin:import/typescript',
+    'plugin:tailwindcss/recommended'
   ],
   overrides: [
   ],
@@ -18,11 +19,17 @@ module.exports = {
   },
   plugins: [
     'react',
-    'react-hooks'
+    'react-hooks',
+    '@emotion'
   ],
   rules: {
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn'
+    'react-hooks/exhaustive-deps': 'warn',
+    '@emotion/pkg-renaming': 'error',
+    '@emotion/jsx-import': 'error',
+    '@emotion/no-vanilla': 'error',
+    '@emotion/import-from-emotion': 'error',
+    '@emotion/styled-import': 'error'
   },
   settings: {
     'import/resolver': {
@@ -38,6 +45,9 @@ module.exports = {
         ],
         extensions: ['.ts', '.js', '.tsx', '.jsx', '.woff', '.woff2']
       }
+    },
+    tailwindcss: {
+      classRegex: '^tw$'
     }
   }
 }

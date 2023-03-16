@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react";
-import tw from "twin.macro";
-import React, { Fragment, useEffect } from "react";
 import { usePrefersReducedMotion } from "@hooks";
-import { GlobalStyle, ThemeContext } from "@styles";
+import { ThemeContext } from "@styles";
+import React, { Fragment, useEffect } from "react";
+import tw from "twin.macro";
 
 const bgLight = css`
   background: fixed radial-gradient(ellipse at center, var(--bg-light1) 0%, var(--bg-light2) 100%);
@@ -50,7 +50,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <Fragment>
-      <GlobalStyle />
       <div
         css={styles.main({isDark : delayDark})}
       >

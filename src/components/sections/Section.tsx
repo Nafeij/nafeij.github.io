@@ -28,7 +28,7 @@ export default function Section({
 }) {
   return (
     <StyledSection background={background} minHeight={minHeight}>
-      <div tw="mx-auto max-w-screen-xl px-6 md:px-16 ">{children}</div>
+      <div tw="mx-auto max-w-screen-xl px-6 md:px-16">{children}</div>
     </StyledSection>
   );
 }
