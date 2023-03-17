@@ -40,12 +40,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
 
   const [delayDark, setDelayDark] = React.useState(isDark());
-
+  let timeout_func : NodeJS.Timeout;
   useEffect(() => {
-    (reducedMotion && setDelayDark(isDark())) ||
-      setTimeout(() => {
+    if (reducedMotion) {
+      setDelayDark(isDark())
+    } else {
+      if (timeout_func) clearTimeout(timeout_func);
+      timeout_func = setTimeout(() => {
         setDelayDark(isDark());
       }, 600);
+    }
   }, [theme]);
 
   return (

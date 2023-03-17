@@ -29,13 +29,17 @@ export default function TransitionSeries({
   const [show, setShow] = useState(false);
   const d = duration ?? 500;
   const delay = d / children.length;
+  let timeout_func : NodeJS.Timeout;
   useEffect(() => {
     if (timeout) {
-      setTimeout(() => {
+      timeout_func = setTimeout(() => {
         setShow(true);
       }, timeout);
     } else {
       setShow(true);
+    }
+    return () => {
+      if (timeout_func) clearTimeout(timeout_func);
     }
   }, []);
   return (
