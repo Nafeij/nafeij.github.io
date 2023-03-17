@@ -41,7 +41,8 @@ module.exports = {
           ['@images', './src/assets/images'],
           ['@pages', './src/pages'],
           ['@styles', './src/styles'],
-          ['@util', './src/util']
+          ['@util', './src/util'],
+          ['@config', './src/config']
         ],
         extensions: ['.ts', '.js', '.tsx', '.jsx', '.woff', '.woff2']
       }

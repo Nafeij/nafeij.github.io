@@ -5,10 +5,10 @@ import { ReactNode } from "react";
 import styled from "@emotion/styled";
 
 const StyledSection = styled.section(
-  ({ minWidth, background }: { minWidth?: string; background?: string }) => [
+  ({ minWidth, background }: { minWidth : string; background? : string }) => [
     tw`flex justify-center items-start flex-col`,
     css`
-      min-width: ${minWidth ?? "100vw"};
+      min-width: ${minWidth};
     `,
     background &&
       css`
@@ -20,7 +20,7 @@ const StyledSection = styled.section(
 export default function Section({
   children,
   background,
-  minWidth,
+  minWidth = "100vw",
 }: {
   children: ReactNode;
   background?: string;
@@ -28,7 +28,14 @@ export default function Section({
 }) {
   return (
     <StyledSection background={background} minWidth={minWidth}>
-      <div tw="mx-auto max-w-screen-xl px-6 md:px-16">{children}</div>
+      <div
+        tw="mx-auto max-w-screen-xl text-primary text-justify px-16 md:px-28"
+        css={{
+          fontFamily: "source_sans_pro"
+        }}
+      >
+        {children}
+      </div>
     </StyledSection>
   );
 }

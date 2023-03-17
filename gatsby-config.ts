@@ -53,7 +53,8 @@ const config: GatsbyConfig = {
           '@images': path.resolve(__dirname, 'src/assets/images'),
           '@pages': path.resolve(__dirname, 'src/pages'),
           '@styles': path.resolve(__dirname, 'src/styles'),
-          '@util': path.resolve(__dirname, 'src/util')
+          '@util': path.resolve(__dirname, 'src/util'),
+          '@config': path.resolve(__dirname, 'src/config'),
         },
         extensions: [
           "js", "jsx", "ts", "tsx", "css", "scss", "svg", "jpg", "png", "woff", "woff2"

@@ -91,13 +91,11 @@ const Amazing = ({
     </defs>
     <clipPath id="textClip" className="filled-heading">
       <text
-        css={[
-          css`
-            font-family: "source_sans_probold";
-            font-size: 230px;
-          `,
-          tw`font-bold`,
-        ]}
+        css={{
+          fontFamily: "source_sans_pro",
+          fontSize: "230px",
+          fontWeight: "bold"
+        }}
         y=".75em"
       >
         Amazing.
