@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react";
 import { Section, FancyTitle, TransitionSeries } from "@components";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useEffect } from "react";
 import React from "react";
 
@@ -20,7 +19,7 @@ export default function Title() {
             font-family: ui-monospace, "Roboto Mono", monospace;
           `}
         >
-          Build something
+          Create something
         </p>
         <FancyTitle />
       </TransitionSeries>

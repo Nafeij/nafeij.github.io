@@ -1,16 +1,29 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/react";
 import { Section } from "@components";
+import { graphql, useStaticQuery } from "gatsby";
 
 export default function About() {
+  const { markdownRemark } = useStaticQuery(
+    graphql`
+      query AboutQuery {
+        markdownRemark(fileAbsolutePath: { regex: "content/About/" }) {
+          frontmatter {
+            cover
+            tech
+            title
+          }
+          html
+        }
+      }
+    `
+  );
   return (
-    <Section minHeight="none">
-      <p tw="text-primary">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
-        adipisci, laborum eum voluptatum illo fugiat, temporibus, laboriosam ut
-        maiores explicabo rem tempore at nesciunt beatae magni nulla error
-        consequuntur? Perferendis!
-      </p>
+    <Section>
+      <div
+        tw="text-primary"
+        dangerouslySetInnerHTML={{ __html: markdownRemark.html }}
+      />
     </Section>
   );
 }

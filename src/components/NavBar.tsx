@@ -18,13 +18,12 @@ export default function NavBar() {
   return (
     <header
       id="navbar"
-      tw="w-full h-32 top-0 flex items-center justify-center fixed z-10 px-6 md:px-10 lg:px-12"
+      tw="w-full top-0 flex items-center justify-between fixed z-10 p-6 lg:p-10"
     >
-      <div tw="flex items-center justify-between w-full h-10 md:h-14">
-        <TransitionSeries duration={600}>
+      <TransitionSeries duration={600}>
           <img
             css={[
-              tw`h-full aspect-square`,
+              tw`h-12 aspect-square`,
               css`
                 clip-path: circle(49%);
               `,
@@ -32,7 +31,7 @@ export default function NavBar() {
             src={logo}
           />
           <button
-            tw="h-full aspect-square border-0 outline-0 rounded-lg flex justify-center items-center bg-[var(--text-primary)] hover:scale-110 active:scale-90"
+            tw="h-12 aspect-square border-0 outline-0 rounded-lg flex justify-center items-center bg-[var(--text-primary)] hover:scale-110 active:scale-90"
             onClick={toggle}
           >
             {theme === "dark" ? (
@@ -42,7 +41,6 @@ export default function NavBar() {
             )}
           </button>
         </TransitionSeries>
-      </div>
     </header>
   );
 }

@@ -8,8 +8,8 @@ const IndexPage: FC<PageProps> = () => {
   return (
     <>
       <GlobalStyle />
+      <NavBar />
       <Layout>
-        <NavBar />
         <Title />
         <About />
       </Layout>

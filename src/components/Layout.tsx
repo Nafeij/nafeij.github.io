@@ -3,47 +3,38 @@ import { jsx, css } from "@emotion/react";
 import { usePrefersReducedMotion } from "@hooks";
 import { ThemeContext } from "@styles";
 import React, { Fragment, useEffect } from "react";
+import { scrollHorizontal } from "@hooks";
 import tw from "twin.macro";
 
 const bgLight = css`
-  background: fixed radial-gradient(ellipse at center, var(--bg-light1) 0%, var(--bg-light2) 100%);
+  background: fixed
+    radial-gradient(
+      ellipse at center,
+      var(--bg-light1) 0%,
+      var(--bg-light2) 100%
+    );
 `;
 
 const bgDark = css`
-  background: fixed var(--bg-dark1) radial-gradient(ellipse at center, var(--bg-dark2) 8%, transparent 8%);
+  background: fixed var(--bg-dark1)
+    radial-gradient(ellipse at center, var(--bg-dark2) 8%, transparent 8%);
   background-size: 8vmin 8vmin;
 `;
-
-const styles ={
-  main : ({isDark} : {isDark : boolean}) => [
-    tw`transition-none isolate`,
-    css`counter-reset: section;`,
-    isDark ? bgDark : bgLight,
-  ],
-  mask : ({isDark} : {isDark : boolean}) => [
-    tw`fixed h-full w-full top-0 left-0`,
-    css`
-      clip-path: circle(0% at 100% 0%);
-      animation: BackgroundSpread 700ms backwards;
-      z-index: -1;
-    `,
-    isDark ? bgDark : bgLight ,
-  ],
-}
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { theme } = React.useContext(ThemeContext);
   const reducedMotion = usePrefersReducedMotion();
+  const scrollRef = React.useRef<HTMLDivElement>(null);
 
   function isDark() {
     return theme === "dark";
   }
 
   const [delayDark, setDelayDark] = React.useState(isDark());
-  let timeout_func : NodeJS.Timeout;
+  let timeout_func: NodeJS.Timeout;
   useEffect(() => {
     if (reducedMotion) {
-      setDelayDark(isDark())
+      setDelayDark(isDark());
     } else {
       if (timeout_func) clearTimeout(timeout_func);
       timeout_func = setTimeout(() => {
@@ -55,11 +46,27 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Fragment>
       <div
-        css={styles.main({isDark : delayDark})}
+        css={[
+          tw`transition-none isolate flex flex-row flex-nowrap w-full h-screen overflow-scroll`,
+          css`
+            counter-reset: section;
+          `,
+          delayDark ? bgDark : bgLight,
+        ]}
+        ref={scrollRef}
+        onWheel={scrollHorizontal(scrollRef)}
       >
         {children}
         <div
-          css={styles.mask({isDark : isDark()})}
+          css={[
+            tw`fixed h-full w-full top-0 left-0`,
+            css`
+              clip-path: circle(0% at 100% 0%);
+              animation: BackgroundSpread 700ms backwards;
+              z-index: -1;
+            `,
+            isDark() ? bgDark : bgLight,
+          ]}
           key={theme}
         />
       </div>

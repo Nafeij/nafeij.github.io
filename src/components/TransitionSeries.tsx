@@ -51,7 +51,7 @@ export default function TransitionSeries({
             classNames={classNames ?? "fadedown"}
             timeout={d}
           >
-            <div key={i} tw="h-full" css={{ transitionDelay: `${delay * i}ms` }}>
+            <div key={i} css={{ transitionDelay: `${delay * i}ms` }}>
               {child}
             </div>
           </CSSTransition>
