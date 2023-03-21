@@ -61,7 +61,7 @@ export const scrollHorizontal = (ref : React.RefObject<HTMLDivElement>) => (
     // e.preventDefault();
     ref.current && ref.current.scrollBy({
       top: 0,
-      left: e.deltaY * ref.current.clientWidth * 0.002,
+      left: e.deltaY * ref.current.clientWidth * 0.0027,
       behavior: "smooth",
     });
   }

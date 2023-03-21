@@ -29,7 +29,7 @@ export default function Section({
   return (
     <StyledSection background={background} minWidth={minWidth}>
       <div
-        tw="mx-auto max-w-screen-xl text-primary text-justify px-16 md:px-28"
+        tw="mx-auto max-w-screen-xl text-primary text-justify px-6 md:px-28"
         css={{
           fontFamily: "source_sans_pro"
         }}

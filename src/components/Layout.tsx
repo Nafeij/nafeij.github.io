@@ -2,7 +2,7 @@
 import { jsx, css } from "@emotion/react";
 import { usePrefersReducedMotion } from "@hooks";
 import { ThemeContext } from "@styles";
-import React, { Fragment, useEffect } from "react";
+import React, { createContext, Fragment, RefObject, useEffect } from "react";
 import { scrollHorizontal } from "@hooks";
 import tw from "twin.macro";
 
@@ -20,6 +20,8 @@ const bgDark = css`
     radial-gradient(ellipse at center, var(--bg-dark2) 8%, transparent 8%);
   background-size: 8vmin 8vmin;
 `;
+
+export const ScrollContainerRefContext = createContext<RefObject<HTMLDivElement>|null>(null);
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { theme } = React.useContext(ThemeContext);
@@ -56,7 +58,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         ref={scrollRef}
         onWheel={scrollHorizontal(scrollRef)}
       >
+        <ScrollContainerRefContext.Provider value={scrollRef}>
         {children}
+        </ScrollContainerRefContext.Provider>
         <div
           css={[
             tw`fixed h-full w-full top-0 left-0`,

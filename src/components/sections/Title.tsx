@@ -13,7 +13,7 @@ export default function Title() {
     <Section>
       <TransitionSeries duration={600} timeout={600}>
         <p
-          tw="text-primary"
+          tw="text-primary mb-2"
           css={css`
             font-size: clamp(1.4rem, 3vw, 3rem);
             font-family: ui-monospace, "Roboto Mono", monospace;

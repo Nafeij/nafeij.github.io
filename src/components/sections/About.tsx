@@ -5,8 +5,9 @@ import { jsx, css } from "@emotion/react";
 import { usePrefersReducedMotion } from "@hooks";
 import { sr } from "@util";
 import { graphql, useStaticQuery } from "gatsby";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import tw from "twin.macro";
+import { ScrollContainerRefContext } from "../Layout";
 
 export default function About() {
   const { markdownRemark } = useStaticQuery(
@@ -25,32 +26,34 @@ export default function About() {
   );
   const techs: string[] = markdownRemark.frontmatter.tech;
   const prefersReducedMotion = usePrefersReducedMotion();
-  const revealContainer = useRef<null | HTMLDivElement>(null);
+  const revealRef = useRef<HTMLDivElement | null>(null);
+  const ScrollContainerRef = useContext(ScrollContainerRefContext);
 
   useEffect(() => {
-    if (!prefersReducedMotion && sr && revealContainer.current) {
-      sr.reveal(revealContainer.current, srConfig());
+    if (!prefersReducedMotion && sr && revealRef.current) {
+      sr.reveal(revealRef.current, {...srConfig(), container: ScrollContainerRef?.current});
     }
   }, []);
 
   return (
     <Section>
       <div
-        tw="text-2xl"
+        tw="text-xl md:text-2xl"
         dangerouslySetInnerHTML={{ __html: markdownRemark.html }}
         css={css`
           h1 {
-            ${tw`text-6xl`}
+            ${tw`text-4xl md:text-6xl lg:text-7xl`}
           }
           h2 {
-            ${tw`text-4xl leading-loose`}
+            ${tw`text-2xl md:text-4xl lg:text-5xl`}
+            line-height: 2!important;
           }
         `}
-        ref={revealContainer}
+        ref={revealRef}
       />
-      <div tw="mt-5 text-xl grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div tw="mt-5 text-xl flex flex-wrap gap-y-4 md:mt-8">
         {techs.map((tech, i) => (
-          <div key={i} tw="flex items-center justify-center">
+          <div key={i} tw="grow basis-1/2 text-center md:basis-1/3">
             {tech}
           </div>
         ))}

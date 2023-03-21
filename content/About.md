@@ -10,6 +10,7 @@ tech:
   - Python
 ---
 
+<img>[@images/profilepic.jpg](width=200)</img> //TODO image
 # **Hi, I'm Jiefan.**
 
 ## **I like to create things.**

@@ -6,7 +6,7 @@ import { useState } from "react";
 import tw from "twin.macro";
 
 const Inspiring = ({ animCallback }: { animCallback: () => void }) => (
-  <svg viewBox="0 0 1043 239" height="100%" id="Inspiring">
+  <svg viewBox="0 0 1040 239" height="100%" id="Inspiring">
     <path
       d="M10 10H87.4697V15.2188H66.0148V171.086H87.4697V176.305H10V171.086H31.339V15.2188H10V10Z"
       tw="fill-[var(--text-primary)] stroke-[var(--text-primary)]"
@@ -179,7 +179,7 @@ const H1Styled = styled.h1`
   font-weight: bold;
   text-transform: uppercase;
   height: ${(props: H1Props) => props.height};
-  font-size: clamp(4rem, 12vw, 12rem);
+  font-size: clamp(3.5rem, 12vw, 12rem);
   line-height: 1;
   animation: glitch-clip 12s steps(100, end);
   clip-path: inset(50%);
@@ -223,7 +223,7 @@ const Exciting = ({
     <SpanStyled aria-hidden="true">Exciting.</SpanStyled>
   </H1Styled>
 );
-const height = "clamp(5rem,15vw,14rem)";
+const height = "clamp(4rem,15vw,14rem)";
 
 const FancyTitle = () => {
   const [iter, setIter] = useState(Math.floor(Math.random() * 3));
