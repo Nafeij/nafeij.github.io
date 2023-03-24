@@ -7,7 +7,8 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      'source-sans-probold': ['source_sans_probold', 'sans-serif']
+      'source-sans-probold': ['source_sans_probold', 'sans-serif'],
+      mono: ['ui-monospace', 'Roboto Mono', 'monospace']
     },
     extend: {
       backgroundColor: {

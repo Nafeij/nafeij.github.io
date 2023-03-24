@@ -5,18 +5,13 @@ import { useEffect } from "react";
 import React from "react";
 
 export default function Title() {
-  const [show, setShow] = React.useState(false);
-  useEffect(() => {
-    setShow(true);
-  }, []);
   return (
-    <Section css={genDelays(2,600)}>
+    <Section css={genDelays(2,1200)}>
       <TransitionSeries duration={600} timeout={600}>
         <p
-          tw="text-primary mb-2"
+          tw="text-primary mb-1 font-mono"
           css={css`
             font-size: clamp(1.4rem, 3vw, 3rem);
-            font-family: ui-monospace, "Roboto Mono", monospace;
           `}
         >
           Create something

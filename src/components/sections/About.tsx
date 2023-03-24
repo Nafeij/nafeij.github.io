@@ -59,7 +59,7 @@ export default function About() {
         dangerouslySetInnerHTML={{ __html: markdownRemark.html }}
         css={css`
           h1 {
-            ${tw`text-4xl text-primary md:text-6xl lg:text-7xl`},
+            ${tw`text-3xl text-primary md:text-6xl lg:text-7xl`},
             :before {
               ${tw`ml-1 mr-3 inline-block aspect-square bg-cover align-baseline rounded-md h-12 md:h-16 lg:h-20`}
               content: "";
@@ -76,14 +76,14 @@ export default function About() {
         `}
         ref={revealRef}
       />
-      <div css={[tw`mt-5 text-lg flex flex-wrap gap-y-4 md:mt-8`]}>
+      <div css={[tw`mt-5 text-lg font-mono flex flex-wrap gap-y-4 md:mt-8`]}>
         {techs.map((tech, i) => (
           <div
             key={i}
             ref={(el) => {
               el && (techRefs.current[i] = el);
             }}
-            tw="grow basis-1/2 text-center md:basis-1/3 lg:text-lg"
+            tw="grow basis-1/2 text-center md:basis-1/3"
             css={css`
               :before {
                 ${tw`absolute left-0`}

@@ -12,7 +12,7 @@ const TransitionStyles = css`
     transform: translateY(5vh);
     transition: opacity 300ms var(--easing), transform 300ms var(--easing);
   }
-  .fadeup-enter-active, .fadeup-enter-done {
+  .fadeup-enter-active {
     opacity: 1;
     transform: translateY(0vh);
     transition: opacity 300ms var(--easing), transform 300ms var(--easing);
@@ -23,7 +23,7 @@ const TransitionStyles = css`
     transform: translateY(-5vh);
     transition: opacity 300ms var(--easing), transform 300ms var(--easing);
   }
-  .fadedown-enter-active, .fadedown-enter-done {
+  .fadedown-enter-active {
     opacity: 1;
     transform: translateY(0vh);
     transition: opacity 300ms var(--easing), transform 300ms var(--easing);

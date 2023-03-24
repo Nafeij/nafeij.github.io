@@ -32,7 +32,7 @@ const Section = forwardRef<HTMLDivElement, SectionProps>( (props : SectionProps,
   return (
     <StyledSection {...dProps}>
       <div
-        tw="mx-auto max-w-screen-xl text-primary tracking-wide text-justify px-12 md:px-28"
+        tw="mx-auto max-w-screen-xl text-primary tracking-wide text-justify px-6 md:px-28"
         css={{
           fontFamily: "source_sans_pro"
         }}

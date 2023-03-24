@@ -23,8 +23,8 @@ const CustomStyles = css`
   .light {
     --bg-primary: var(--bg-light1);
     --bg-secondary: var(--bg-light2);
-    --text-primary: #0f0f0f;
-    --text-secondary: #181818;
+    --text-primary: #080808;
+    --text-secondary: #484848;
     --color-primary: #e11d48;
 
     --blob1: #0036dd;
