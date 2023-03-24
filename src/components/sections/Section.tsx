@@ -1,14 +1,18 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react";
 import tw from "twin.macro";
-import { ReactNode } from "react";
+import { ForwardedRef, forwardRef, ReactNode, RefObject } from "react";
 import styled from "@emotion/styled";
 
 const StyledSection = styled.section(
-  ({ minWidth, background }: { minWidth : string; background? : string }) => [
+  ({ minAxis, background }: { minAxis : string; background? : string }) => [
     tw`flex justify-center items-start flex-col`,
     css`
-      min-width: ${minWidth};
+      min-width: ${minAxis};
+      @media (min-width: 768px) {
+        min-width: unset;
+        min-height: ${minAxis};
+      }
     `,
     background &&
       css`
@@ -17,25 +21,27 @@ const StyledSection = styled.section(
   ]
 );
 
-export default function Section({
-  children,
-  background,
-  minWidth = "100vw",
-}: {
-  children: ReactNode;
-  background?: string;
-  minWidth?: string;
-}) {
+interface SectionProps extends React.ComponentPropsWithoutRef<"div"> {
+  background? : string;
+  minAxis? : string;
+  children? : ReactNode;
+}
+
+const Section = forwardRef<HTMLDivElement, SectionProps>( (props : SectionProps, ref : ForwardedRef<HTMLDivElement>) => {
+  const dProps = { minAxis: "100%", ...props };
   return (
-    <StyledSection background={background} minWidth={minWidth}>
+    <StyledSection {...dProps}>
       <div
-        tw="mx-auto max-w-screen-xl text-primary text-justify px-6 md:px-28"
+        tw="mx-auto max-w-screen-xl text-primary tracking-wide text-justify px-12 md:px-28"
         css={{
           fontFamily: "source_sans_pro"
         }}
+        ref={ref}
       >
-        {children}
+        {props.children}
       </div>
     </StyledSection>
   );
-}
+})
+
+export default Section;

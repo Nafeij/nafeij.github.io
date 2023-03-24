@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react";
-import { Section, FancyTitle, TransitionSeries } from "@components";
+import { Section, FancyTitle, TransitionSeries, genDelays } from "@components";
 import { useEffect } from "react";
 import React from "react";
 
@@ -10,7 +10,7 @@ export default function Title() {
     setShow(true);
   }, []);
   return (
-    <Section>
+    <Section css={genDelays(2,600)}>
       <TransitionSeries duration={600} timeout={600}>
         <p
           tw="text-primary mb-2"

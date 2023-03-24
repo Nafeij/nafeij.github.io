@@ -5,6 +5,7 @@ import { ThemeContext } from "@styles";
 import React, { createContext, Fragment, RefObject, useEffect } from "react";
 import { scrollHorizontal } from "@hooks";
 import tw from "twin.macro";
+import { isMatch } from "@util";
 
 const bgLight = css`
   background: fixed
@@ -32,6 +33,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return theme === "dark";
   }
 
+  function findScrollDirection(e: React.WheelEvent<HTMLDivElement>) {
+    if (!isMatch('md')) {
+      scrollHorizontal(scrollRef)(e)
+    }
+  }
+
   const [delayDark, setDelayDark] = React.useState(isDark());
   let timeout_func: NodeJS.Timeout;
   useEffect(() => {
@@ -49,14 +56,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <Fragment>
       <div
         css={[
-          tw`transition-none isolate flex flex-row flex-nowrap w-full h-screen overflow-scroll`,
+          tw`transition-none isolate flex flex-row flex-nowrap w-screen h-screen overflow-scroll md:flex-col`,
           css`
             counter-reset: section;
           `,
           delayDark ? bgDark : bgLight,
         ]}
         ref={scrollRef}
-        onWheel={scrollHorizontal(scrollRef)}
+        onWheel={findScrollDirection}
       >
         <ScrollContainerRefContext.Provider value={scrollRef}>
         {children}

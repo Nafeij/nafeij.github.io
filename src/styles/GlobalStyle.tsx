@@ -34,14 +34,13 @@ const CustomStyles = css`
   .dark {
     --bg-primary: var(--bg-dark1);
     --bg-secondary: var(--bg-dark2);
-    --text-primary: #e0e0e0;
-    --text-secondary: #f1f5f9;
+    --text-primary: #f1f5f9;
+    --text-secondary: #c0c0c0;
     --color-primary: #2563eb;
 
     --blob1: #00cc99;
     --blob2: #6600ff;
   }
-
 
 
   *:not(body):not(html) {
