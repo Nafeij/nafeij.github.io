@@ -32,7 +32,7 @@ const TransitionStyles = css`
   .fade-enter {
     opacity: 0;
   }
-  .fade-enter-active, .fade-enter-done {
+  .fade-enter-active {
     opacity: 1;
     transition: opacity 300ms var(--easing);
   }
@@ -42,6 +42,10 @@ const TransitionStyles = css`
   .fade-exit-active, .fade-exit-done {
     opacity: 0;
     transition: opacity 300ms var(--easing);
+  }
+
+  .fadedown-enter-done, .fadeup-enter-done, .fade-enter-done, .fade-exit-done {
+    transition-delay: 0s !important;
   }
 `;
 

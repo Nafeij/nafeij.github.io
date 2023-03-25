@@ -35,14 +35,15 @@ export default function NavBar() {
         }}
         />
         <button
-          tw="h-12 aspect-square border-0 outline-0 rounded-lg flex justify-center items-center bg-[var(--text-primary)] hover:scale-110 active:scale-90"
+          tw="h-12 aspect-square border-0 outline-0 flex justify-center items-center bg-transparent hover:scale-110 active:scale-90"
+          css={{
+            "& > svg": [
+              tw`h-full aspect-square text-[var(--text-primary)]`,
+            ]
+          }}
           onClick={toggle}
         >
-          {theme === "dark" ? (
-            <MoonIcon tw="h-1/2 aspect-square text-[var(--bg-primary)]" />
-          ) : (
-            <SunIcon tw="h-1/2 aspect-square text-[var(--bg-primary)]" />
-          )}
+          {theme === "dark" ? ( <MoonIcon /> ) : ( <SunIcon /> )}
         </button>
       </TransitionSeries>
     </header>
