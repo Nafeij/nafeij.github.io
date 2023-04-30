@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { genDelays, Section, TransitionSeries } from "@components";
+import { Section } from "@components";
 import { srConfig } from "@config";
 import { jsx, css } from "@emotion/react";
 import { usePrefersReducedMotion } from "@hooks";
@@ -14,7 +14,7 @@ import React from "react";
 export default function About() {
   const { markdownRemark } = useStaticQuery(
     graphql`
-      query AboutQuery {
+      query {
         markdownRemark(fileAbsolutePath: { regex: "content/About/" }) {
           frontmatter {
             tech
@@ -33,15 +33,13 @@ export default function About() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const revealRef = useRef<HTMLDivElement | null>(null);
   const ScrollContainerRef = useContext(ScrollContainerRefContext);
-  const [showTags, setShowTags] = React.useState(false);
 
   useEffect(() => {
     if (!prefersReducedMotion) {
       revealRef.current &&
         sr?.reveal(revealRef.current, {
           ...srConfig(),
-          container: ScrollContainerRef?.current,
-          afterReveal: () => setShowTags(true),
+          container: ScrollContainerRef?.current
         });
       techRefs.current.forEach((el, i) => {
         sr?.reveal(el, {
@@ -50,16 +48,16 @@ export default function About() {
         });
       });
     }
-  }, []);
+  }, [revealRef, techRefs]);
 
   return (
-    <Section>
+    <Section tw="text-lg md:text-xl lg:text-2xl">
       <div
-        tw="text-secondary md:text-lg lg:text-xl"
+        tw="text-secondary"
         dangerouslySetInnerHTML={{ __html: markdownRemark.html }}
         css={css`
           h1 {
-            ${tw`text-3xl text-primary md:text-6xl lg:text-7xl`},
+            ${tw`text-3xl text-primary md:text-5xl lg:text-6xl`},
             :before {
               ${tw`ml-1 mr-3 inline-block aspect-square bg-cover align-baseline rounded-md h-12 md:h-16 lg:h-20`}
               content: "";
@@ -67,16 +65,20 @@ export default function About() {
             }
           }
           h2 {
-            ${tw`text-2xl md:text-4xl lg:text-5xl`}
+            ${tw`text-2xl md:text-3xl lg:text-4xl`}
             line-height: 2!important;
           }
           a {
             color: var(--text-primary);
+
+            :hover {
+              color: var(--link-color);
+            }
           }
         `}
         ref={revealRef}
       />
-      <div css={[tw`mt-5 text-lg font-mono flex flex-wrap gap-y-4 md:mt-8`]}>
+      <div css={[tw`mt-5 pl-2 font-mono flex flex-wrap gap-y-4 md:mt-8`]}>
         {techs.map((tech, i) => (
           <div
             key={i}
@@ -86,7 +88,7 @@ export default function About() {
             tw="grow basis-1/2 text-center md:basis-1/3"
             css={css`
               :before {
-                ${tw`absolute left-0`}
+                ${tw`absolute -left-2`}
                 content: "▹";
               }
             `}

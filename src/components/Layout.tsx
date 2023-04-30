@@ -22,7 +22,8 @@ const bgDark = css`
   background-size: 8vmin 8vmin;
 `;
 
-export const ScrollContainerRefContext = createContext<RefObject<HTMLDivElement>|null>(null);
+export const ScrollContainerRefContext =
+  createContext<RefObject<HTMLDivElement> | null>(null);
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { theme } = React.useContext(ThemeContext);
@@ -34,8 +35,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
 
   function findScrollDirection(e: React.WheelEvent<HTMLDivElement>) {
-    if (!isMatch('md')) {
-      scrollHorizontal(scrollRef)(e)
+    if (!isMatch("md")) {
+      scrollHorizontal(scrollRef)(e);
     }
   }
 
@@ -56,9 +57,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <Fragment>
       <div
         css={[
-          tw`transition-none isolate flex flex-row flex-nowrap w-screen h-screen overflow-scroll md:flex-col`,
+          tw`transition-none isolate flex flex-row flex-nowrap w-screen h-screen md:flex-col`,
           css`
             counter-reset: section;
+            overflow-y: ${isMatch("md") ? "scroll" : "hidden"};
+            overflow-x: ${isMatch("md") ? "hidden" : "scroll"};
+            scroll-snap-type: ${isMatch("md") ? "none" : "x mandatory"};
           `,
           delayDark ? bgDark : bgLight,
         ]}
@@ -66,7 +70,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         onWheel={findScrollDirection}
       >
         <ScrollContainerRefContext.Provider value={scrollRef}>
-        {children}
+          {children}
         </ScrollContainerRefContext.Provider>
         <div
           css={[

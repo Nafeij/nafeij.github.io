@@ -15,6 +15,8 @@ const CustomStyles = css`
     --bg-dark1: #0f0f0f;
     --bg-dark2: #181818;
 
+    --link-color: #2563eb;
+
     --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
 
     --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);

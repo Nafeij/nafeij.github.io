@@ -3,5 +3,5 @@ node_modules/
 public
 .DS_Store
 src/gatsby-types.d.ts
-package-lock.json
 /.vscode
+listing.txt

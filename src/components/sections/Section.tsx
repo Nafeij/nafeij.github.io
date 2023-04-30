@@ -5,13 +5,16 @@ import { ForwardedRef, forwardRef, ReactNode, RefObject } from "react";
 import styled from "@emotion/styled";
 
 const StyledSection = styled.section(
-  ({ minAxis, background }: { minAxis : string; background? : string }) => [
+  ({ background }: { background? : string }) => [
     tw`flex justify-center items-start flex-col`,
     css`
-      min-width: ${minAxis};
+      max-width: 100svw;
+      min-width: 100%;
       @media (min-width: 768px) {
+        max-width: unset;
         min-width: unset;
-        min-height: ${minAxis};
+        max-height: 100svh;
+        min-height: 100%;
       }
     `,
     background &&
@@ -23,16 +26,14 @@ const StyledSection = styled.section(
 
 interface SectionProps extends React.ComponentPropsWithoutRef<"div"> {
   background? : string;
-  minAxis? : string;
   children? : ReactNode;
 }
 
 const Section = forwardRef<HTMLDivElement, SectionProps>( (props : SectionProps, ref : ForwardedRef<HTMLDivElement>) => {
-  const dProps = { minAxis: "100%", ...props };
   return (
-    <StyledSection {...dProps}>
+    <StyledSection {...props}>
       <div
-        tw="mx-auto max-w-screen-xl text-primary tracking-wide text-justify px-6 md:px-28"
+        tw="mx-auto max-h-full max-w-screen-xl text-primary tracking-wide text-justify px-6 snap-center md:px-28"
         css={{
           fontFamily: "source_sans_pro"
         }}
