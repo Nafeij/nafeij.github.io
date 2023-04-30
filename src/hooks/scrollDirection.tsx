@@ -56,15 +56,13 @@ const useScrollDirection = ({
   return scrollDir;
 };
 
-export const scrollHorizontal = (ref : React.RefObject<HTMLDivElement>) => (
-  (e: React.WheelEvent) => {
+export const scrollHorizontal = (ref : React.RefObject<HTMLDivElement>, e: React.WheelEvent) => {
     // e.preventDefault();
-    ref.current && ref.current.scrollBy({
+    ref.current?.scrollBy({
       top: 0,
       left: e.deltaY * ref.current.clientWidth * 0.0027,
       behavior: "smooth",
     });
-  }
-);
+  };
 
 export default useScrollDirection;

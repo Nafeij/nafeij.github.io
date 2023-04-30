@@ -2,7 +2,15 @@
 import { jsx, css } from "@emotion/react";
 import { usePrefersReducedMotion } from "@hooks";
 import { ThemeContext } from "@styles";
-import React, { createContext, Fragment, RefObject, useEffect } from "react";
+import React, {
+  createContext,
+  Fragment,
+  RefObject,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import { scrollHorizontal } from "@hooks";
 import tw from "twin.macro";
 import { isMatch } from "@util";
@@ -26,21 +34,23 @@ export const ScrollContainerRefContext =
   createContext<RefObject<HTMLDivElement> | null>(null);
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { theme } = React.useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const reducedMotion = usePrefersReducedMotion();
-  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [delayDark, setDelayDark] = React.useState(isDark());
 
   function isDark() {
     return theme === "dark";
   }
 
-  function findScrollDirection(e: React.WheelEvent<HTMLDivElement>) {
-    if (!isMatch("md")) {
-      scrollHorizontal(scrollRef)(e);
-    }
-  }
+  const handleScroll = useCallback(
+    (e: React.WheelEvent<HTMLDivElement>) => {
+      if (isMatch("md")) return;
+      scrollHorizontal(scrollRef, e);
+    },
+    [isMatch("md"), scrollRef]
+  );
 
-  const [delayDark, setDelayDark] = React.useState(isDark());
   let timeout_func: NodeJS.Timeout;
   useEffect(() => {
     if (reducedMotion) {
@@ -57,17 +67,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <Fragment>
       <div
         css={[
-          tw`transition-none isolate flex flex-row flex-nowrap w-screen h-screen md:flex-col`,
+          tw`transition-none isolate flex  flex-nowrap w-screen h-screen overflow-scroll snap-mandatory snap-x md:snap-none flex-row md:flex-col`,
           css`
             counter-reset: section;
-            overflow-y: ${isMatch("md") ? "scroll" : "hidden"};
-            overflow-x: ${isMatch("md") ? "hidden" : "scroll"};
-            scroll-snap-type: ${isMatch("md") ? "none" : "x mandatory"};
           `,
           delayDark ? bgDark : bgLight,
         ]}
         ref={scrollRef}
-        onWheel={findScrollDirection}
+        onWheel={handleScroll}
       >
         <ScrollContainerRefContext.Provider value={scrollRef}>
           {children}

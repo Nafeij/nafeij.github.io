@@ -70,7 +70,7 @@ const Amazing = ({
 }) => (
   <svg
     id="Amazing"
-    viewBox="0 0 1000 230"
+    viewBox="0 0 935 230"
     height="100%"
     onAnimationEnd={animCallback}
   >
@@ -232,7 +232,7 @@ const FancyTitle = () => {
     <div
       css={css`
         height: ${height};
-        aspect-ratio: 1043/239;
+        aspect-ratio: 990/239;
       `}
     >
       {iter === 0 && (
