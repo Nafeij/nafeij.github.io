@@ -1,6 +1,6 @@
 ---
 date: '2022-10-28'
-title: 'PySlidingWindow'
+title: 'Python Sliding Window'
 github: 'https://github.com/Nafeij/Paper'
 tech:
   - Python

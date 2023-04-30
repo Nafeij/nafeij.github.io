@@ -55,6 +55,7 @@ const config: GatsbyConfig = {
           '@styles': path.resolve(__dirname, 'src/styles'),
           '@util': path.resolve(__dirname, 'src/util'),
           '@config': path.resolve(__dirname, 'src/config'),
+          '@icons': path.resolve(__dirname, 'src/components/icons')
         },
         extensions: [
           "js", "jsx", "ts", "tsx", "css", "scss", "svg", "jpg", "png", "woff", "woff2"

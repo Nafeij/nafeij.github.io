@@ -178,8 +178,9 @@ const H1Styled = styled.h1`
   font-family: sans-serif;
   font-weight: bold;
   text-transform: uppercase;
-  height: ${(props: H1Props) => props.height};
-  font-size: clamp(4rem,14vw,11rem);
+  font-size: clamp(4rem,14vw,11rem) !important;
+  padding-top: 0.5rem;
+  box-sizing: border-box;
   line-height: 1;
   animation: glitch-clip 12s steps(100, end);
   clip-path: inset(50%);
@@ -187,8 +188,9 @@ const H1Styled = styled.h1`
 
 const SpanStyled = styled.span`
   position: absolute;
-  top: 0;
+  top: .5rem;
   left: 0;
+  height: inherit;
 
   &:first-of-type {
     animation: glitch 2s 6;
@@ -206,16 +208,12 @@ const SpanStyled = styled.span`
 `;
 
 const Exciting = ({
-  height,
   animCallback,
 }: {
-  height: string | number;
   animCallback: () => void;
 }) => (
   <H1Styled
     id="Exciting"
-    height={height}
-    tw="text-primary"
     onAnimationEnd={animCallback}
   >
     <SpanStyled aria-hidden="true">Exciting.</SpanStyled>
@@ -223,16 +221,15 @@ const Exciting = ({
     <SpanStyled aria-hidden="true">Exciting.</SpanStyled>
   </H1Styled>
 );
-const height = "clamp(5rem,18vw,14rem)";
 
 const FancyTitle = () => {
-  const [iter, setIter] = useState(Math.floor(Math.random() * 3));
+  const [iter, setIter] = useState(2); // Math.floor(Math.random() * 3)
   const animateBlob = !usePrefersReducedMotion();
   return (
     <div
       css={css`
-        height: ${height};
-        aspect-ratio: 990/239;
+        height: clamp(5rem,18vw,14rem);
+        aspect-ratio: 970/239;
       `}
     >
       {iter === 0 && (
@@ -252,7 +249,6 @@ const FancyTitle = () => {
       )}
       {iter === 2 && (
         <Exciting
-          height={height}
           animCallback={() => {
             setIter(0);
           }}

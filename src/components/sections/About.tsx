@@ -48,32 +48,22 @@ export default function About() {
         });
       });
     }
-  }, [revealRef, techRefs]);
+  }, [revealRef, techs]);
 
   return (
-    <Section tw="text-lg md:text-xl lg:text-2xl">
+    <Section>
       <div
-        tw="text-secondary"
         dangerouslySetInnerHTML={{ __html: markdownRemark.html }}
         css={css`
           h1 {
-            ${tw`text-3xl text-primary md:text-5xl lg:text-6xl`},
             :before {
-              ${tw`ml-1 mr-3 inline-block aspect-square bg-cover align-baseline rounded-md h-12 md:h-16 lg:h-20`}
+              ${tw`ml-1 mr-3 -mb-0.5 inline-block aspect-square bg-cover align-baseline rounded-md h-12 md:h-16 lg:h-20`}
               content: "";
               background-image: url(${profilepic});
             }
           }
           h2 {
-            ${tw`text-2xl md:text-3xl lg:text-4xl`}
             line-height: 2!important;
-          }
-          a {
-            color: var(--text-primary);
-
-            :hover {
-              color: var(--link-color);
-            }
           }
         `}
         ref={revealRef}
