@@ -1,7 +1,7 @@
 import type { HeadFC, PageProps } from "gatsby";
 import React, { FC } from "react";
 
-import { Layout, NavBar, Title, About, Projects } from "@components";
+import { Layout, NavBar, Title, About, Projects, Contact } from "@components";
 import { GlobalStyle } from "@styles";
 
 const IndexPage: FC<PageProps> = () => {
@@ -13,6 +13,7 @@ const IndexPage: FC<PageProps> = () => {
         <Title />
         <About />
         <Projects />
+        <Contact />
       </Layout>
     </>
   );
