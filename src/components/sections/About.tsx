@@ -68,7 +68,7 @@ export default function About() {
         `}
         ref={revealRef}
       />
-      <div css={[tw`mt-5 pl-2 font-mono flex flex-wrap gap-y-4 md:mt-8`]}>
+      <div css={[tw`mt-5 pl-2 w-full font-mono flex flex-wrap gap-y-4 md:mt-8`]}>
         {techs.map((tech, i) => (
           <div
             key={i}

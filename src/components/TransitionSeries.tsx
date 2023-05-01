@@ -5,12 +5,12 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 const DEFAULT_DURATION = 500;
 
-export const genDelays = (n: number, duration = DEFAULT_DURATION) => {
-  const delay = duration / n;
+export const genDelays = (n: number, duration = DEFAULT_DURATION, delay = 0) => {
+  const interval = duration / n;
   let styles : {[key : string] : any} = {};
   for (let i = 0; i < n; i++) {
     styles[`& > *:nth-child(${i + 1})`] = {
-      transitionDelay: `${i * delay}ms`,
+      transitionDelay: `${i * interval + delay}ms`,
     };
   }
   return styles;
@@ -45,22 +45,17 @@ export default function TransitionSeries({
   const d = duration ?? DEFAULT_DURATION;
   let timeout_func : NodeJS.Timeout;
   useEffect(() => {
-    if (trigger ?? timeout) {
+    if (trigger && timeout) {
       timeout_func = setTimeout(() => {
         setShow(true);
       }, timeout);
-    } else {
-      setShow(trigger ?? true);
+    } else if (trigger) {
+      setShow(true);
     }
     return () => {
       if (timeout_func) clearTimeout(timeout_func);
     }
-  }, []);
-  useEffect(() => {
-    if (trigger) {
-      setShow(trigger);
-    }
-  }, [trigger]);
+  }, [trigger, timeout]);
   return (
     <TransitionGroup component={null}>
       {show && children.map((child, i) => (

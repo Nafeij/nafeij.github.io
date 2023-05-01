@@ -12,6 +12,7 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { usePrefersReducedMotion } from "@hooks";
 import { srConfig } from "@config";
 import { ScrollContainerRefContext } from "../Layout";
+import { ThemeContext } from "@styles";
 
 const Scroller = styled.div`
   overflow-y: ${isMatch("md") ? "hidden" : "scroll"};
@@ -19,7 +20,8 @@ const Scroller = styled.div`
   -ms-overflow-style: none;
   scrollbar-width: none;
   box-sizing: border-box;
-  height: 100%;
+  left: 0;
+  right: 0;
   padding-top: 6rem;
   padding-bottom: 2rem;
 
@@ -28,7 +30,7 @@ const Scroller = styled.div`
   }
 `;
 
-const Grid = styled.div`
+const Grid = styled.div<{isDark : boolean}>`
   display: grid;
   grid-template-columns: repeat(auto-fit, 1fr);
   grid-auto-flow: dense;
@@ -39,7 +41,7 @@ const Grid = styled.div`
   }
 
   &:hover > .card::after {
-    opacity: 0.5;
+    opacity: ${props => props.isDark ? ".5" : ".25"};
   }
 
   .card {
@@ -51,10 +53,11 @@ const Grid = styled.div`
 
     &:hover {
       &::before {
-        opacity: 0.15;
+        opacity: ${props => props.isDark ? ".15" : ".07"};
       }
       .card-content .img {
         opacity: 0.3;
+        filter: blur(0.2rem);
       }
     }
 
@@ -67,7 +70,6 @@ const Grid = styled.div`
       opacity: 0;
       position: absolute;
       top: 0px;
-      transition: opacity 500ms;
       width: 100%;
       pointer-events: none;
     }
@@ -119,6 +121,7 @@ const Grid = styled.div`
         ${tw`absolute inset-0 -z-10 overflow-hidden`}
         border-radius: inherit;
         opacity: 0.1;
+        filter: blur(0.5rem);
       }
     }
   }
@@ -139,12 +142,16 @@ const Grid = styled.div`
 `;
 
 export default function Projects() {
+  const { theme } = useContext(ThemeContext);
   const { projects } = useStaticQuery(
     graphql`
       {
         projects: allMarkdownRemark(
           filter: { fileAbsolutePath: { regex: "/content/Projects/" } }
-          sort: [{ frontmatter: { big: DESC } }]
+          sort: [
+            { frontmatter: { big: DESC } }
+            { frontmatter: { cover: { name: ASC } } }
+          ]
         ) {
           edges {
             node {
@@ -187,7 +194,7 @@ export default function Projects() {
         sr?.reveal(scrollerRef.current, {
           ...srConfig(),
           container: ScrollContainerRef?.current,
-          afterReveal: () => setIsRevealed(true),
+          beforeReveal: () => setIsRevealed(true),
         });
     }
   }, [posts]);
@@ -242,6 +249,18 @@ export default function Projects() {
             </span>
           </span>
           <p dangerouslySetInnerHTML={{ __html: html }} />
+          {tech.length && (
+            <ul
+              className="project-tech-list"
+              tw="flex flex-wrap list-none mt-auto pt-5 align-bottom opacity-75 font-mono text-sm md:text-base lg:text-lg"
+            >
+              {tech.map((t: string, i: number) => (
+                <li tw="whitespace-nowrap mr-5" key={i}>
+                  {t}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     );
@@ -250,9 +269,13 @@ export default function Projects() {
   return (
     <Section>
       <Scroller ref={scrollerRef}>
-        <h2 tw="mb-5">Here are some of my projects.</h2>
-        <Grid onMouseMove={handleMouseMove} css={genDelays(2,1200)}>
-          <TransitionSeries trigger={isRevealed}>
+        <h2 tw="mb-5 md:mb-10">Here are some of my projects.</h2>
+        <Grid
+          onMouseMove={handleMouseMove}
+          css={genDelays(posts.length, 1000, 700)}
+          isDark={theme === "dark"}
+        >
+          <TransitionSeries trigger={isRevealed} duration={1700}>
             {posts.map(({ node }: { node: any }, i: number) =>
               projInner(node, i)
             )}

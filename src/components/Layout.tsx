@@ -67,7 +67,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <Fragment>
       <div
         css={[
-          tw`transition-none isolate flex  flex-nowrap w-screen h-screen overflow-scroll snap-mandatory snap-x md:snap-none flex-row md:flex-col`,
+          tw`transition-none isolate flex flex-nowrap items-center w-screen h-screen overflow-scroll snap-mandatory snap-x md:snap-none flex-row md:flex-col`,
           css`
             counter-reset: section;
           `,

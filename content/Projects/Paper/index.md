@@ -4,6 +4,7 @@ title: 'Paper'
 github: 'https://github.com/Nafeij/Paper'
 tech:
   - KLWP
+  - CSS
 big: false
 cover: './demo.png'
 ---

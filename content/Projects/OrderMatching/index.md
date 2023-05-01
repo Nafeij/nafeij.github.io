@@ -1,11 +1,10 @@
 ---
 date: '2023-02-08'
-title: 'Order Matching Engine in C++'
+title: 'Concurrent Order Matching Engine'
 github: 'https://github.com/Nafeij/order-matching'
 tech:
-  - C++
-  - Concurrency Primitives
+  - C++20
 big: false
 ---
 
-C++ demo for a thread-safe concurrent [order-matching engine](https://en.wikipedia.org/wiki/Order_matching_system).
+Demo for a thread-safe concurrent [order-matching engine](https://en.wikipedia.org/wiki/Order_matching_system).

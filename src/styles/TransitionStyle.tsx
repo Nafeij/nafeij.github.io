@@ -21,7 +21,7 @@ const TransitionStyles = css`
   .fadedown-enter {
     opacity: 0.01;
     transform: translateY(-5vh);
-    transition: opacity 300ms var(--easing), transform 300ms var(--easing);
+    transition: opacity 300ms var(--easing), transform 0ms var(--easing);
   }
   .fadedown-enter-active {
     opacity: 1;

@@ -6,10 +6,10 @@ import React from "react";
 
 export default function Title() {
   return (
-    <Section tw="select-none pointer-events-none" css={genDelays(2,1200)}>
-      <TransitionSeries duration={600} timeout={600}>
+    <Section tw="select-none pointer-events-none" css={genDelays(2,600)}>
+      <TransitionSeries timeout={600} trigger={true}>
         <p
-          tw="text-primary mb-1 font-mono"
+          tw="text-primary mb-5 font-mono"
           css={css`
             font-size: clamp(1.4rem, 3vw, 3rem);
           `}

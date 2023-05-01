@@ -25,7 +25,7 @@ export default function NavBar() {
         `,
       ]}
     >
-      <TransitionSeries duration={600}>
+      <TransitionSeries duration={600} trigger={true}>
         <div
         css={{
           width: "50px",

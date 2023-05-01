@@ -11,6 +11,7 @@ tech:
   - Demucs
   - Remotion
 big: true
+cover: './demo.png'
 ---
 
-The ultimate karaoke video production workflow. Harness the power of AI to turn `.mp3` files into stylish subtitled karaoke videos in one command.
+The ultimate karaoke video production workflow. Use AI to turn `.mp3` files directly into stylish karaoke videos.
