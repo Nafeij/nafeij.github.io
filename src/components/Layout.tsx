@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/react";
+import { jsx, css, keyframes } from "@emotion/react";
 import { usePrefersReducedMotion } from "@hooks";
 import { ThemeContext } from "@styles";
 import React, {
@@ -13,7 +13,13 @@ import React, {
 } from "react";
 import { scrollHorizontal } from "@hooks";
 import tw from "twin.macro";
-import { isMatch } from "@util";
+import { MediaContext } from "@util";
+
+const backgroundSpread = keyframes`
+100% {
+  clip-path: circle(283% at 100% 0%);
+}
+`;
 
 const bgLight = css`
   background: fixed
@@ -35,6 +41,7 @@ export const ScrollContainerRefContext =
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { theme } = useContext(ThemeContext);
+  const { isMatch } = useContext(MediaContext);
   const reducedMotion = usePrefersReducedMotion();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [delayDark, setDelayDark] = React.useState(isDark());
@@ -48,7 +55,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       if (isMatch("md")) return;
       scrollHorizontal(scrollRef, e);
     },
-    [isMatch("md"), scrollRef]
+    [scrollRef]
   );
 
   let timeout_func: NodeJS.Timeout;
@@ -84,7 +91,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             tw`fixed h-full w-full top-0 left-0`,
             css`
               clip-path: circle(0% at 100% 0%);
-              animation: BackgroundSpread 700ms backwards;
+              animation: ${backgroundSpread} 700ms backwards;
               z-index: -1;
             `,
             isDark() ? bgDark : bgLight,

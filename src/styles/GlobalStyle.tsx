@@ -1,12 +1,42 @@
 /** @jsx jsx */
 import { Fragment } from "react";
-import { jsx, css, Global } from "@emotion/react";
+import { jsx, css, Global, keyframes } from "@emotion/react";
 import { GlobalStyles as BaseStyles } from "twin.macro";
 
 import { Fonts, TransitionStyle } from "@styles";
 
-const CustomStyles = css`
+const drawStroke = keyframes`
+  0%,
+  100% {
+    fill-opacity: 0;
+    stroke-dashoffset: 800;
+    stroke-opacity: 1;
+  }
+  25%,
+  75% {
+    fill-opacity: 0;
+    stroke-opacity: 1;
+  }
+  33%,
+  66% {
+    fill-opacity: 1;
+    stroke-dashoffset: 0;
+    stroke-opacity: 0;
+  }
+`;
 
+const fadeInOut = keyframes`
+  0%,
+  100% {
+    opacity: 0;
+  }
+  20%,
+  80% {
+    opacity: 1;
+  }
+`;
+
+const CustomStyles = css`
   ${Fonts}
 
   :root {
@@ -17,7 +47,7 @@ const CustomStyles = css`
 
     --link-color: #2563eb;
 
-    --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+    --font-mono: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
 
     --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
   }
@@ -43,7 +73,6 @@ const CustomStyles = css`
     --blob1: #00cc99;
     --blob2: #6600ff;
   }
-
 
   *:not(body):not(html) {
     transition: var(--transition);
@@ -75,108 +104,12 @@ const CustomStyles = css`
     stroke-dashoffset: 800;
     stroke-linecap: round;
     stroke-linejoin: round;
-    animation: draw-stroke 12s linear forwards 0.3s;
-  }
-
-  @keyframes draw-stroke {
-    0%,
-    100% {
-      fill-opacity: 0;
-      stroke-dashoffset: 800;
-      stroke-opacity: 1;
-    }
-    25%,
-    75% {
-      fill-opacity: 0;
-      stroke-opacity: 1;
-    }
-    33%,
-    66% {
-      fill-opacity: 1;
-      stroke-dashoffset: 0;
-      stroke-opacity: 0;
-    }
+    animation: ${drawStroke} 12s linear forwards 0.3s;
   }
 
   svg#Amazing {
     opacity: 0;
-    animation: fade-in-out 12s linear forwards 0.3s;
-  }
-
-  @keyframes fade-in-out {
-    0%,
-    100% {
-      opacity: 0;
-    }
-    20%,
-    80% {
-      opacity: 1;
-    }
-  }
-
-  @keyframes glitch {
-    0% {
-      text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
-        -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
-        -0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
-    }
-    14% {
-      text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
-        -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
-        -0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
-    }
-    15% {
-      text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
-        0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
-        -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
-    }
-    49% {
-      text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
-        0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
-        -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
-    }
-    50% {
-      text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
-        0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75);
-    }
-    99% {
-      text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
-        0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75);
-    }
-    100% {
-      text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75),
-        -0.025em -0.025em 0 rgba(0, 255, 0, 0.75),
-        -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
-    }
-  }
-
-  @keyframes glitch-clip {
-    0%,
-    100% {
-      clip-path: inset(50%);
-    }
-    1%,
-    99% {
-      clip-path: path(
-        "M167 -37.5L38.5 166H736L742 -50H910.5V166H-22V-37.5H167Z"
-      );
-    }
-    2%,
-    98% {
-      clip-path: path(
-        "M102.5 -25.5L234 175H357.5L481.5 -36.5H672.5L565 175H102.5L1 -20L102.5 -25.5Z"
-      );
-    }
-    3%,
-    97% {
-      clip-path: none;
-    }
-  }
-
-  @keyframes BackgroundSpread {
-    100% {
-      clip-path: circle(283% at 100% 0%);
-    }
+    animation: ${fadeInOut} 12s linear forwards 0.3s;
   }
 
   @media (prefers-reduced-motion: reduce) {

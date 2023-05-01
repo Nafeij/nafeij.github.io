@@ -1,10 +1,9 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react";
-import { sr } from "@util";
+import { MediaContext, sr } from "@util";
 import { Section, TransitionSeries, genDelays } from "@components";
 import { graphql, useStaticQuery } from "gatsby";
 import styled from "@emotion/styled";
-import { isMatch } from "@util";
 import { useContext, useEffect, useRef, useState } from "react";
 import tw from "twin.macro";
 import { IconExternal, IconGitHub } from "@icons";
@@ -15,25 +14,41 @@ import { ScrollContainerRefContext } from "../Layout";
 import { ThemeContext } from "@styles";
 
 const Scroller = styled.div`
-  overflow-y: ${isMatch("md") ? "hidden" : "scroll"};
-  overflow-x: ${isMatch("md") ? "scroll" : "hidden"};
+  overflow-y: scroll;
+  overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  box-sizing: border-box;
-  left: 0;
-  right: 0;
   padding-top: 6rem;
   padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
 
   @media (min-width: 768px) {
+    overflow-y: hidden;
+    padding-bottom: 4rem;
+  }
+
+  @media (min-width: 1024px) {
     padding-top: 2rem;
   }
 `;
 
-const Grid = styled.div<{isDark : boolean}>`
+const InnerScroller = styled.div`
+  flex: 1 0 auto;
+  @media (min-width: 768px) {
+    overflow-y: hidden;
+    overflow-x: scroll;
+    flex-shrink: 1;
+  }
+`;
+
+const Grid = styled.div<{
+  isDark: boolean;
+}>`
   display: grid;
-  grid-template-columns: repeat(auto-fit, 1fr);
-  grid-auto-flow: dense;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-auto-flow: row dense;
   gap: 0.5rem;
 
   &::-webkit-scrollbar {
@@ -41,7 +56,7 @@ const Grid = styled.div<{isDark : boolean}>`
   }
 
   &:hover > .card::after {
-    opacity: ${props => props.isDark ? ".5" : ".25"};
+    opacity: ${({ isDark }) => (isDark ? ".5" : ".25")};
   }
 
   .card {
@@ -53,7 +68,7 @@ const Grid = styled.div<{isDark : boolean}>`
 
     &:hover {
       &::before {
-        opacity: ${props => props.isDark ? ".15" : ".07"};
+        opacity: ${({ isDark }) => (isDark ? ".15" : ".07")};
       }
       .card-content .img {
         opacity: 0.3;
@@ -127,16 +142,26 @@ const Grid = styled.div<{isDark : boolean}>`
   }
 
   @media (min-width: 768px) {
-    .big {
-      grid-column-end: span 2;
-    }
-  }
+    grid-auto-flow: column dense;
+    grid-template-columns: unset;
+    grid-auto-columns: minmax(300px, 1fr);
+    grid-template-rows: repeat(3, minmax(auto, 25svh));
 
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(auto-fit, minmax(400px, auto));
-    .big {
-      grid-column-end: span 1;
-      grid-row-end: span 2;
+    .card.big {
+      grid-column-end: span 2;
+      ${tw`text-lg md:text-xl lg:text-2xl`}
+
+      h1 {
+        ${tw`text-3xl md:text-4xl lg:text-5xl`}
+      }
+
+      h2 {
+        ${tw`text-2xl md:text-3xl lg:text-4xl`}
+      }
+
+      svg {
+        ${tw`w-7 md:w-8 lg:w-9`}
+      }
     }
   }
 `;
@@ -270,17 +295,19 @@ export default function Projects() {
     <Section>
       <Scroller ref={scrollerRef}>
         <h2 tw="mb-5 md:mb-10">Here are some of my projects.</h2>
-        <Grid
-          onMouseMove={handleMouseMove}
-          css={genDelays(posts.length, 1000, 700)}
-          isDark={theme === "dark"}
-        >
-          <TransitionSeries trigger={isRevealed} duration={1700}>
-            {posts.map(({ node }: { node: any }, i: number) =>
-              projInner(node, i)
-            )}
-          </TransitionSeries>
-        </Grid>
+        <InnerScroller>
+          <Grid
+            onMouseMove={handleMouseMove}
+            css={genDelays(posts.length, 1000, 700)}
+            isDark={theme === "dark"}
+          >
+            <TransitionSeries trigger={isRevealed} duration={1700}>
+              {posts.map(({ node }: { node: any }, i: number) =>
+                projInner(node, i)
+              )}
+            </TransitionSeries>
+          </Grid>
+        </InnerScroller>
       </Scroller>
     </Section>
   );

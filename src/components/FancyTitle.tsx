@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/react";
+import { jsx, css, keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 import { usePrefersReducedMotion } from "@hooks";
 import { useState } from "react";
@@ -169,6 +169,65 @@ const Amazing = ({
   </svg>
 );
 
+const glitch = keyframes`
+  0% {
+    text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+      -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
+      -0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  14% {
+    text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+      -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
+      -0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  15% {
+    text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+      0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+      -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+      0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+      -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  50% {
+    text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+      0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  99% {
+    text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+      0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  100% {
+    text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75),
+      -0.025em -0.025em 0 rgba(0, 255, 0, 0.75),
+      -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+`;
+
+const glitchClip = keyframes`
+  0%,
+  100% {
+    clip-path: inset(50%);
+  }
+  1%,
+  99% {
+    clip-path: path(
+      "M167 -37.5L38.5 166H736L742 -50H910.5V166H-22V-37.5H167Z"
+    );
+  }
+  2%,
+  98% {
+    clip-path: path(
+      "M102.5 -25.5L234 175H357.5L481.5 -36.5H672.5L565 175H102.5L1 -20L102.5 -25.5Z"
+    );
+  }
+  3%,
+  97% {
+    clip-path: none;
+  }
+`;
+
 interface H1Props {
   height: string | number;
 }
@@ -182,7 +241,7 @@ const H1Styled = styled.h1`
   padding-top: 0.5rem;
   box-sizing: border-box;
   line-height: 1;
-  animation: glitch-clip 12s steps(100, end);
+  animation: ${glitchClip} 12s steps(100, end);
   clip-path: inset(50%);
 `;
 
@@ -193,14 +252,14 @@ const SpanStyled = styled.span`
   height: inherit;
 
   &:first-of-type {
-    animation: glitch 2s 6;
+    animation: ${glitch} 2s 6;
     clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
     transform: translate(-0.025em, -0.0125em);
     opacity: 0.8;
   }
 
   &:last-of-type {
-    animation: glitch 1s 12;
+    animation: ${glitch} 1s 12;
     clip-path: polygon(0 80%, 100% 20%, 100% 100%, 0 100%);
     transform: translate(0.0125em, 0.025em);
     opacity: 0.8;

@@ -1,6 +1,9 @@
 import { ThemeProvider } from '@styles'
-const React = require('react')
+import { MediaProvider } from '@util'
+import React from 'react'
 
 export const wrapRootElement = ({ element }) => (
-  <ThemeProvider>{element}</ThemeProvider>
+  <MediaProvider>
+    <ThemeProvider>{element}</ThemeProvider>
+  </MediaProvider>
 )

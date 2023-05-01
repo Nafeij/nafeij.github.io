@@ -1,23 +1,34 @@
 /** @jsx jsx */
-import { jsx, css } from "@emotion/react";
+import { jsx, css, keyframes } from "@emotion/react";
 import { Section } from "@components";
 import { useContext, useEffect } from "react";
 import React from "react";
 import styled from "@emotion/styled";
 import { ScrollContainerRefContext } from "../Layout";
+import { MediaContext } from "@util";
+
+const flip = keyframes`
+  0% {
+    transform: translateX(0) rotateY(0deg);
+  }
+  100% {
+    transform: translateX(-100%) rotateY(-180deg);
+  }
+`;
 
 const Card = styled.div<{ progress: number }>`
+  width: 100%;
+  aspect-ratio: 7/4;
   perspective: 150rem;
 
   .card {
+    width: 100%;
+    height: 100%;
     position: relative;
-    height: 15rem;
-    aspect-ratio: 7/4;
     transform-origin: 100% 50%;
     transform-style: preserve-3d;
-    animation: flip 1s cubic-bezier(0.49, 0.23, 0.58, 0.49) forwards;
-    animation-play-state: paused;
-    animation-delay: ${props => (-props.progress).toFixed(2)}s;
+    animation: ${flip} 1s cubic-bezier(0.49, 0.23, 0.58, 0.49) paused forwards;
+    animation-delay: ${(props) => -props.progress}s;
 
     .front,
     .back {
@@ -29,7 +40,6 @@ const Card = styled.div<{ progress: number }>`
       justify-content: center;
       margin: auto;
       border-radius: 5px;
-      box-shadow: 0 1.5rem 4rem rgba(black, 0.4);
       //transform-origin: left center;
       backface-visibility: hidden;
       overflow: hidden;
@@ -39,61 +49,79 @@ const Card = styled.div<{ progress: number }>`
       height: 100%;
       background: linear-gradient(
         45deg,
-        var(--text-primary),
-        var(--bg-primary)
+        var(--text-secondary),
+        var(--bg-secondary)
       );
-      transform: translateZ(10px) rotateY(0);
-      &:after {
-        color: darken(var(--bg-primary), 6%);
-      }
+      transform: rotateY(0);
     }
     .back {
       background: linear-gradient(
         -45deg,
-        var(--text-primary),
-        var(--bg-primary)
+        var(--text-secondary),
+        var(--bg-secondary)
       );
       transform: rotateY(180deg);
-      &:after {
-        color: darken(var(--bg-primary), 15%);
-      }
-    }
-  }
-
-  @keyframes flip {
-    to {
-      transform: translateX(-100%) rotateY(-180deg);
     }
   }
 `;
 
+const getDOMVars = ({
+  container,
+  parent,
+  card,
+  isMatch,
+}: {
+  container: HTMLDivElement;
+  parent: HTMLDivElement;
+  card: HTMLDivElement;
+  isMatch: (media: string) => boolean;
+}) =>
+  isMatch("md")
+    ? {
+        distance: (parent.offsetHeight - card.offsetTop) / 2,
+        start: parent.offsetTop,
+        scroll: container.scrollTop,
+      }
+    : {
+        distance: (parent.offsetWidth - card.offsetLeft) / 2,
+        start: parent.offsetLeft,
+        scroll: container.scrollLeft,
+      };
+
 export default function Contact() {
   // const [flip, forceFlip] = React.useState(true);
   const ScrollContainerRef = useContext(ScrollContainerRefContext);
+  const { isMatch } = useContext(MediaContext);
   const parentRef = React.useRef<HTMLDivElement>(null);
+  const cardRef = React.useRef<HTMLDivElement>(null);
   const [progress, setProgress] = React.useState(0);
 
   useEffect(() => {
-    const container = ScrollContainerRef?.current;
-    if (!container) return;
-    ScrollContainerRef?.current?.addEventListener("scroll", () => {
+    ScrollContainerRef?.current?.addEventListener("scroll", (ev) => {
       const parent = parentRef.current;
       if (!parent) return;
-      const height = parent.offsetHeight;
-      const scroll = container.scrollTop;
-      const start = parent.offsetTop;
+      const card = cardRef.current;
+      if (!card) return;
+      const container = ev.target as HTMLDivElement;
+
+      const { distance, start, scroll } = getDOMVars({
+        container,
+        parent,
+        card,
+        isMatch,
+      });
+
       const progress = Math.max(
         0,
-        Math.min(1, (scroll - start + height) / height)
+        Math.min(1, (scroll - start + distance) / distance)
       );
-      console.log(progress);
       setProgress(progress);
     });
   }, []);
 
   return (
     <Section tw="select-none" ref={parentRef}>
-      <Card progress={progress}>
+      <Card progress={progress} ref={cardRef}>
         <div className="card">
           <div className="front">
             <h1>Front</h1>

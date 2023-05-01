@@ -48,6 +48,7 @@ const StyledSection = styled.section(
 
       @media (min-width: 768px) {
         min-width: unset;
+        width: 100%;
         max-width: 1280px;
         min-height: 100svh;
         margin-right: 0;

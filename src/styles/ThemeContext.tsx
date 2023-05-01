@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode, createContext, useEffect, useState } from "react";
 
 const getInitialTheme = () => {
   if (typeof window !== "undefined" && window.localStorage) {
@@ -16,7 +16,7 @@ const getInitialTheme = () => {
   return "dark";
 };
 
-const ThemeContext = React.createContext({
+const ThemeContext = createContext({
   theme: "dark",
   setTheme: (theme: string) => {},
 });
@@ -26,9 +26,9 @@ const ThemeProvider = ({
   children,
 }: {
   initialTheme?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) => {
-  const [theme, setTheme] = React.useState(getInitialTheme);
+  const [theme, setTheme] = useState(getInitialTheme);
 
   const rawSetTheme = (theme: string) => {
     const root = window.document.documentElement;
@@ -44,7 +44,7 @@ const ThemeProvider = ({
     rawSetTheme(initialTheme);
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     rawSetTheme(theme);
   }, [theme]);
 
