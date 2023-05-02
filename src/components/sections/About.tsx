@@ -28,7 +28,6 @@ export default function About() {
 
   const techs: string[] = markdownRemark.frontmatter.tech;
   const techRefs = useRef<HTMLDivElement[]>([]);
-  const profileImg = markdownRemark.frontmatter.cover;
 
   const prefersReducedMotion = usePrefersReducedMotion();
   const revealRef = useRef<HTMLDivElement | null>(null);
@@ -77,7 +76,7 @@ export default function About() {
             ref={(el) => {
               el && (techRefs.current[i] = el);
             }}
-            tw="grow basis-1/2 text-center md:basis-1/3"
+            tw="grow relative basis-1/2 text-center md:basis-1/3"
             css={css`
               :before {
                 ${tw`absolute -left-2`}

@@ -27,11 +27,7 @@ const Scroller = styled.div`
 
   @media (min-width: 768px) {
     overflow: visible;
-    padding-bottom: 4rem;
-  }
-
-  @media (min-width: 1024px) {
-    padding-top: 2rem;
+    padding: 4rem 0;
   }
 `;
 
@@ -195,7 +191,7 @@ export default function Projects() {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const horiScrollerRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
   const { events } = useDraggable(horiScrollerRef);
-  const [isRevealed, setIsRevealed] = useState(false);
+  const [isRevealed, setIsRevealed] = useState(prefersReducedMotion);
 
   useEffect(() => {
     if (!prefersReducedMotion) {
@@ -280,7 +276,7 @@ export default function Projects() {
       <Scroller ref={scrollerRef}>
         <h1 tw="mb-1 md:mb-2">Here is some of my work.</h1>
         <Grid
-          onMouseMove={handleMouseMove}
+          onMouseMoveCapture={handleMouseMove}
           css={genDelays(posts.length, 1000, 700)}
           isDark={theme === "dark"}
           {...events}

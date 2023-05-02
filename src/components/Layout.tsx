@@ -68,7 +68,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <Fragment>
       <div
         css={[
-          tw`transition-none isolate flex flex-nowrap items-center w-screen h-screen overflow-x-auto snap-mandatory snap-x md:snap-none flex-row md:flex-col md:overflow-x-hidden md:overflow-y-auto text-secondary text-lg md:text-xl lg:text-2xl`,
+          tw`relative transition-none isolate flex flex-nowrap items-center w-screen h-screen overflow-x-auto snap-mandatory snap-x md:snap-none flex-row md:flex-col md:overflow-x-hidden md:overflow-y-auto text-secondary text-lg md:text-xl lg:text-2xl`,
           css`
             counter-reset: section;
 

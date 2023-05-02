@@ -6,9 +6,9 @@ type link = {
   name: string;
   url: string;
   desc?: string;
-}
+};
 
-export const links : link[] = [
+export const links: link[] = [
   {
     name: "Email",
     url: `mailto:${email}`,
@@ -39,10 +39,10 @@ export const links : link[] = [
     name: "Reddit",
     url: "https://reddit.com/u/nafeij",
   },
-  {
+  /* {
     name: "Strava",
     url: "https://www.strava.com/athletes/102314645",
-  },
+  }, */
 ];
 
 export const navLinks = [
