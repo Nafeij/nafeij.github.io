@@ -12,27 +12,26 @@ const getInitialTheme = () => {
       return "dark";
     }
   }
-
   return "dark";
 };
 
 const ThemeContext = createContext({
-  theme: "dark",
-  setTheme: (theme: string) => {},
+  isDark: true,
+  setDark: (dark: boolean) => {},
 });
 
 const ThemeProvider = ({
-  initialTheme,
+  initialThemeIsDark,
   children,
 }: {
-  initialTheme?: string;
+  initialThemeIsDark?: boolean;
   children: ReactNode;
 }) => {
-  const [theme, setTheme] = useState(getInitialTheme);
+  const [isDark, setDark] = useState(()=>getInitialTheme() === "dark");
 
-  const rawSetTheme = (theme: string) => {
+  const rawSetTheme = (isDark: boolean) => {
     const root = window.document.documentElement;
-    const isDark = theme === "dark";
+    const theme = isDark ? "dark" : "light";
 
     root.classList.remove(isDark ? "light" : "dark");
     root.classList.add(theme);
@@ -40,16 +39,16 @@ const ThemeProvider = ({
     localStorage.setItem("color-theme", theme);
   };
 
-  if (initialTheme) {
-    rawSetTheme(initialTheme);
+  if (initialThemeIsDark) {
+    rawSetTheme(initialThemeIsDark);
   }
 
   useEffect(() => {
-    rawSetTheme(theme);
-  }, [theme]);
+    rawSetTheme(isDark);
+  }, [isDark]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ isDark, setDark }}>
       {children}
     </ThemeContext.Provider>
   );

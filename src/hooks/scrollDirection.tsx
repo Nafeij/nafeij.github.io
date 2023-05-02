@@ -1,37 +1,66 @@
 const SCROLL_UP = "up";
 const SCROLL_DOWN = "down";
+const SCROLL_LEFT = "left";
+const SCROLL_RIGHT = "right";
 
 import { useState, useEffect } from "react";
 
 interface UseScrollDirectionOptions {
-  initialDirection?: string;
+  containerRef: React.RefObject<HTMLElement>;
+  initialDirectionX?: string;
+  initialDirectionY?: string;
   thresholdPixels?: number;
   off?: boolean;
 }
 
 const useScrollDirection = ({
-  initialDirection,
+  containerRef,
+  initialDirectionX,
+  initialDirectionY,
   thresholdPixels,
   off,
 }: UseScrollDirectionOptions) => {
-  const [scrollDir, setScrollDir] = useState(initialDirection);
+
+  const container = containerRef.current;
+  if (!container) return;
+
+  const [scrollDir, setScrollDir] = useState([initialDirectionX, initialDirectionY]);
 
   useEffect(() => {
     const threshold = thresholdPixels || 0;
-    let lastScrollY = window.pageYOffset;
+    let lastScrollY = container.scrollTop;
+    let lastScrollX = container.scrollLeft;
     let ticking = false;
 
     const updateScrollDir = () => {
-      const scrollY = window.pageYOffset;
-
-      if (Math.abs(scrollY - lastScrollY) < threshold) {
+      const scrollY = container.scrollTop;
+      const scrollX = container.scrollLeft;
+      if (
+        Math.abs(scrollY - lastScrollY) < threshold &&
+        Math.abs(scrollX - lastScrollX) < threshold
+      ) {
         // We haven't exceeded the threshold
         ticking = false;
         return;
       }
 
-      setScrollDir(scrollY > lastScrollY ? SCROLL_DOWN : SCROLL_UP);
+      setScrollDir(scrollDir => {
+        const directionY = scrollY > lastScrollY ? SCROLL_DOWN : SCROLL_UP;
+        const directionX = scrollX > lastScrollX ? SCROLL_RIGHT : SCROLL_LEFT;
+
+        // If the last direction equal the new direction there's no need to change the state.
+        if (
+          scrollDir.includes(directionX) &&
+          scrollDir.includes(directionY)
+        ) {
+          ticking = false;
+          return scrollDir;
+        }
+
+        return [directionX, directionY];
+      });
       lastScrollY = scrollY > 0 ? scrollY : 0;
+      lastScrollX = scrollX > 0 ? scrollX : 0;
       ticking = false;
     };
 
@@ -47,22 +76,25 @@ const useScrollDirection = ({
      * If `off` is set to true reset the scroll direction.
      */
     !off
-      ? window.addEventListener("scroll", onScroll)
-      : setScrollDir(initialDirection);
+      ? container.addEventListener("scroll", onScroll)
+      : setScrollDir([initialDirectionX, initialDirectionY]);
 
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [initialDirection, thresholdPixels, off]);
+    return () => container.removeEventListener("scroll", onScroll);
+  }, [containerRef, initialDirectionX, initialDirectionY, thresholdPixels, off]);
 
   return scrollDir;
 };
 
-export const scrollHorizontal = (ref : React.RefObject<HTMLDivElement>, e: React.WheelEvent) => {
-    // e.preventDefault();
-    ref.current?.scrollBy({
-      top: 0,
-      left: e.deltaY * ref.current.clientWidth * 0.0027,
-      behavior: "smooth",
-    });
-  };
+export const scrollHorizontal = (
+  ref: React.RefObject<HTMLElement>,
+  e: React.WheelEvent
+) => {
+  // e.preventDefault();
+  ref.current?.scrollBy({
+    top: 0,
+    left: e.deltaY * ref.current.clientWidth * 0.0027,
+    behavior: "smooth",
+  });
+};
 
 export default useScrollDirection;

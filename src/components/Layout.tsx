@@ -14,6 +14,7 @@ import React, {
 import { scrollHorizontal } from "@hooks";
 import tw from "twin.macro";
 import { MediaContext } from "@util";
+import { NavBar } from "@components";
 
 const backgroundSpread = keyframes`
 100% {
@@ -22,11 +23,17 @@ const backgroundSpread = keyframes`
 `;
 
 const bgLight = css`
-  background: fixed radial-gradient( ellipse at center, var(--bg-light1) 0%, var(--bg-light2) 100% );
+  background: fixed
+    radial-gradient(
+      ellipse at center,
+      var(--bg-light1) 0%,
+      var(--bg-light2) 100%
+    );
 `;
 
 const bgDark = css`
-  background: fixed var(--bg-dark1) radial-gradient(ellipse at center, var(--bg-dark2) 8%, transparent 8%);
+  background: fixed var(--bg-dark1)
+    radial-gradient(ellipse at center, var(--bg-dark2) 8%, transparent 8%);
   background-size: 8vmin 8vmin;
 `;
 
@@ -34,15 +41,11 @@ export const ScrollContainerRefContext =
   createContext<RefObject<HTMLDivElement> | null>(null);
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { theme } = useContext(ThemeContext);
+  const { isDark } = useContext(ThemeContext);
   const { isMatch } = useContext(MediaContext);
   const reducedMotion = usePrefersReducedMotion();
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [delayDark, setDelayDark] = React.useState(isDark());
-
-  function isDark() {
-    return theme === "dark";
-  }
+  const [delayDark, setDelayDark] = React.useState(isDark);
 
   const handleScroll = useCallback(
     (e: React.WheelEvent<HTMLDivElement>) => {
@@ -55,14 +58,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   let timeout_func: NodeJS.Timeout;
   useEffect(() => {
     if (reducedMotion) {
-      setDelayDark(isDark());
+      setDelayDark(isDark);
     } else {
       if (timeout_func) clearTimeout(timeout_func);
       timeout_func = setTimeout(() => {
-        setDelayDark(isDark());
+        setDelayDark(isDark);
       }, 600);
     }
-  }, [theme]);
+  }, [isDark]);
 
   return (
     <Fragment>
@@ -92,6 +95,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         ref={scrollRef}
         onWheel={handleScroll}
       >
+        <NavBar />
         <ScrollContainerRefContext.Provider value={scrollRef}>
           {children}
         </ScrollContainerRefContext.Provider>
@@ -103,9 +107,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               animation: ${backgroundSpread} 700ms backwards;
               z-index: -1;
             `,
-            isDark() ? bgDark : bgLight,
+            isDark ? bgDark : bgLight,
           ]}
-          key={theme}
+          key={isDark + ""}
         />
       </div>
     </Fragment>

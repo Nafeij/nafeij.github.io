@@ -4,8 +4,11 @@ import path from "path";
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `nafeij.github.io`,
+    title: `Wang Jiefan`,
+    description: `Wang Jiefan's personal website. He is a Computer Science Major at the National University of Singapore and aspiring software engineer with a passion for building exceptional digital experiences.`,
     siteUrl: `https://nafeij.github.io`,
+    twitterUsername: `@WJiefan`,
+    image: `/og.png`,
   },
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
   // If you use VSCode you can also use the GraphQL plugin

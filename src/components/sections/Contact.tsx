@@ -95,7 +95,6 @@ const Card = styled.div`
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
-      padding: 0 10%;
       justify-content: center;
       gap: 0.5rem;
       box-shadow: 0 -0.75rem 1rem 0 rgba(#000, 0.2),
@@ -130,11 +129,11 @@ const Card = styled.div`
       .shine {
         animation-name: ${swipef};
       }
+      padding: 0 10%;
     }
     .back {
-      ${tw`text-sm md:text-base lg:text-lg`}
       svg {
-        ${tw`h-4 md:h-5 lg:h-6`}
+        ${tw`h-5 md:h-6 lg:h-7`}
       }
       background: linear-gradient(
         -45deg,
@@ -273,8 +272,9 @@ export default function Contact() {
               />
             </div>
             <div className="back">
-              {links.map(({ name, url, desc }) => (
+              {links.map(({ name, url, desc }, i) => (
                 <a
+                  key={i}
                   href={url}
                   target="_blank"
                   rel="noreferrer"

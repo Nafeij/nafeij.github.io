@@ -31,18 +31,12 @@ const Scroller = styled.div`
   }
 `;
 
-const Grid = styled.div<{
-  isDark: boolean;
-}>`
+const Grid = styled.div`
   flex: 1 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-auto-flow: row dense;
   gap: 0.5rem;
-
-  &:hover > .card::after {
-    opacity: ${({ isDark }) => (isDark ? ".5" : ".25")};
-  }
 
   .card {
     background: var(--bg-primary);
@@ -52,9 +46,6 @@ const Grid = styled.div<{
     position: relative;
 
     &:hover {
-      &::before {
-        opacity: ${({ isDark }) => (isDark ? ".15" : ".07")};
-      }
       .card-content .img {
         opacity: 0.3;
         filter: blur(0.2rem);
@@ -145,7 +136,7 @@ const Grid = styled.div<{
 `;
 
 export default function Projects() {
-  const { theme } = useContext(ThemeContext);
+  const { isDark } = useContext(ThemeContext);
   const { projects } = useStaticQuery(
     graphql`
       {
@@ -189,7 +180,8 @@ export default function Projects() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const ScrollContainerRef = useContext(ScrollContainerRefContext);
   const scrollerRef = useRef<HTMLDivElement>(null);
-  const horiScrollerRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
+  const horiScrollerRef =
+    useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
   const { events } = useDraggable(horiScrollerRef);
   const [isRevealed, setIsRevealed] = useState(prefersReducedMotion);
 
@@ -277,8 +269,15 @@ export default function Projects() {
         <h1 tw="mb-1 md:mb-2">Here is some of my work.</h1>
         <Grid
           onMouseMoveCapture={handleMouseMove}
-          css={genDelays(posts.length, 1000, 700)}
-          isDark={theme === "dark"}
+          css={{
+            ...genDelays(posts.length, 1000, 700),
+            "&:hover > .card::after": {
+              opacity: isDark ? ".5" : ".25",
+            },
+            "&:hover::before": {
+              opacity: isDark ? ".15" : ".07",
+            },
+          }}
           {...events}
           ref={horiScrollerRef}
         >
