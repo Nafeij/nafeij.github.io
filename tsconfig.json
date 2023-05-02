@@ -117,7 +117,7 @@
     "./gatsby-config.ts",
     "./plugins/**/*",
     "src/custom.d.ts"
-  ],
+, "src/components/icons/strava.tsx"  ],
   "ts-node": {
     "require": ["tsconfig-paths/register"]
   },

@@ -35,6 +35,7 @@
     "react-dom": "^18.2.0",
     "react-is": "16.8",
     "react-transition-group": "^4.4.5",
+    "react-use-draggable-scroll": "^0.4.7",
     "sass": "^1.58.3",
     "scrollreveal": "^4.0.9"
   },

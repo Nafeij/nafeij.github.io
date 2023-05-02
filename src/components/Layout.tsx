@@ -22,17 +22,11 @@ const backgroundSpread = keyframes`
 `;
 
 const bgLight = css`
-  background: fixed
-    radial-gradient(
-      ellipse at center,
-      var(--bg-light1) 0%,
-      var(--bg-light2) 100%
-    );
+  background: fixed radial-gradient( ellipse at center, var(--bg-light1) 0%, var(--bg-light2) 100% );
 `;
 
 const bgDark = css`
-  background: fixed var(--bg-dark1)
-    radial-gradient(ellipse at center, var(--bg-dark2) 8%, transparent 8%);
+  background: fixed var(--bg-dark1) radial-gradient(ellipse at center, var(--bg-dark2) 8%, transparent 8%);
   background-size: 8vmin 8vmin;
 `;
 
@@ -74,9 +68,24 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <Fragment>
       <div
         css={[
-          tw`transition-none isolate flex flex-nowrap items-center w-screen h-screen overflow-scroll snap-mandatory snap-x md:snap-none flex-row md:flex-col`,
+          tw`transition-none isolate flex flex-nowrap items-center w-screen h-screen overflow-x-auto snap-mandatory snap-x md:snap-none flex-row md:flex-col md:overflow-x-hidden md:overflow-y-auto text-secondary text-lg md:text-xl lg:text-2xl`,
           css`
             counter-reset: section;
+
+            h1 {
+              ${tw`font-bold text-3xl text-primary md:text-4xl lg:text-5xl`}
+            }
+
+            h2 {
+              ${tw`font-bold text-2xl md:text-3xl lg:text-4xl`}
+            }
+
+            a {
+              color: var(--text-primary);
+              :hover {
+                color: var(--link-color);
+              }
+            }
           `,
           delayDark ? bgDark : bgLight,
         ]}

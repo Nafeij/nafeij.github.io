@@ -6,15 +6,16 @@ import { graphql, useStaticQuery } from "gatsby";
 import styled from "@emotion/styled";
 import { useContext, useEffect, useRef, useState } from "react";
 import tw from "twin.macro";
-import { IconExternal, IconGitHub } from "@icons";
+import Icon from "@icons";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { usePrefersReducedMotion } from "@hooks";
 import { srConfig } from "@config";
 import { ScrollContainerRefContext } from "../Layout";
 import { ThemeContext } from "@styles";
+import { useDraggable } from "react-use-draggable-scroll";
 
 const Scroller = styled.div`
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -25,7 +26,7 @@ const Scroller = styled.div`
   max-width: 100%;
 
   @media (min-width: 768px) {
-    overflow-y: hidden;
+    overflow: visible;
     padding-bottom: 4rem;
   }
 
@@ -34,26 +35,14 @@ const Scroller = styled.div`
   }
 `;
 
-const InnerScroller = styled.div`
-  flex: 1 0 auto;
-  @media (min-width: 768px) {
-    overflow-y: hidden;
-    overflow-x: scroll;
-    flex-shrink: 1;
-  }
-`;
-
 const Grid = styled.div<{
   isDark: boolean;
 }>`
+  flex: 1 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-auto-flow: row dense;
   gap: 0.5rem;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 
   &:hover > .card::after {
     opacity: ${({ isDark }) => (isDark ? ".5" : ".25")};
@@ -142,6 +131,12 @@ const Grid = styled.div<{
   }
 
   @media (min-width: 768px) {
+    padding: 1rem 6rem;
+    overflow-x: auto;
+    width: 100svw;
+    max-width: 1280px;
+    position: relative;
+    left: -6rem;
     grid-auto-flow: column dense;
     grid-template-columns: unset;
     grid-auto-columns: minmax(300px, 1fr);
@@ -149,19 +144,6 @@ const Grid = styled.div<{
 
     .card.big {
       grid-column-end: span 2;
-      ${tw`text-lg md:text-xl lg:text-2xl`}
-
-      h1 {
-        ${tw`text-3xl md:text-4xl lg:text-5xl`}
-      }
-
-      h2 {
-        ${tw`text-2xl md:text-3xl lg:text-4xl`}
-      }
-
-      svg {
-        ${tw`w-7 md:w-8 lg:w-9`}
-      }
     }
   }
 `;
@@ -211,6 +193,8 @@ export default function Projects() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const ScrollContainerRef = useContext(ScrollContainerRefContext);
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const horiScrollerRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
+  const { events } = useDraggable(horiScrollerRef);
   const [isRevealed, setIsRevealed] = useState(false);
 
   useEffect(() => {
@@ -250,7 +234,7 @@ export default function Projects() {
           {image && <GatsbyImage image={image} alt={title} className="img" />}
           <span tw="flex justify-between items-start mb-1">
             <h2 tw="inline-block pt-2">{title}</h2>
-            <span tw="flex gap-2">
+            <span tw="flex gap-5">
               {external && (
                 <a
                   href={external}
@@ -258,7 +242,7 @@ export default function Projects() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <IconExternal />
+                  <Icon name="External" />
                 </a>
               )}
               {github && (
@@ -268,7 +252,7 @@ export default function Projects() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <IconGitHub />
+                  <Icon name="Github" />
                 </a>
               )}
             </span>
@@ -294,20 +278,20 @@ export default function Projects() {
   return (
     <Section>
       <Scroller ref={scrollerRef}>
-        <h2 tw="mb-5 md:mb-10">Here are some of my projects.</h2>
-        <InnerScroller>
-          <Grid
-            onMouseMove={handleMouseMove}
-            css={genDelays(posts.length, 1000, 700)}
-            isDark={theme === "dark"}
-          >
-            <TransitionSeries trigger={isRevealed} duration={1700}>
-              {posts.map(({ node }: { node: any }, i: number) =>
-                projInner(node, i)
-              )}
-            </TransitionSeries>
-          </Grid>
-        </InnerScroller>
+        <h1 tw="mb-1 md:mb-2">Here is some of my work.</h1>
+        <Grid
+          onMouseMove={handleMouseMove}
+          css={genDelays(posts.length, 1000, 700)}
+          isDark={theme === "dark"}
+          {...events}
+          ref={horiScrollerRef}
+        >
+          <TransitionSeries trigger={isRevealed} duration={1700}>
+            {posts.map(({ node }: { node: any }, i: number) =>
+              projInner(node, i)
+            )}
+          </TransitionSeries>
+        </Grid>
       </Scroller>
     </Section>
   );

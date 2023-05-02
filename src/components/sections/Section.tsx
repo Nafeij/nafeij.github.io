@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 
 const StyledSection = styled.section(
   ({ background }: { background?: string }) => [
-    tw`flex justify-center items-start flex-col snap-center text-secondary tracking-wide px-6 md:px-24 text-lg md:text-xl lg:text-2xl`,
+    tw`flex justify-center items-start flex-col snap-center tracking-wide px-6 md:px-24`,
     css`
       min-width: 101svw; /* need to be >100 to stop some funky nonsense with scroll snapping to 2nd section*/
       max-height: 100svh;
@@ -14,21 +14,6 @@ const StyledSection = styled.section(
       position: relative;
       margin-right: 2px;
       font-family: "source_sans_pro";
-
-      h1 {
-        ${tw`font-bold text-3xl text-primary md:text-5xl lg:text-6xl`}
-      }
-
-      h2 {
-        ${tw`font-bold text-2xl md:text-3xl lg:text-4xl`}
-      }
-
-      a {
-        color: var(--text-primary);
-        :hover {
-          color: var(--link-color);
-        }
-      }
 
       &::after {
         content: "";

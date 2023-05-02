@@ -56,6 +56,8 @@ export default function About() {
         dangerouslySetInnerHTML={{ __html: markdownRemark.html }}
         css={css`
           h1 {
+            ${tw`md:!text-5xl lg:!text-6xl`}
+
             :before {
               ${tw`ml-1 mr-3 -mb-0.5 inline-block aspect-square bg-cover align-baseline rounded-md h-12 md:h-16 lg:h-20`}
               content: "";

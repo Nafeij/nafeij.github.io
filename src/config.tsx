@@ -1,28 +1,58 @@
-export const email = "wng.jiefan@gmail.com";
+const email = "wng.jiefan@gmail.com";
 
-export const social = [
+const phone = "+65-9626-6581";
+
+type link = {
+  name: string;
+  url: string;
+  desc?: string;
+}
+
+export const links : link[] = [
+  {
+    name: "Email",
+    url: `mailto:${email}`,
+    desc: email,
+  },
+  {
+    name: "Phone",
+    url: `tel:${phone}`,
+    desc: phone.replace(/-/g, " "),
+  },
+  {
+    name: "Resume",
+    url: "/Resume_Jiefan.pdf",
+  },
   {
     name: "GitHub",
     url: "https://github.com/Nafeij",
+  },
+  {
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/in/wang-jiefan/",
+  },
+  {
+    name: "LeetCode",
+    url: "https://leetcode.com/user5917bB/",
   },
   {
     name: "Reddit",
     url: "https://reddit.com/u/nafeij",
   },
   {
-    name: "Linkedin",
-    url: "https://www.linkedin.com/in/wang-jiefan/",
+    name: "Strava",
+    url: "https://www.strava.com/athletes/102314645",
   },
 ];
 
 export const navLinks = [
   {
-    name: "About",
-    url: "/#about",
+    name: "Home",
+    url: "/",
   },
   {
-    name: "Experience",
-    url: "/#jobs",
+    name: "About",
+    url: "/#about",
   },
   {
     name: "Work",
