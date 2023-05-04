@@ -71,7 +71,7 @@ export default function Layout({
     const el = document.getElementById("home");
     if (el) {
       el.scrollIntoView({
-        behavior: "smooth",
+        behavior: reducedMotion ? "auto" : "smooth",
       });
       el.focus();
     }

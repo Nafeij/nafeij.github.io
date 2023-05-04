@@ -292,7 +292,7 @@ export default function Contact() {
 
   return (
     <Fragment>
-      <Card>
+      <Card id={prefersReducedMotion ? "contact" : ""}>
         <h1 style={{ opacity: interpolate(progress, 0, 250) }}>
           Let's get in touch.
         </h1>
@@ -339,7 +339,7 @@ export default function Contact() {
         </div>
       </Card>
       <Spacer ref={parentRef} />
-      <Spacer id="contact" />
+      <Spacer id={prefersReducedMotion ? "" : "contact"} />
     </Fragment>
   );
 }
