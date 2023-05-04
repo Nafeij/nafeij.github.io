@@ -4,11 +4,11 @@ import React, { FC } from "react";
 import { Layout, Title, About, Projects, Contact } from "@components";
 import { GlobalStyle } from "@styles";
 
-const IndexPage: FC<PageProps> = () => {
+const IndexPage: FC<PageProps> = ({ location }) => {
   return (
     <>
       <GlobalStyle />
-      <Layout>
+      <Layout location={location}>
         <Title />
         <About />
         <Projects />

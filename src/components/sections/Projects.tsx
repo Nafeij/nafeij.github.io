@@ -230,7 +230,7 @@ export default function Projects() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Icon name="External" />
+                  <Icon name='External' />
                 </a>
               )}
               {github && (
@@ -240,7 +240,7 @@ export default function Projects() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Icon name="Github" />
+                  <Icon name='GitHub' />
                 </a>
               )}
             </span>
@@ -264,7 +264,7 @@ export default function Projects() {
   };
 
   return (
-    <Section>
+    <Section id="projects">
       <Scroller ref={scrollerRef}>
         <h1 tw="mb-1 md:mb-2">Here is some of my work.</h1>
         <Grid

@@ -31,10 +31,10 @@ export const links: link[] = [
     name: "LinkedIn",
     url: "https://www.linkedin.com/in/wang-jiefan/",
   },
-  {
+  /* {
     name: "LeetCode",
     url: "https://leetcode.com/user5917bB/",
-  },
+  }, */
   {
     name: "Reddit",
     url: "https://reddit.com/u/nafeij",
@@ -48,19 +48,19 @@ export const links: link[] = [
 export const navLinks = [
   {
     name: "Home",
-    url: "/",
+    url: "",
   },
   {
     name: "About",
-    url: "/#about",
+    url: "#about",
   },
   {
     name: "Work",
-    url: "/#projects",
+    url: "#projects",
   },
   {
     name: "Contact",
-    url: "/#contact",
+    url: "#contact",
   },
 ];
 

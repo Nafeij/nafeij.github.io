@@ -74,12 +74,24 @@ const CustomStyles = css`
     --blob2: #6600ff;
   }
 
+  body.blur {
+    #content {
+      overflow: hidden;
+      & > *:not(#fakeBg) {
+        filter: blur(5px) brightness(0.7);
+        transition: var(--transition);
+        pointer-events: none;
+        user-select: none;
+      }
+    }
+  }
+
   *:not(body):not(html) {
     transition: var(--transition);
   }
 
   /* Scrollbar Styles */
-  html {
+  html, body {
     scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: var(--text-primary) transparent;
@@ -130,6 +142,7 @@ const CustomStyles = css`
 
     svg#Amazing {
       animation: fade-in-out 12s linear forwards !important;
+      opacity: 1 !important;
     }
 
     h1#Exciting {

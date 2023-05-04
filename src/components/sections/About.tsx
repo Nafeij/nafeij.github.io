@@ -50,7 +50,7 @@ export default function About() {
   }, [revealRef, techs]);
 
   return (
-    <Section>
+    <Section id="about">
       <div
         dangerouslySetInnerHTML={{ __html: markdownRemark.html }}
         css={css`

@@ -31,19 +31,19 @@ const swipe = keyframes`
 
 const swipef = keyframes`
   0% {
-    left: -5%;
+    left: -25%;
   }
   50% {
-    left: 150%;
+    left: 110%;
   }
 `;
 
 const swipeb = keyframes`
   50% {
-    left: -5%;
+    left: -25%;
   }
   100% {
-    left: 150%;
+    left: 110%;
   }
 `;
 
@@ -60,6 +60,10 @@ const Card = styled.div`
   transform: translateX(-50%) translateY(-50%);
   width: 100%;
   perspective: 100vmax;
+
+  > * {
+    transition: none !important;
+  }
 
   a {
     pointer-events: all;
@@ -93,6 +97,7 @@ const Card = styled.div`
       width: 100%;
       height: 100%;
       display: flex;
+      padding: 0 10%;
       flex-direction: column;
       box-sizing: border-box;
       justify-content: center;
@@ -129,11 +134,11 @@ const Card = styled.div`
       .shine {
         animation-name: ${swipef};
       }
-      padding: 0 10%;
     }
     .back {
+      ${tw`gap-1 md:gap-2 lg:gap-6`}
       svg {
-        ${tw`h-5 md:h-6 lg:h-7`}
+        ${tw`h-5 md:h-6 lg:h-8`}
       }
       background: linear-gradient(
         -45deg,
@@ -162,6 +167,17 @@ const Card = styled.div`
   }
 
   @media (prefers-reduced-motion) {
+    position: relative;
+    scroll-snap-align: center;
+    top: 0;
+    left: 0;
+    transform: none;
+    min-width: 100svw;
+
+    > h1 {
+      opacity: 1 !important;
+    }
+
     .card {
       margin-top: 1rem;
       animation: none !important;
@@ -171,6 +187,7 @@ const Card = styled.div`
     .back {
       transform: none !important;
       position: relative !important;
+      flex: 0;
       .shine {
         opacity: 0.2 !important;
         animation: none !important;
@@ -182,13 +199,42 @@ const Card = styled.div`
     }
 
     @media (min-width: 768px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100svh;
+
       .card {
         margin-top: 2rem;
-      }
-      .front {
-        margin-bottom: 2rem;
+        max-width: 500px;
+        aspect-ratio: unset;
+
+        .front,
+        .back {
+          aspect-ratio: 7/4;
+          height: auto;
+        }
+        .front {
+          margin-bottom: 2rem;
+        }
       }
     }
+
+    @media (min-width: 1024px) {
+      .card {
+        max-width: 600px;
+      }
+    }
+  }
+`;
+
+const Spacer = styled.section`
+  min-height: 100svh;
+  min-width: 100svw;
+  scroll-snap-align: center;
+  @media (prefers-reduced-motion) {
+    display: none;
   }
 `;
 
@@ -246,55 +292,54 @@ export default function Contact() {
 
   return (
     <Fragment>
-      <Section ref={parentRef} css={[css`min-height: 100svh; min-width: 100svw;`, tw`select-none items-center`]}>
-        <Card>
-          <h1 style={{ opacity: interpolate(progress, 0, 250) }}>
-            Let's get in touch.
-          </h1>
-          <div
-            className="card"
-            style={{
-              animationDelay: `${-interpolate(
-                progress,
-                500,
-                1000
-              )}s, ${-interpolate(progress, 0, 500)}s`,
-            }}
-          >
-            <div className="front">
-              <h1>Wang Jiefan</h1>
-              <p>Undergraduate | Software Engineer</p>
-              <div
-                className="shine"
-                style={{
-                  animationDelay: `${-interpolate(progress, 500, 1000)}s`,
-                }}
-              />
-            </div>
-            <div className="back">
-              {links.map(({ name, url, desc }, i) => (
-                <a
-                  key={i}
-                  href={url}
-                  target="_blank"
-                  rel="noreferrer"
-                  tw="flex-initial flex flex-row justify-between gap-10"
-                >
-                  <Icon name={name} />
-                  <p>{desc ?? name}</p>
-                </a>
-              ))}
-              <div
-                className="shine"
-                style={{
-                  animationDelay: `${-interpolate(progress, 500, 1000)}s`,
-                }}
-              />
-            </div>
+      <Card>
+        <h1 style={{ opacity: interpolate(progress, 0, 250) }}>
+          Let's get in touch.
+        </h1>
+        <div
+          className="card"
+          style={{
+            animationDelay: `${-interpolate(
+              progress,
+              500,
+              1000
+            )}s, ${-interpolate(progress, 0, 500)}s`,
+          }}
+        >
+          <div className="front">
+            <h1>Wang Jiefan</h1>
+            <p>Undergraduate | Software Engineer</p>
+            <div
+              className="shine"
+              style={{
+                animationDelay: `${-interpolate(progress, 500, 1000)}s`,
+              }}
+            />
           </div>
-        </Card>
-      </Section>
-      <div css={[css`min-height: 100svh; min-width: 100svw;`, tw`snap-center`]}/>
+          <div className="back">
+            {links.map(({ name, url, desc }, i) => (
+              <a
+                key={i}
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                tw="flex-initial flex flex-row items-center justify-between gap-10"
+              >
+                <Icon name={name} />
+                <p>{desc ?? name}</p>
+              </a>
+            ))}
+            <div
+              className="shine"
+              style={{
+                animationDelay: `${-interpolate(progress, 500, 1000)}s`,
+              }}
+            />
+          </div>
+        </div>
+      </Card>
+      <Spacer ref={parentRef} />
+      <Spacer id="contact" />
     </Fragment>
   );
 }

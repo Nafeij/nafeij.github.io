@@ -6,6 +6,7 @@ import {default as IconReddit} from './reddit';
 import {default as IconStrava} from './strava';
 import {default as IconLeetCode} from './leetcode';
 import {default as IconMail} from './mail';
+import {default as IconPhone} from './phone';
 import {default as IconResume} from './resume';
 
 const Icon = ({name} : {name : string}) => {
@@ -24,6 +25,8 @@ const Icon = ({name} : {name : string}) => {
             return <IconLeetCode />;
         case 'Email':
             return <IconMail />;
+        case 'Phone':
+            return <IconPhone />;
         case 'Resume':
             return <IconResume />;
         default:

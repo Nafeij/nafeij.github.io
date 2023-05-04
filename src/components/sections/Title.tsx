@@ -6,7 +6,7 @@ import React from "react";
 
 export default function Title() {
   return (
-    <Section tw="select-none pointer-events-none" css={genDelays(2,600)}>
+    <Section tw="select-none pointer-events-none" id="home" css={genDelays(2,600)}>
       <TransitionSeries timeout={600} trigger={true}>
         <p
           tw="text-primary mb-5 font-mono"

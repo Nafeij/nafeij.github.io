@@ -4,17 +4,21 @@ import { usePrefersReducedMotion } from "@hooks";
 import { ThemeContext } from "@styles";
 import React, {
   createContext,
-  Fragment,
+  ReactNode,
   RefObject,
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useRef,
+  useState,
+  WheelEvent,
 } from "react";
 import { scrollHorizontal } from "@hooks";
 import tw from "twin.macro";
 import { MediaContext } from "@util";
 import { NavBar } from "@components";
+import { WindowLocation } from "@reach/router";
 
 const backgroundSpread = keyframes`
 100% {
@@ -40,22 +44,41 @@ const bgDark = css`
 export const ScrollContainerRefContext =
   createContext<RefObject<HTMLDivElement> | null>(null);
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({
+  children,
+  location,
+}: {
+  children: ReactNode;
+  location: WindowLocation;
+}) {
   const { isDark } = useContext(ThemeContext);
   const { isMatch } = useContext(MediaContext);
   const reducedMotion = usePrefersReducedMotion();
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [delayDark, setDelayDark] = React.useState(isDark);
+  const [delayDark, setDelayDark] = useState(isDark);
+  const prevId = useRef<string>();
 
   const handleScroll = useCallback(
-    (e: React.WheelEvent<HTMLDivElement>) => {
+    (e: WheelEvent) => {
       if (isMatch("md")) return;
       scrollHorizontal(scrollRef, e);
     },
     [scrollRef]
   );
 
+  useEffect(() => {
+    if (location.hash) return;
+    const el = document.getElementById("home");
+    if (el) {
+      el.scrollIntoView({
+        behavior: "smooth",
+      });
+      el.focus();
+    }
+  }, [location]);
+
   let timeout_func: NodeJS.Timeout;
+
   useEffect(() => {
     if (reducedMotion) {
       setDelayDark(isDark);
@@ -68,38 +91,46 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, [isDark]);
 
   return (
-    <Fragment>
+    <div
+      css={[
+        tw`text-secondary text-lg md:text-xl lg:text-2xl`,
+        css`
+          font-family: "source_sans_pro";
+          h1 {
+            ${tw`font-bold text-3xl text-primary md:text-4xl lg:text-5xl`}
+          }
+
+          h2 {
+            ${tw`font-bold text-2xl md:text-3xl lg:text-4xl`}
+          }
+
+          a {
+            color: var(--text-primary);
+            :hover {
+              color: var(--link-color);
+            }
+          }
+        `,
+      ]}
+    >
+      <NavBar />
       <div
+        id="content"
         css={[
-          tw`relative transition-none isolate flex flex-nowrap items-center w-screen h-screen overflow-x-auto snap-mandatory snap-x md:snap-none flex-row md:flex-col md:overflow-x-hidden md:overflow-y-auto text-secondary text-lg md:text-xl lg:text-2xl`,
+          tw`relative transition-none isolate flex flex-nowrap items-center w-screen h-screen overflow-x-auto snap-mandatory snap-x md:snap-none flex-row md:flex-col md:overflow-x-hidden md:overflow-y-auto scroll-smooth motion-reduce:scroll-auto`,
           css`
             counter-reset: section;
-
-            h1 {
-              ${tw`font-bold text-3xl text-primary md:text-4xl lg:text-5xl`}
-            }
-
-            h2 {
-              ${tw`font-bold text-2xl md:text-3xl lg:text-4xl`}
-            }
-
-            a {
-              color: var(--text-primary);
-              :hover {
-                color: var(--link-color);
-              }
-            }
           `,
           delayDark ? bgDark : bgLight,
         ]}
         ref={scrollRef}
         onWheel={handleScroll}
       >
-        <NavBar />
         <ScrollContainerRefContext.Provider value={scrollRef}>
           {children}
         </ScrollContainerRefContext.Provider>
         <div
+          id="fakeBg"
           css={[
             tw`fixed h-full w-full top-0 left-0`,
             css`
@@ -112,6 +143,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           key={isDark + ""}
         />
       </div>
-    </Fragment>
+    </div>
   );
 }

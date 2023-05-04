@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react";
 import tw from "twin.macro";
-import { ForwardedRef, forwardRef, ReactNode, RefObject } from "react";
+import { ForwardedRef, forwardRef, ReactNode } from "react";
 import styled from "@emotion/styled";
 
 const StyledSection = styled.section`
@@ -11,7 +11,6 @@ const StyledSection = styled.section`
   box-sizing: border-box;
   position: relative;
   margin-right: 2px;
-  font-family: "source_sans_pro";
 
   &::after {
     content: "";

@@ -21,7 +21,14 @@ const config: GatsbyConfig = {
     "gatsby-transformer-sharp",
     {
       resolve: `gatsby-transformer-remark`,
-      options: {},
+      options: {
+        plugins: [
+          {
+            resolve: "gatsby-remark-autolink",
+            options: {},
+          },
+        ],
+      },
     },
     {
       resolve: "gatsby-source-filesystem",
@@ -44,26 +51,36 @@ const config: GatsbyConfig = {
       options: {
         name: "sections",
         path: "./content/",
-      }
+      },
     },
     {
       resolve: "gatsby-plugin-alias-imports",
       options: {
         alias: {
-          '@components': path.resolve(__dirname, 'src/components'),
-          '@fonts': path.resolve(__dirname, 'src/assets/fonts'),
-          '@hooks': path.resolve(__dirname, 'src/hooks'),
-          '@images': path.resolve(__dirname, 'src/assets/images'),
-          '@pages': path.resolve(__dirname, 'src/pages'),
-          '@styles': path.resolve(__dirname, 'src/styles'),
-          '@util': path.resolve(__dirname, 'src/util'),
-          '@config': path.resolve(__dirname, 'src/config'),
-          '@icons': path.resolve(__dirname, 'src/components/icons')
+          "@components": path.resolve(__dirname, "src/components"),
+          "@fonts": path.resolve(__dirname, "src/assets/fonts"),
+          "@hooks": path.resolve(__dirname, "src/hooks"),
+          "@images": path.resolve(__dirname, "src/assets/images"),
+          "@pages": path.resolve(__dirname, "src/pages"),
+          "@styles": path.resolve(__dirname, "src/styles"),
+          "@util": path.resolve(__dirname, "src/util"),
+          "@config": path.resolve(__dirname, "src/config"),
+          "@icons": path.resolve(__dirname, "src/components/icons"),
         },
         extensions: [
-          "js", "jsx", "ts", "tsx", "css", "scss", "svg", "jpg", "png", "woff", "woff2"
+          "js",
+          "jsx",
+          "ts",
+          "tsx",
+          "css",
+          "scss",
+          "svg",
+          "jpg",
+          "png",
+          "woff",
+          "woff2",
         ],
-      }
+      },
     },
   ],
 };

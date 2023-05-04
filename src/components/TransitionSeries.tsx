@@ -16,6 +16,17 @@ export const genDelays = (n: number, duration = DEFAULT_DURATION, delay = 0) => 
   return styles;
 }
 
+export const genDelayIntervals = (intvs : number[], duration = DEFAULT_DURATION, delay = 0) => {
+  const interval = duration / intvs.reduce((a, b) => a + b, 0);
+  let styles : {[key : string] : any} = {};
+  for (let i = 0; i < intvs.length; i++) {
+    styles[`& > *:nth-child(${i + 1})`] = {
+      transitionDelay: `${intvs[i] * interval + delay}ms`,
+    };
+  }
+  return styles;
+};
+
 export default function TransitionSeries({
   children,
   classNames,
