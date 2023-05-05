@@ -1,18 +1,18 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 import { Helmet } from "react-helmet";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "@styles";
 import { SunIcon } from "@heroicons/react/24/outline";
 import { MoonIcon } from "@heroicons/react/24/solid";
 import tw from "twin.macro";
-import TransitionSeries, {
-  genDelayIntervals,
-  genDelays,
-} from "./TransitionSeries";
+import TransitionSeries, { genDelays } from "./TransitionSeries";
 import styled from "@emotion/styled";
 import { navLinks } from "@config";
 import { Link } from "gatsby";
+import { usePrefersReducedMotion, useScrollDirection } from "@hooks";
+import { ScrollContainerRefContext } from "./Layout";
+import { MediaContext } from "@util";
 
 const StyledHamburgerButton = styled.button<{ menuOpen: boolean }>`
   @media (max-width: 768px) {
@@ -57,8 +57,8 @@ const StyledHamburgerButton = styled.button<{ menuOpen: boolean }>`
       content: "";
       display: block;
       position: absolute;
-      left: 0;
-      right: auto;
+      left: auto;
+      right: 0;
       width: 30px;
       height: 2px;
       border-radius: 4px;
@@ -73,17 +73,17 @@ const StyledHamburgerButton = styled.button<{ menuOpen: boolean }>`
       opacity: ${({ menuOpen }) => (menuOpen ? 0 : 1)};
       transition: ${({ menuOpen }) =>
         menuOpen
-          ? "top 0.1s ease-out, opacity 0.1s ease-out 0.12s"
-          : "top 0.1s ease-in 0.25s, opacity 0.1s ease-in"};
+          ? "top 0.1s ease-out, opacity 0.1s ease-out 0.12s, width 0.34s"
+          : "top 0.1s ease-in 0.25s, opacity 0.1s ease-in, width 0.34s"};
     }
     &:after {
       width: ${({ menuOpen }) => (menuOpen ? `100%` : `80%`)};
       bottom: ${({ menuOpen }) => (menuOpen ? `0` : `-10px`)};
-      transform: rotate(${({ menuOpen }) => (menuOpen ? `-90deg` : `0`)});
+      transform: rotate(${({ menuOpen }) => (menuOpen ? `90deg` : `0`)});
       transition: ${({ menuOpen }) =>
         menuOpen
-          ? "bottom 0.1s ease-out"
-          : "bottom 0.1s ease-in 0.25s, transform 0.22s cubic-bezier(0.55, 0.055, 0.675, 0.19)"};
+          ? "bottom 0.1s ease-out, transform 0.1s ease-out 0.12s, width 0.34s"
+          : "bottom 0.1s ease-in 0.25s, transform 0.22s cubic-bezier(0.55, 0.055, 0.675, 0.19), width 0.34s"};
     }
   }
 `;
@@ -155,6 +155,8 @@ const StyledSidebar = styled.aside<{ menuOpen: boolean }>`
 `;
 
 const StyledLinks = styled.div`
+  font-family: var(--font-mono);
+
   @media (max-width: 768px) {
     display: none;
   }
@@ -189,6 +191,21 @@ const StyledLinks = styled.div`
   }
 `;
 
+const DarkButton = () => {
+  const { isDark, setDark } = useContext(ThemeContext);
+  return (
+    <button
+      tw="h-12 z-10 aspect-square border-0 outline-0 flex justify-center items-center bg-transparent hover:scale-110 active:scale-90"
+      css={{
+        "& > svg": [tw`h-full aspect-square text-[var(--text-primary)]`],
+      }}
+      onClick={() => setDark(!isDark)}
+    >
+      {isDark ? <MoonIcon /> : <SunIcon />}
+    </button>
+  );
+};
+
 const Resume = () => (
   <a href="/Resume_Jiefan.pdf" className="resume-link">
     Resume
@@ -200,21 +217,52 @@ const ANIM_DURATION = 600;
 const innerDuration =
   (ANIM_DURATION * (navLinks.length + 1)) / (navLinks.length + 3);
 
-export default function NavBar() {
-  const { isDark, setDark } = useContext(ThemeContext);
-
+export default function NavBar({
+  scrollRef,
+}: {
+  scrollRef: React.RefObject<HTMLDivElement>;
+}) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolledToTop, setScrolledToTop] = useState(true);
+  const { isMatch } = useContext(MediaContext);
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  const scrollDirection = useScrollDirection({
+    containerRef: scrollRef,
+    initialDirection: "forward",
+    horizontal: !isMatch("md"),
+  });
+
+  const handleScroll = () => {
+    console.log(scrollDirection)
+    const scroll = scrollRef.current;
+    setScrolledToTop(scroll ? scroll.scrollTop < 50 && scroll.scrollLeft < 50 : false);
+  };
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
-  const toggleDark = () => setDark(!isDark);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    scrollRef.current?.addEventListener("scroll", handleScroll);
+    return () => {
+      scrollRef.current?.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <header
       id="navbar"
       css={[
-        tw`w-full top-0 flex items-center justify-between fixed z-10 p-6 md:justify-end lg:p-10`,
+        tw`w-full bottom-0 flex items-center overflow-visible justify-between fixed z-10 p-6 md:top-0 md:justify-end lg:p-10`,
         css`
           ${genDelays(3, ANIM_DURATION)}
+          box-shadow: 0 -10px 30px -10px #000;
+          @media (prefers-reduced-motion: no-preference) {
+            ${scrollDirection === "backward" || scrolledToTop
+              ? `transform: translateY(0);`
+              : `transform: translateY(-100%);`}
+            background-color: var(--bg-secondary);
+          }
         `,
       ]}
     >
@@ -222,6 +270,7 @@ export default function NavBar() {
         <body className={menuOpen ? "blur" : ""} />
       </Helmet>
       <TransitionSeries duration={ANIM_DURATION} trigger={true}>
+        <DarkButton />
         <div tw="z-0 block md:hidden">
           <StyledHamburgerButton
             onClick={toggleMenu}
@@ -238,7 +287,7 @@ export default function NavBar() {
                 {navLinks.map(({ url, name }, i) => (
                   <li key={i}>
                     <Link
-                      to={url}
+                      to={`/${url}`}
                       onClick={() => {
                         setMenuOpen(false);
                       }}
@@ -262,26 +311,17 @@ export default function NavBar() {
               {navLinks
                 .map(({ url, name }, i) => (
                   <li key={i}>
-                    <Link to={url}>{name}</Link>
+                    <Link to={`/${url}`}>{name}</Link>
                   </li>
                 ))
                 .concat([
-                  <li>
+                  <li key={-1}>
                     <Resume />
                   </li>,
                 ])}
             </TransitionSeries>
           </ol>
         </StyledLinks>
-        <button
-          tw="h-12 z-10 aspect-square border-0 outline-0 flex justify-center items-center bg-transparent hover:scale-110 active:scale-90"
-          css={{
-            "& > svg": [tw`h-full aspect-square text-[var(--text-primary)]`],
-          }}
-          onClick={toggleDark}
-        >
-          {isDark ? <MoonIcon /> : <SunIcon />}
-        </button>
       </TransitionSeries>
     </header>
   );

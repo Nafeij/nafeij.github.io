@@ -9,7 +9,6 @@ import React, {
   useCallback,
   useContext,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
   WheelEvent,
@@ -21,7 +20,19 @@ import { NavBar } from "@components";
 import { WindowLocation } from "@reach/router";
 
 const backgroundSpread = keyframes`
-100% {
+from {
+  clip-path: circle(0% at 0% 100%);
+}
+to {
+  clip-path: circle(283% at 0% 100%);
+}
+`;
+
+const backgroundSpreadBelow = keyframes`
+from {
+  clip-path: circle(0% at 100% 0%);
+}
+to {
   clip-path: circle(283% at 100% 0%);
 }
 `;
@@ -56,7 +67,6 @@ export default function Layout({
   const reducedMotion = usePrefersReducedMotion();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [delayDark, setDelayDark] = useState(isDark);
-  const prevId = useRef<string>();
 
   const handleScroll = useCallback(
     (e: WheelEvent) => {
@@ -70,9 +80,7 @@ export default function Layout({
     if (location.hash) return;
     const el = document.getElementById("home");
     if (el) {
-      el.scrollIntoView({
-        behavior: reducedMotion ? "auto" : "smooth",
-      });
+      el.scrollIntoView();
       el.focus();
     }
   }, [location]);
@@ -113,7 +121,7 @@ export default function Layout({
         `,
       ]}
     >
-      <NavBar />
+      <NavBar scrollRef={scrollRef}/>
       <div
         id="content"
         css={[
@@ -132,11 +140,13 @@ export default function Layout({
         <div
           id="fakeBg"
           css={[
-            tw`fixed h-full w-full top-0 left-0`,
+            tw`fixed h-full w-full top-0 left-0 pointer-events-none`,
             css`
-              clip-path: circle(0% at 100% 0%);
-              animation: ${backgroundSpread} 700ms backwards;
+              animation: ${backgroundSpread} 700ms both;
               z-index: -1;
+              @media (min-width: 768px) {
+                animation: ${backgroundSpreadBelow} 700ms both;
+              }
             `,
             isDark ? bgDark : bgLight,
           ]}

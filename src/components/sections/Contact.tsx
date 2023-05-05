@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx, css, keyframes } from "@emotion/react";
-import { Section } from "@components";
-import { Fragment, useContext, useEffect } from "react";
+import { Fragment, useContext, useEffect, useRef, useState } from "react";
 import React from "react";
 import styled from "@emotion/styled";
 import { ScrollContainerRefContext } from "../Layout";
@@ -250,12 +249,12 @@ const getDOMVars = ({
   isMatch("md")
     ? {
         start: parent.offsetTop - parent.clientHeight / 4,
-        end: parent.offsetTop + parent.clientHeight / 2,
+        end: parent.offsetTop + parent.clientHeight,
         scroll: container.scrollTop,
       }
     : {
         start: parent.offsetLeft - parent.clientWidth / 4,
-        end: parent.offsetLeft + parent.clientWidth / 2,
+        end: parent.offsetLeft + parent.clientWidth,
         scroll: container.scrollLeft,
       };
 
@@ -264,8 +263,8 @@ export default function Contact() {
   const ScrollContainerRef = useContext(ScrollContainerRefContext);
   const { isMatch } = useContext(MediaContext);
   const prefersReducedMotion = usePrefersReducedMotion();
-  const parentRef = React.useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = React.useState(0);
+  const parentRef = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(0);
 
   const calcProgress = (ev: Event) => {
     const parent = parentRef.current;
@@ -288,7 +287,7 @@ export default function Contact() {
     return () => {
       ScrollContainerRef?.current?.removeEventListener("scroll", calcProgress);
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <Fragment>
@@ -303,16 +302,16 @@ export default function Contact() {
               progress,
               500,
               1000
-            )}s, ${-interpolate(progress, 0, 500)}s`,
+            )}s, ${-interpolate(progress, 0, 350)}s`,
           }}
         >
           <div className="front">
             <h1>Wang Jiefan</h1>
-            <p>Undergraduate | Software Engineer</p>
+            <p>CS Undergraduate</p>
             <div
               className="shine"
               style={{
-                animationDelay: `${-interpolate(progress, 500, 1000)}s`,
+                animationDelay: `${-interpolate(progress, 450, 1000)}s`,
               }}
             />
           </div>

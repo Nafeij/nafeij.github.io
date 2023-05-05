@@ -19,8 +19,8 @@ const Scroller = styled.div`
   overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  padding-top: 6rem;
-  padding-bottom: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 6rem;
   display: flex;
   flex-direction: column;
   max-width: 100%;
