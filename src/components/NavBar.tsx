@@ -17,7 +17,7 @@ const StyledHamburgerButton = styled.button<{ menuOpen: boolean }>`
   @media (max-width: 768px) {
     position: relative;
     z-index: 10;
-    width: 2rem;
+    width: 1.75rem;
     aspect-ratio: 1;
     box-sizing: content-box;
     padding: 0.25rem;
@@ -198,7 +198,7 @@ const DarkButton = () => {
   const { isDark, setDark } = useContext(ThemeContext);
   return (
     <button
-      tw="h-10 z-10 aspect-square border-0 outline-0 flex justify-center items-center bg-transparent hover:scale-110 active:scale-90 md:h-12"
+      tw="h-8 z-10 aspect-square border-0 outline-0 flex justify-center items-center bg-transparent hover:scale-110 active:scale-90 md:h-12"
       css={{
         "& > svg": [tw`h-full aspect-square text-[var(--text-primary)]`],
       }}
@@ -239,8 +239,9 @@ export default function NavBar({
   });
 
   const handleScroll = () => {
-    // setOverrideScroll(false);
+    setOverrideScroll(false);
     const scroll = scrollRef.current;
+    // console.log(scroll?.scrollTop, scroll?.scrollLeft);
     setScrolledToTop(
       scroll ? scroll.scrollTop < 50 && scroll.scrollLeft < 50 : false
     );
@@ -274,6 +275,7 @@ export default function NavBar({
       menuFocusables.current[0].focus();
     }
   };
+  */
 
   const onKeyDown = (e: KeyboardEvent) => {
     switch (e.key) {
@@ -285,16 +287,6 @@ export default function NavBar({
 
       case KEY_CODES.TAB: {
         setOverrideScroll(true);
-        if (menuFocusables.current && menuFocusables.current.length === 1) {
-          e.preventDefault();
-          break;
-        }
-        if (e.shiftKey) {
-          handleBackwardTab(e);
-          break;
-        }
-        handleForwardTab(e);
-        break;
       }
 
       default: {
@@ -302,9 +294,9 @@ export default function NavBar({
       }
     }
   };
-  */
+
   useEffect(() => {
-    // document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("keydown", onKeyDown);
     window.addEventListener("resize", onResize);
 
     if (!prefersReducedMotion) {
@@ -313,7 +305,7 @@ export default function NavBar({
 
     return () => {
       scrollRef.current?.removeEventListener("scroll", handleScroll);
-      // document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("resize", onResize);
     };
   }, []);
@@ -327,11 +319,11 @@ export default function NavBar({
   return (
     <header
       id="navbar"
-      tabIndex={!scrolledToTop && scrollDirection === "forward" ? -1 : 1}
       css={[
-        tw`w-full bottom-0 flex items-center overflow-visible justify-between fixed z-10 p-4 md:top-0 md:bottom-auto lg:p-10`,
+        tw`w-full bottom-0 flex items-center overflow-visible justify-between fixed z-10 p-5 md:top-0 md:bottom-auto opacity-50 md:hover:opacity-100 lg:p-10`,
         css`
           ${genDelays(3, ANIM_DURATION)}
+          ${menuOpen && `opacity: 1;`}
           @media (prefers-reduced-motion: no-preference) {
             transform: translateY(0);
             ${!scrolledToTop &&
@@ -340,6 +332,7 @@ export default function NavBar({
                 box-shadow: 0 -10px 30px -10px #00000088;`) ||
               (scrollDirection === "backward" &&
                 `box-shadow: 0 -10px 30px -10px #00000088;
+                opacity: 1;
                 background-color: var(--bg-secondary);`))}
           }
         `,
@@ -352,9 +345,7 @@ export default function NavBar({
         <StyledLinks>
           <nav /* ref={navRef} */>
             <ol
-              css={css`+
-                ${genDelays(navLinks.length + 1)}
-              `}
+              css={genDelays(navLinks.length + 1)}
             >
               <TransitionSeries duration={innerDuration} trigger={true}>
                 {navLinks
@@ -374,10 +365,7 @@ export default function NavBar({
         </StyledLinks>
         <DarkButton />
         <div tw="z-0 block md:hidden">
-          <StyledHamburgerButton
-            onClick={toggleMenu}
-            menuOpen={menuOpen}
-          >
+          <StyledHamburgerButton onClick={toggleMenu} menuOpen={menuOpen}>
             <div className="ham-box">
               <div className="ham-box-inner" />
             </div>

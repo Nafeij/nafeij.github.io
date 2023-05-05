@@ -15,18 +15,24 @@ import { ThemeContext } from "@styles";
 import { useDraggable } from "react-use-draggable-scroll";
 
 const Scroller = styled.div`
-  overflow: visible;
-  -ms-overflow-style: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-top: 2rem;
+  padding-bottom: 6rem;
   scrollbar-width: none;
   display: flex;
   flex-direction: column;
   max-width: 100%;
 
-  @media (max-width: 768px) {
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-top: 2rem;
-    padding-bottom: 6rem;
+  @media (min-width: 768px) {
+    overflow: visible;
+    padding: 7rem 0;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  @media (min-width: 1280px) {
+    padding-top: 10rem;
   }
 `;
 
@@ -117,20 +123,17 @@ const Grid = styled.div`
   }
 
   @media (min-width: 768px) {
-    padding: 1rem 6rem;
-    overflow-x: auto;
-    width: 100svw;
-    max-width: 1280px;
+    overflow-x: scroll;
     position: relative;
-    left: -6rem;
     grid-auto-flow: column dense;
     grid-template-columns: unset;
-    grid-auto-columns: minmax(300px, 1fr);
-    grid-template-rows: repeat(3, minmax(auto, 25svh));
+    grid-template-rows: repeat(auto-fit, minmax(auto, 49%));
+    grid-auto-columns: minmax(20rem, 1fr);
+    padding-bottom: 1rem;
 
-    .card.big {
+    /* .card.big {
       grid-column-end: span 2;
-    }
+    } */
   }
 `;
 
@@ -265,18 +268,18 @@ export default function Projects() {
   return (
     <Section id="projects">
       <Scroller ref={scrollerRef}>
-        <h1 tw="mb-1 md:mb-2">Here is some of my work.</h1>
+        <h1 tw="mb-3 md:mb-5">Here is some of my work.</h1>
         <Grid
           onMouseMoveCapture={handleMouseMove}
-          css={{
-            ...genDelays(posts.length, 1000, 700),
-            "&:hover > .card::after": {
-              opacity: isDark ? ".5" : ".25",
-            },
-            "&:hover::before": {
-              opacity: isDark ? ".15" : ".07",
-            },
-          }}
+          css={css`
+            ${genDelays(posts.length, 1000, 700)}
+            &:hover > .card::after {
+              opacity: ${isDark ? ".5" : ".25"};
+            }
+            & > .card:hover::before {
+              opacity: .05;
+            }
+          `}
           {...events}
           ref={horiScrollerRef}
         >

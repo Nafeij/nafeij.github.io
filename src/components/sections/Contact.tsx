@@ -21,10 +21,19 @@ const flip = keyframes`
 
 const swipe = keyframes`
   0% {
-    left: 100svw;
+    left: 100%;
   }
   100% {
     left: 0;
+  }
+`;
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 `;
 
@@ -120,7 +129,7 @@ const Card = styled.div`
         transform: skew(-15deg);
         opacity: 0.5;
         left: 0;
-        animation: 1s ease-in-out paused both;
+        animation: 1s ease-in-out both paused;
       }
     }
     .front {
@@ -130,6 +139,7 @@ const Card = styled.div`
         var(--text-secondary)
       );
       border-radius: 1rem 0 1rem 0;
+      animation: 1s ${fadeIn} ease-out both paused;
       .shine {
         animation-name: ${swipef};
       }
@@ -292,20 +302,24 @@ export default function Contact() {
   return (
     <Fragment>
       <Card id={prefersReducedMotion ? "contact" : ""}>
-        <h1 style={{ opacity: interpolate(progress, 0, 250) }}>
+        <h1 style={{ opacity: interpolate(progress, 0, 200) }}>
           Let's get in touch.
         </h1>
         <div
           className="card"
           style={{
-            animationDelay: `${-interpolate(
-              progress,
-              500,
-              1000
-            )}s, ${-interpolate(progress, 0, 350)}s`,
+            animationDelay: `
+            ${-interpolate(progress, 500, 1000)}s, ${-interpolate(
+              progress, 0, 350
+            )}s`,
           }}
         >
-          <div className="front">
+          <div
+            className="front"
+            style={{
+              animationDelay: `${-interpolate(progress, 0, 200)}s`,
+            }}
+          >
             <h1>Wang Jiefan</h1>
             <p>CS Undergraduate</p>
             <div
@@ -331,7 +345,7 @@ export default function Contact() {
             <div
               className="shine"
               style={{
-                animationDelay: `${-interpolate(progress, 500, 1000)}s`,
+                animationDelay: `${-interpolate(progress, 450, 1000)}s`,
               }}
             />
           </div>
