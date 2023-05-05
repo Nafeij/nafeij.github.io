@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 import { Helmet } from "react-helmet";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { ThemeContext } from "@styles";
 import { SunIcon } from "@heroicons/react/24/outline";
 import { MoonIcon } from "@heroicons/react/24/solid";
@@ -11,15 +11,16 @@ import styled from "@emotion/styled";
 import { navLinks } from "@config";
 import { Link } from "gatsby";
 import { usePrefersReducedMotion, useScrollDirection } from "@hooks";
-import { ScrollContainerRefContext } from "./Layout";
-import { MediaContext } from "@util";
+import { KEY_CODES, MediaContext } from "@util";
 
 const StyledHamburgerButton = styled.button<{ menuOpen: boolean }>`
   @media (max-width: 768px) {
     position: relative;
     z-index: 10;
-    margin-right: -15px;
-    padding: 15px;
+    width: 2rem;
+    aspect-ratio: 1;
+    box-sizing: content-box;
+    padding: 0.25rem;
     border: 0;
     background-color: transparent;
     color: inherit;
@@ -32,15 +33,15 @@ const StyledHamburgerButton = styled.button<{ menuOpen: boolean }>`
   .ham-box {
     display: inline-block;
     position: relative;
-    width: 30px;
-    height: 24px;
+    width: 100%;
+    height: 80%;
   }
 
   .ham-box-inner {
     position: absolute;
     top: 50%;
     right: 0;
-    width: 30px;
+    width: 100%;
     height: 2px;
     border-radius: 4px;
     background-color: var(--text-primary);
@@ -59,7 +60,7 @@ const StyledHamburgerButton = styled.button<{ menuOpen: boolean }>`
       position: absolute;
       left: auto;
       right: 0;
-      width: 30px;
+      width: 100%;
       height: 2px;
       border-radius: 4px;
       background-color: var(--text-primary);
@@ -94,17 +95,18 @@ const StyledSidebar = styled.aside<{ menuOpen: boolean }>`
     position: fixed;
     align-items: center;
     justify-content: center;
-    top: 0;
+    top: 100%;
     bottom: 0;
     right: 0;
     padding: 50px 10px;
     width: min(75vw, 400px);
     height: 100vh;
     background-color: var(--bg-secondary);
-    box-shadow: -10px 0px 30px -15px #00;
+    box-shadow: -10px 0px 30px -15px #00000088;
     outline: 0;
     z-index: 9;
-    transform: translateX(${({ menuOpen }) => (menuOpen ? 0 : 100)}vw);
+    transform: translateY(-100%)
+      translateX(${({ menuOpen }) => (menuOpen ? 0 : 100)}vw);
     visibility: ${({ menuOpen }) => (menuOpen ? "visible" : "hidden")};
     transition: var(--transition);
   }
@@ -181,6 +183,7 @@ const StyledLinks = styled.div`
           content: "0" counter(item) ".";
           margin-right: 5px;
           text-align: right;
+          color: var(--text-secondary);
         }
       }
     }
@@ -195,7 +198,7 @@ const DarkButton = () => {
   const { isDark, setDark } = useContext(ThemeContext);
   return (
     <button
-      tw="h-12 z-10 aspect-square border-0 outline-0 flex justify-center items-center bg-transparent hover:scale-110 active:scale-90"
+      tw="h-10 z-10 aspect-square border-0 outline-0 flex justify-center items-center bg-transparent hover:scale-110 active:scale-90 md:h-12"
       css={{
         "& > svg": [tw`h-full aspect-square text-[var(--text-primary)]`],
       }}
@@ -224,44 +227,120 @@ export default function NavBar({
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolledToTop, setScrolledToTop] = useState(true);
+  const [overrideScroll, setOverrideScroll] = useState(false);
   const { isMatch } = useContext(MediaContext);
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const scrollDirection = useScrollDirection({
     containerRef: scrollRef,
-    initialDirection: "forward",
     horizontal: !isMatch("md"),
+    thresholdPixels: 50,
+    off: overrideScroll,
   });
 
   const handleScroll = () => {
-    console.log(scrollDirection)
+    // setOverrideScroll(false);
     const scroll = scrollRef.current;
-    setScrolledToTop(scroll ? scroll.scrollTop < 50 && scroll.scrollLeft < 50 : false);
+    setScrolledToTop(
+      scroll ? scroll.scrollTop < 50 && scroll.scrollLeft < 50 : false
+    );
   };
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
+  /*
+  const navRef = useRef<HTMLElement>(null);
+
+  const menuFocusables = useRef<HTMLAnchorElement[]>([]);
+  */
+
+  const onResize = () => {
+    if (window.innerWidth > 768) {
+      setMenuOpen(false);
+    }
+  };
+
+  /*
+  const handleBackwardTab = (e: KeyboardEvent) => {
+    if (document.activeElement === menuFocusables.current[0]) {
+      e.preventDefault();
+      menuFocusables.current[menuFocusables.current.length - 1].focus();
+    }
+  };
+
+  const handleForwardTab = (e: KeyboardEvent) => {
+    if (document.activeElement === menuFocusables.current[menuFocusables.current.length - 1]) {
+      e.preventDefault();
+      menuFocusables.current[0].focus();
+    }
+  };
+
+  const onKeyDown = (e: KeyboardEvent) => {
+    switch (e.key) {
+      case KEY_CODES.ESCAPE:
+      case KEY_CODES.ESCAPE_IE11: {
+        setOverrideScroll(false);
+        break;
+      }
+
+      case KEY_CODES.TAB: {
+        setOverrideScroll(true);
+        if (menuFocusables.current && menuFocusables.current.length === 1) {
+          e.preventDefault();
+          break;
+        }
+        if (e.shiftKey) {
+          handleBackwardTab(e);
+          break;
+        }
+        handleForwardTab(e);
+        break;
+      }
+
+      default: {
+        break;
+      }
+    }
+  };
+  */
   useEffect(() => {
-    if (prefersReducedMotion) return;
-    scrollRef.current?.addEventListener("scroll", handleScroll);
+    // document.addEventListener("keydown", onKeyDown);
+    window.addEventListener("resize", onResize);
+
+    if (!prefersReducedMotion) {
+      scrollRef.current?.addEventListener("scroll", handleScroll);
+    }
+
     return () => {
       scrollRef.current?.removeEventListener("scroll", handleScroll);
+      // document.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 
+  /*
+  useEffect(() => {
+    if (!navRef.current) return;
+    menuFocusables.current = Array.from(navRef.current.querySelectorAll("a"));
+  }, [navRef.current]);
+  */
   return (
     <header
       id="navbar"
+      tabIndex={!scrolledToTop && scrollDirection === "forward" ? -1 : 1}
       css={[
-        tw`w-full bottom-0 flex items-center overflow-visible justify-between fixed z-10 p-6 md:top-0 md:justify-end lg:p-10`,
+        tw`w-full bottom-0 flex items-center overflow-visible justify-between fixed z-10 p-4 md:top-0 md:bottom-auto lg:p-10`,
         css`
           ${genDelays(3, ANIM_DURATION)}
-          box-shadow: 0 -10px 30px -10px #000;
           @media (prefers-reduced-motion: no-preference) {
-            ${scrollDirection === "backward" || scrolledToTop
-              ? `transform: translateY(0);`
-              : `transform: translateY(-100%);`}
-            background-color: var(--bg-secondary);
+            transform: translateY(0);
+            ${!scrolledToTop &&
+            ((scrollDirection === "forward" &&
+              `transform: translateY(${isMatch("md") ? `-100%` : `100%`});
+                box-shadow: 0 -10px 30px -10px #00000088;`) ||
+              (scrollDirection === "backward" &&
+                `box-shadow: 0 -10px 30px -10px #00000088;
+                background-color: var(--bg-secondary);`))}
           }
         `,
       ]}
@@ -270,18 +349,44 @@ export default function NavBar({
         <body className={menuOpen ? "blur" : ""} />
       </Helmet>
       <TransitionSeries duration={ANIM_DURATION} trigger={true}>
+        <StyledLinks>
+          <nav /* ref={navRef} */>
+            <ol
+              css={css`+
+                ${genDelays(navLinks.length + 1)}
+              `}
+            >
+              <TransitionSeries duration={innerDuration} trigger={true}>
+                {navLinks
+                  .map(({ url, name }, i) => (
+                    <li key={i}>
+                      <Link to={`/${url}`}>{name}</Link>
+                    </li>
+                  ))
+                  .concat([
+                    <li key={-1}>
+                      <Resume />
+                    </li>,
+                  ])}
+              </TransitionSeries>
+            </ol>
+          </nav>
+        </StyledLinks>
         <DarkButton />
         <div tw="z-0 block md:hidden">
           <StyledHamburgerButton
             onClick={toggleMenu}
             menuOpen={menuOpen}
-            // ref={buttonRef} TODO
           >
             <div className="ham-box">
               <div className="ham-box-inner" />
             </div>
           </StyledHamburgerButton>
-          <StyledSidebar menuOpen={menuOpen}>
+          <StyledSidebar
+            menuOpen={menuOpen}
+            aria-hidden={!menuOpen}
+            tabIndex={menuOpen ? 1 : -1}
+          >
             <nav>
               <ol>
                 {navLinks.map(({ url, name }, i) => (
@@ -301,27 +406,6 @@ export default function NavBar({
             </nav>
           </StyledSidebar>
         </div>
-        <StyledLinks>
-          <ol
-            css={css`
-              ${genDelays(navLinks.length + 1)}
-            `}
-          >
-            <TransitionSeries duration={innerDuration} trigger={true}>
-              {navLinks
-                .map(({ url, name }, i) => (
-                  <li key={i}>
-                    <Link to={`/${url}`}>{name}</Link>
-                  </li>
-                ))
-                .concat([
-                  <li key={-1}>
-                    <Resume />
-                  </li>,
-                ])}
-            </TransitionSeries>
-          </ol>
-        </StyledLinks>
       </TransitionSeries>
     </header>
   );

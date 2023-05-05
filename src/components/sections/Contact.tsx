@@ -322,7 +322,7 @@ export default function Contact() {
                 href={url}
                 target="_blank"
                 rel="noreferrer"
-                tw="flex-initial flex flex-row items-center justify-between gap-10"
+                tw="flex-initial flex flex-row items-center justify-between"
               >
                 <Icon name={name} />
                 <p>{desc ?? name}</p>

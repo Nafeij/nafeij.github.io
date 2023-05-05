@@ -15,19 +15,18 @@ import { ThemeContext } from "@styles";
 import { useDraggable } from "react-use-draggable-scroll";
 
 const Scroller = styled.div`
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: visible;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  padding-top: 2rem;
-  padding-bottom: 6rem;
   display: flex;
   flex-direction: column;
   max-width: 100%;
 
-  @media (min-width: 768px) {
-    overflow: visible;
-    padding: 4rem 0;
+  @media (max-width: 768px) {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 2rem;
+    padding-bottom: 6rem;
   }
 `;
 
@@ -230,7 +229,7 @@ export default function Projects() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Icon name='External' />
+                  <Icon name="External" />
                 </a>
               )}
               {github && (
@@ -240,7 +239,7 @@ export default function Projects() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Icon name='GitHub' />
+                  <Icon name="GitHub" />
                 </a>
               )}
             </span>
