@@ -9,6 +9,7 @@ import { links } from "@config";
 import Icon from "@icons";
 import tw from "twin.macro";
 import { usePrefersReducedMotion } from "@hooks";
+import { QR } from "@components";
 
 const flip = keyframes`
   0% {
@@ -101,14 +102,13 @@ const Card = styled.div`
 
     .front,
     .back {
+      padding: 0 10%;
       position: absolute;
       width: 100%;
       height: 100%;
       display: flex;
-      padding: 0 10%;
       flex-direction: column;
       box-sizing: border-box;
-      justify-content: center;
       gap: 0.5rem;
       box-shadow: 0 -0.75rem 1rem 0 rgba(#000, 0.2),
         0 0.75rem 1rem 0 rgba(#000, 0.2), 0.75rem 0px 1rem 0 rgba(#000, 0.2),
@@ -133,22 +133,21 @@ const Card = styled.div`
       }
     }
     .front {
+      border-radius: 1rem 0 1rem 0;
+      animation: 1s ${fadeIn} ease-out both paused;
+      justify-content: center;
       background: linear-gradient(
         45deg,
         var(--text-primary),
         var(--text-secondary)
       );
-      border-radius: 1rem 0 1rem 0;
-      animation: 1s ${fadeIn} ease-out both paused;
       .shine {
         animation-name: ${swipef};
       }
     }
     .back {
-      ${tw`gap-1 md:gap-2 lg:gap-6`}
-      svg {
-        ${tw`h-5 md:h-6 lg:h-8`}
-      }
+      ${tw`flex-row items-center justify-between gap-2 md:gap-4 lg:gap-12 text-sm md:text-base lg:text-2xl`}
+
       background: linear-gradient(
         -45deg,
         var(--text-primary),
@@ -159,15 +158,20 @@ const Card = styled.div`
       .shine {
         animation-name: ${swipeb};
       }
+      > svg {
+        display: none;
+      }
     }
   }
 
   @media (min-width: 768px) {
     padding: 0;
     max-width: 500px;
-
     .card {
       aspect-ratio: 7/4;
+      .back > svg {
+        display: block;
+      }
     }
   }
 
@@ -310,7 +314,9 @@ export default function Contact() {
           style={{
             animationDelay: `
             ${-interpolate(progress, 500, 1000)}s, ${-interpolate(
-              progress, 0, 350
+              progress,
+              0,
+              350
             )}s`,
           }}
         >
@@ -330,18 +336,41 @@ export default function Contact() {
             />
           </div>
           <div className="back">
-            {links.map(({ name, url, desc }, i) => (
-              <a
-                key={i}
-                href={url}
-                target="_blank"
-                rel="noreferrer"
-                tw="flex-initial flex flex-row items-center justify-between"
-              >
-                <Icon name={name} />
-                <p>{desc ?? name}</p>
-              </a>
-            ))}
+            <QR />
+            <div
+              tw="relative flex-1 flex flex-col md:ml-12 gap-2 lg:gap-6 motion-reduce:lg:gap-4 motion-reduce:lg:text-lg"
+              css={css`
+                svg {
+                  ${tw`h-5 md:h-6 lg:h-8`}
+                }
+                @media (min-width: 768px) {
+                  &::before {
+                    content: "";
+                    width: 2px;
+                    height: 80%;
+                    background-color: var(--bg-primary);
+                    position: absolute;
+                    top: 50%;
+                    translate: 0 -50%;
+                    opacity: 0.6;
+                    ${tw`md:-left-9 lg:-left-14`}
+                  }
+                }
+              `}
+            >
+              {links.map(({ name, url, desc }, i) => (
+                <a
+                  key={i}
+                  href={url}
+                  target="_blank"
+                  rel="noreferrer"
+                  tw="flex-initial flex flex-row items-center justify-between gap-2 md:gap-4 lg:gap-6"
+                >
+                  <Icon name={name} />
+                  <p>{desc ?? name}</p>
+                </a>
+              ))}
+            </div>
             <div
               className="shine"
               style={{

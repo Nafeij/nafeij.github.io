@@ -79,7 +79,7 @@ export const scrollHorizontal = (
   ref: React.RefObject<HTMLElement>,
   e: React.WheelEvent
 ) => {
-  // e.preventDefault();
+  e.preventDefault();
   ref.current?.scrollBy({
     top: 0,
     left: e.deltaY * ref.current.clientWidth * 0.0027,

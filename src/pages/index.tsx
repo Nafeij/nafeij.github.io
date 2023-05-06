@@ -1,12 +1,13 @@
 import type { HeadFC, PageProps } from "gatsby";
 import React, { FC } from "react";
 
-import { Layout, Title, About, Projects, Contact } from "@components";
+import { Layout, Title, About, Projects, Contact, Head } from "@components";
 import { GlobalStyle } from "@styles";
 
 const IndexPage: FC<PageProps> = ({ location }) => {
   return (
     <>
+    <Head />
       <GlobalStyle />
       <Layout location={location}>
         <Title />
@@ -19,5 +20,3 @@ const IndexPage: FC<PageProps> = ({ location }) => {
 };
 
 export default IndexPage;
-
-export const Head: HeadFC = () => <title>Home Page</title>;

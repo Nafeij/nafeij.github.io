@@ -320,7 +320,7 @@ export default function NavBar({
     <header
       id="navbar"
       css={[
-        tw`w-full bottom-0 flex items-center overflow-visible justify-between fixed z-10 p-5 md:top-0 md:bottom-auto opacity-50 md:hover:opacity-100 lg:p-10`,
+        tw`w-full bottom-0 flex items-center overflow-visible justify-between fixed z-10 p-5 md:top-0 md:bottom-auto opacity-50 md:hover:opacity-100 lg:p-8`,
         css`
           ${genDelays(3, ANIM_DURATION)}
           ${menuOpen && `opacity: 1;`}
@@ -334,6 +334,11 @@ export default function NavBar({
                 `box-shadow: 0 -10px 30px -10px #00000088;
                 opacity: 1;
                 background-color: var(--bg-secondary);`))}
+          }
+          @media (prefers-reduced-motion: reduce) {
+            opacity: 1;
+            box-shadow: 0 -10px 30px -10px #00000088;
+            background-color: var(--bg-secondary);
           }
         `,
       ]}

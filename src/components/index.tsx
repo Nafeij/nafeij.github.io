@@ -9,3 +9,5 @@ export { default as Title } from './sections/Title';
 export { default as About } from './sections/About';
 export { default as Projects } from './sections/Projects';
 export { default as Contact } from './sections/Contact';
+export { default as Head } from './Head';
+export { default as QR } from './qr';
