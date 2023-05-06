@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react";
 import { Section, FancyTitle, TransitionSeries, genDelays } from "@components";
-import { useEffect } from "react";
 import React from "react";
 
 export default function Title() {

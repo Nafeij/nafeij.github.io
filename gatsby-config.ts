@@ -15,7 +15,7 @@ const config: GatsbyConfig = {
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
   flags: {
-    DEV_SSR: true
+    DEV_SSR: true,
   },
   plugins: [
     "gatsby-plugin-image",
@@ -31,6 +31,28 @@ const config: GatsbyConfig = {
             options: {},
           },
         ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: "Nafeij",
+        short_name: "Nafeij",
+        icons: [
+          {
+            src: "src/assets/images/favicon/android-chrome-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "src/assets/images/favicon/android-chrome-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+        ],
+        theme_color: "#ffffff",
+        background_color: "#ffffff",
+        display: "standalone",
       },
     },
     {

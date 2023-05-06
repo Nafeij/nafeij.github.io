@@ -14,7 +14,7 @@ import React, {
 import { scrollHorizontal } from "@hooks";
 import tw from "twin.macro";
 import { MediaContext } from "@util";
-import { NavBar } from "@components";
+import { Footer, NavBar } from "@components";
 import { WindowLocation } from "@reach/router";
 
 const backgroundSpread = keyframes`
@@ -105,6 +105,7 @@ export default function Layout({
         <ScrollContainerRefContext.Provider value={scrollRef}>
           {children}
         </ScrollContainerRefContext.Provider>
+        <Footer />
         <div
           id="fakeBg"
           css={[
@@ -121,7 +122,7 @@ export default function Layout({
                 }
               `,
           ]}
-          key={isDark + ''}
+          key={isDark + ""}
         />
       </div>
     </div>

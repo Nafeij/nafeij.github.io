@@ -8,6 +8,12 @@ type link = {
   desc?: string;
 };
 
+const repoName = "Nafeij/nafeij.github.io"
+
+export const repo = `https://github.com/${repoName}`
+
+export const repoAPI = `https://api.github.com/repos/${repoName}`
+
 export const links: link[] = [
   {
     name: "Email",
