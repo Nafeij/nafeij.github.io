@@ -45,6 +45,9 @@ const CustomStyles = css`
     --bg-dark1: #0f0f0f;
     --bg-dark2: #181818;
 
+    --bg-light: fixed radial-gradient( ellipse at center, var(--bg-light1) 0%, var(--bg-light2) 100%);
+    --bg-dark: fixed 0% 0% / 8vmin 8vmin var(--bg-dark1) radial-gradient(ellipse at center, var(--bg-dark2) 8%, transparent 8%);
+
     --link-color: #2563eb;
 
     --font-mono: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
@@ -53,6 +56,8 @@ const CustomStyles = css`
   }
 
   .light {
+    --bg: var(--bg-light);
+    --bg-under: var(--bg-dark);
     --bg-primary: var(--bg-light1);
     --bg-secondary: var(--bg-light2);
     --text-primary: #080808;
@@ -64,6 +69,8 @@ const CustomStyles = css`
   }
 
   .dark {
+    --bg: var(--bg-dark);
+    --bg-under: var(--bg-light);
     --bg-primary: var(--bg-dark1);
     --bg-secondary: var(--bg-dark2);
     --text-primary: #f1f5f9;
@@ -90,7 +97,8 @@ const CustomStyles = css`
   }
 
   /* Scrollbar Styles */
-  html, body {
+  html,
+  body {
     scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: var(--text-primary) transparent;

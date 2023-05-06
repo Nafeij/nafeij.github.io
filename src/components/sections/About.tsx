@@ -5,11 +5,10 @@ import { jsx, css } from "@emotion/react";
 import { usePrefersReducedMotion } from "@hooks";
 import { sr } from "@util";
 import { graphql, useStaticQuery } from "gatsby";
-import { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import tw from "twin.macro";
 import { ScrollContainerRefContext } from "../Layout";
 import profilepic from "@images/profilepic.jpg";
-import React from "react";
 
 export default function About() {
   const { markdownRemark } = useStaticQuery(
@@ -47,6 +46,7 @@ export default function About() {
         });
       });
     }
+    return sr?.destroy;
   }, [revealRef, techs]);
 
   return (

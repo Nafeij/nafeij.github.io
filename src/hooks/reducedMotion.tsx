@@ -1,7 +1,6 @@
-
-import { useState, useEffect } from 'react';
-const QUERY = '(prefers-reduced-motion: no-preference)';
-const isRenderingOnServer = typeof window === 'undefined';
+import { useState, useEffect } from "react";
+const QUERY = "(prefers-reduced-motion: no-preference)";
+const isRenderingOnServer = typeof window === "undefined";
 
 const getInitialState = () =>
   // For our initial server render, we won't know if the user
@@ -10,15 +9,16 @@ const getInitialState = () =>
   // occur.
   isRenderingOnServer ? true : !window.matchMedia(QUERY).matches;
 function usePrefersReducedMotion() {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(getInitialState);
+  const [prefersReducedMotion, setPrefersReducedMotion] =
+    useState(getInitialState);
   useEffect(() => {
     const mediaQueryList = window.matchMedia(QUERY);
-    const listener = (event : MediaQueryListEvent) => {
+    const listener = (event: MediaQueryListEvent) => {
       setPrefersReducedMotion(!event.matches);
     };
-    mediaQueryList.addEventListener('change', listener);
+    mediaQueryList.addEventListener("change", listener);
     return () => {
-      mediaQueryList.removeEventListener('change', listener);
+      mediaQueryList.removeEventListener("change", listener);
     };
   }, []);
   return prefersReducedMotion;

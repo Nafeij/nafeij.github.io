@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx, css, keyframes } from "@emotion/react";
-import { usePrefersReducedMotion } from "@hooks";
 import { ThemeContext } from "@styles";
 import React, {
   createContext,
@@ -10,7 +9,6 @@ import React, {
   useContext,
   useEffect,
   useRef,
-  useState,
   WheelEvent,
 } from "react";
 import { scrollHorizontal } from "@hooks";
@@ -37,21 +35,6 @@ to {
 }
 `;
 
-const bgLight = css`
-  background: fixed
-    radial-gradient(
-      ellipse at center,
-      var(--bg-light1) 0%,
-      var(--bg-light2) 100%
-    );
-`;
-
-const bgDark = css`
-  background: fixed var(--bg-dark1)
-    radial-gradient(ellipse at center, var(--bg-dark2) 8%, transparent 8%);
-  background-size: 8vmin 8vmin;
-`;
-
 export const ScrollContainerRefContext =
   createContext<RefObject<HTMLDivElement> | null>(null);
 
@@ -62,11 +45,9 @@ export default function Layout({
   children: ReactNode;
   location: WindowLocation;
 }) {
-  const { isDark } = useContext(ThemeContext);
+  const { isDark, themeSet } = useContext(ThemeContext);
   const { isMatch } = useContext(MediaContext);
-  const reducedMotion = usePrefersReducedMotion();
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [delayDark, setDelayDark] = useState(isDark);
 
   const handleScroll = useCallback(
     (e: WheelEvent) => {
@@ -84,19 +65,6 @@ export default function Layout({
       el.focus();
     }
   }, [location]);
-
-  let timeout_func: NodeJS.Timeout;
-
-  useEffect(() => {
-    if (reducedMotion) {
-      setDelayDark(isDark);
-    } else {
-      if (timeout_func) clearTimeout(timeout_func);
-      timeout_func = setTimeout(() => {
-        setDelayDark(isDark);
-      }, 600);
-    }
-  }, [isDark]);
 
   return (
     <div
@@ -121,15 +89,15 @@ export default function Layout({
         `,
       ]}
     >
-      <NavBar scrollRef={scrollRef}/>
+      <NavBar scrollRef={scrollRef} />
       <div
         id="content"
         css={[
           tw`relative transition-none isolate flex flex-nowrap items-center w-screen h-screen overflow-x-auto snap-mandatory snap-x md:snap-none flex-row md:flex-col md:overflow-x-hidden md:overflow-y-auto scroll-smooth motion-reduce:scroll-auto`,
           css`
+            background: var(--bg-under);
             counter-reset: section;
           `,
-          delayDark ? bgDark : bgLight,
         ]}
         ref={scrollRef}
         onWheel={handleScroll}
@@ -140,17 +108,20 @@ export default function Layout({
         <div
           id="fakeBg"
           css={[
-            tw`fixed h-full w-full top-0 left-0 pointer-events-none`,
+            tw`transition-none fixed h-full w-full top-0 left-0 pointer-events-none`,
             css`
-              animation: ${backgroundSpread} 700ms both;
+              background: var(--bg);
               z-index: -1;
-              @media (min-width: 768px) {
-                animation: ${backgroundSpreadBelow} 700ms both;
-              }
             `,
-            isDark ? bgDark : bgLight,
+            themeSet &&
+              css`
+                animation: ${backgroundSpread} 1s ease-out both;
+                @media (min-width: 768px) {
+                  animation: ${backgroundSpreadBelow} 1s ease-out both;
+                }
+              `,
           ]}
-          key={isDark + ""}
+          key={isDark + ''}
         />
       </div>
     </div>

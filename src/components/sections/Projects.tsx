@@ -268,7 +268,7 @@ export default function Projects() {
   return (
     <Section id="projects">
       <Scroller ref={scrollerRef}>
-        <h1 tw="mb-3 md:mb-5">Here is some of my work.</h1>
+        <h1 tw="mb-3 md:mb-7 lg:mb-10">Here is some of my work.</h1>
         <Grid
           onMouseMoveCapture={handleMouseMove}
           css={css`

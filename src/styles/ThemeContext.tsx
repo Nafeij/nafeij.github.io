@@ -4,20 +4,21 @@ const getInitialTheme = () => {
   if (typeof window !== "undefined" && window.localStorage) {
     const storedPrefs = window.localStorage.getItem("color-theme");
     if (typeof storedPrefs === "string") {
-      return storedPrefs;
+      return storedPrefs === "dark";
     }
 
     const userMedia = window.matchMedia("(prefers-color-scheme: dark)");
     if (userMedia.matches) {
-      return "dark";
+      return true;
     }
   }
-  return "dark";
+  return true;
 };
 
 const ThemeContext = createContext({
   isDark: true,
   setDark: (dark: boolean) => {},
+  themeSet: false,
 });
 
 const ThemeProvider = ({
@@ -27,7 +28,8 @@ const ThemeProvider = ({
   initialThemeIsDark?: boolean;
   children: ReactNode;
 }) => {
-  const [isDark, setDark] = useState(()=>getInitialTheme() === "dark");
+  const [isDark, setDark] = useState(getInitialTheme);
+  const [themeSet, setThemeSet] = useState(false);
 
   const rawSetTheme = (isDark: boolean) => {
     const root = window.document.documentElement;
@@ -48,7 +50,16 @@ const ThemeProvider = ({
   }, [isDark]);
 
   return (
-    <ThemeContext.Provider value={{ isDark, setDark }}>
+    <ThemeContext.Provider
+      value={{
+        isDark,
+        setDark: (dark) => {
+          setDark(dark);
+          setThemeSet(true);
+        },
+        themeSet,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );

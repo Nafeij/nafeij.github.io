@@ -9,7 +9,7 @@ import { links } from "@config";
 import Icon from "@icons";
 import tw from "twin.macro";
 import { usePrefersReducedMotion } from "@hooks";
-import { QR } from "@components";
+import { QR, Section } from "@components";
 
 const flip = keyframes`
   0% {
@@ -181,11 +181,9 @@ const Card = styled.div`
 
   @media (prefers-reduced-motion) {
     position: relative;
-    scroll-snap-align: center;
     top: 0;
     left: 0;
     transform: none;
-    min-width: 100svw;
 
     > h1 {
       opacity: 1 !important;
@@ -242,15 +240,6 @@ const Card = styled.div`
   }
 `;
 
-const Spacer = styled.section`
-  min-height: 100svh;
-  min-width: 100svw;
-  scroll-snap-align: center;
-  @media (prefers-reduced-motion) {
-    display: none;
-  }
-`;
-
 const getDOMVars = ({
   container,
   parent,
@@ -280,10 +269,11 @@ export default function Contact() {
   const parentRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
 
-  const calcProgress = (ev: Event) => {
+  const calcProgress = () => {
+    const container = ScrollContainerRef?.current;
+    if (!container) return;
     const parent = parentRef.current;
     if (!parent) return;
-    const container = ev.target as HTMLDivElement;
 
     const { start, end, scroll } = getDOMVars({
       container,
@@ -297,6 +287,7 @@ export default function Contact() {
 
   useEffect(() => {
     if (prefersReducedMotion) return;
+    calcProgress();
     ScrollContainerRef?.current?.addEventListener("scroll", calcProgress);
     return () => {
       ScrollContainerRef?.current?.removeEventListener("scroll", calcProgress);
@@ -305,83 +296,99 @@ export default function Contact() {
 
   return (
     <Fragment>
-      <Card id={prefersReducedMotion ? "contact" : ""}>
-        <h1 style={{ opacity: interpolate(progress, 0, 200) }}>
-          Let's get in touch.
-        </h1>
-        <div
-          className="card"
-          style={{
-            animationDelay: `
-            ${-interpolate(progress, 500, 1000)}s, ${-interpolate(
-              progress,
-              0,
-              350
-            )}s`,
-          }}
-        >
+      <div
+        css={css`
+          min-height: 100svh;
+          min-width: 100svw;
+          scroll-snap-align: center;
+
+          @media (prefers-reduced-motion) {
+           display: none;
+          }
+        `}
+        ref={parentRef}
+      />
+      <Section
+        id="contact"
+        tw="motion-reduce:md:items-center h-full"
+        css={css`position: unset;`}
+      >
+        <Card>
+          <h1 style={{ opacity: interpolate(progress, 0, 200) }}>
+            Let's get in touch.
+          </h1>
           <div
-            className="front"
+            className="card"
             style={{
-              animationDelay: `${-interpolate(progress, 0, 200)}s`,
+              animationDelay: `
+            ${-interpolate(progress, 500, 1000)}s, ${-interpolate(
+                progress,
+                0,
+                350
+              )}s`,
             }}
           >
-            <h1>Wang Jiefan</h1>
-            <p>CS Undergraduate</p>
             <div
-              className="shine"
+              className="front"
               style={{
-                animationDelay: `${-interpolate(progress, 450, 1000)}s`,
+                animationDelay: `${-interpolate(progress, 0, 200)}s`,
               }}
-            />
-          </div>
-          <div className="back">
-            <QR />
-            <div
-              tw="relative flex-1 flex flex-col md:ml-12 gap-2 lg:gap-6 motion-reduce:lg:gap-4 motion-reduce:lg:text-lg"
-              css={css`
-                svg {
-                  ${tw`h-5 md:h-6 lg:h-8`}
-                }
-                @media (min-width: 768px) {
-                  &::before {
-                    content: "";
-                    width: 2px;
-                    height: 80%;
-                    background-color: var(--bg-primary);
-                    position: absolute;
-                    top: 50%;
-                    translate: 0 -50%;
-                    opacity: 0.6;
-                    ${tw`md:-left-9 lg:-left-14`}
-                  }
-                }
-              `}
             >
-              {links.map(({ name, url, desc }, i) => (
-                <a
-                  key={i}
-                  href={url}
-                  target="_blank"
-                  rel="noreferrer"
-                  tw="flex-initial flex flex-row items-center justify-between gap-2 md:gap-4 lg:gap-6"
-                >
-                  <Icon name={name} />
-                  <p>{desc ?? name}</p>
-                </a>
-              ))}
+              <h1>Wang Jiefan</h1>
+              <p>CS Undergraduate</p>
+              <div
+                className="shine"
+                style={{
+                  animationDelay: `${-interpolate(progress, 450, 1000)}s`,
+                }}
+              />
             </div>
-            <div
-              className="shine"
-              style={{
-                animationDelay: `${-interpolate(progress, 450, 1000)}s`,
-              }}
-            />
+            <div className="back">
+              <QR />
+              <div
+                tw="relative flex-1 flex flex-col md:ml-12 gap-2 lg:gap-6 motion-reduce:lg:gap-4 motion-reduce:lg:text-lg"
+                css={css`
+                  svg {
+                    ${tw`h-5 md:h-6 lg:h-8`}
+                  }
+                  @media (min-width: 768px) {
+                    &::before {
+                      content: "";
+                      width: 2px;
+                      height: 80%;
+                      background-color: var(--bg-primary);
+                      position: absolute;
+                      top: 50%;
+                      translate: 0 -50%;
+                      opacity: 0.6;
+                      ${tw`md:-left-9 lg:-left-14`}
+                    }
+                  }
+                `}
+              >
+                {links.map(({ name, url, desc }, i) => (
+                  <a
+                    key={i}
+                    href={url}
+                    target="_blank"
+                    rel="noreferrer"
+                    tw="flex-initial flex flex-row items-center justify-between gap-2 md:gap-4 lg:gap-6"
+                  >
+                    <Icon name={name} />
+                    <p>{desc ?? name}</p>
+                  </a>
+                ))}
+              </div>
+              <div
+                className="shine"
+                style={{
+                  animationDelay: `${-interpolate(progress, 450, 1000)}s`,
+                }}
+              />
+            </div>
           </div>
-        </div>
-      </Card>
-      <Spacer ref={parentRef} />
-      <Spacer id={prefersReducedMotion ? "" : "contact"} />
+        </Card>
+      </Section>
     </Fragment>
   );
 }
