@@ -198,7 +198,7 @@ const DarkButton = () => {
   const { isDark, setDark } = useContext(ThemeContext);
   return (
     <button
-      tw="h-8 z-10 aspect-square border-0 outline-0 flex justify-center items-center bg-transparent hover:scale-110 active:scale-90 md:h-12"
+      tw="h-8 z-10 aspect-square border-0 outline-0 flex justify-center items-center bg-transparent hover:scale-110 active:scale-90 md:h-10"
       css={{
         "& > svg": [tw`h-full aspect-square text-[var(--text-primary)]`],
       }}
@@ -333,7 +333,14 @@ export default function NavBar({
               (scrollDirection === "backward" &&
                 `box-shadow: 0 -10px 30px -10px #00000088;
                 opacity: 1;
-                background-color: var(--bg-secondary);`))}
+                background-color: var(--bg-secondary);
+                padding-top: .5rem;
+                padding-bottom: .5rem;
+                @media (min-width: 768px) {
+                  padding-top: 1rem;
+                  padding-bottom: 1rem;
+                }
+                `))}
           }
           @media (prefers-reduced-motion: reduce) {
             opacity: 1;
@@ -349,9 +356,7 @@ export default function NavBar({
       <TransitionSeries duration={ANIM_DURATION} trigger={true}>
         <StyledLinks>
           <nav /* ref={navRef} */>
-            <ol
-              css={genDelays(navLinks.length + 1)}
-            >
+            <ol css={genDelays(navLinks.length + 1)}>
               <TransitionSeries duration={innerDuration} trigger={true}>
                 {navLinks
                   .map(({ url, name }, i) => (

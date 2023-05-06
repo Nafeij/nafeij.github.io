@@ -1,7 +1,7 @@
 ---
 date: '2022-10-28'
 title: 'Sliding Window'
-github: 'https://github.com/Nafeij/Paper'
+github: 'https://github.com/Nafeij/PySlidingWindow'
 tech:
   - Python
 big: false

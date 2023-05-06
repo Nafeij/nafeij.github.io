@@ -69,7 +69,7 @@ export default function Layout({
   return (
     <div
       css={[
-        tw`text-secondary text-lg md:text-xl lg:text-2xl`,
+        tw`text-secondary text-base md:text-lg lg:text-xl`,
         css`
           font-family: "source_sans_pro";
           h1 {
