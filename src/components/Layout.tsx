@@ -1,7 +1,6 @@
-/** @jsx jsx */
-import { jsx, css, keyframes } from "@emotion/react";
+import { css, keyframes } from "@emotion/react";
 import { ThemeContext } from "@styles";
-import React, {
+import {
   createContext,
   ReactNode,
   RefObject,
@@ -9,12 +8,13 @@ import React, {
   useContext,
   useEffect,
   useRef,
+  useState,
   WheelEvent,
 } from "react";
-import { scrollHorizontal } from "@hooks";
+import { scrollHorizontal, usePrefersReducedMotion } from "@hooks";
 import tw from "twin.macro";
 import { MediaContext } from "@util";
-import { Footer, NavBar } from "@components";
+import { Footer, Indicator, NavBar } from "@components";
 import { WindowLocation } from "@reach/router";
 
 const backgroundSpread = keyframes`
@@ -45,7 +45,10 @@ export default function Layout({
   children: ReactNode;
   location: WindowLocation;
 }) {
-  const { isDark, themeSet } = useContext(ThemeContext);
+  const { isDark, setDark } = useContext(ThemeContext);
+  const [animate, setAnimate] = useState(false);
+  const [scrolled, setScrolled] = useState(true);
+  const reducedMotion = usePrefersReducedMotion();
   const { isMatch } = useContext(MediaContext);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -65,6 +68,18 @@ export default function Layout({
       el.focus();
     }
   }, [location]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setScrolled(false);
+    }, 100);
+  }, []);
+
+  const toggleDark = () => {
+    setAnimate(true);
+    setDark(!isDark);
+    setTimeout(() => setAnimate(false), 1000);
+  };
 
   return (
     <div
@@ -88,12 +103,13 @@ export default function Layout({
           }
         `,
       ]}
+      className={animate ? "" : "no_anim"}
     >
-      <NavBar scrollRef={scrollRef} />
+      <NavBar scrollRef={scrollRef} toggleDark={toggleDark} />
       <div
         id="content"
         css={[
-          tw`relative transition-none isolate flex flex-nowrap items-center  overflow-x-auto snap-mandatory snap-x snap-always md:snap-none flex-row md:flex-col md:overflow-x-hidden md:overflow-y-auto scroll-smooth motion-reduce:scroll-auto`,
+          tw`relative transition-none isolate flex flex-nowrap items-center  overflow-x-auto snap-mandatory snap-x md:snap-none flex-row md:flex-col md:overflow-x-hidden md:overflow-y-auto scroll-smooth motion-reduce:scroll-auto`,
           css`
             background: var(--bg-under);
             counter-reset: section;
@@ -105,6 +121,7 @@ export default function Layout({
         onWheel={handleScroll}
       >
         <ScrollContainerRefContext.Provider value={scrollRef}>
+          {!scrolled && <Indicator bottom={false} />}
           {children}
         </ScrollContainerRefContext.Provider>
         <Footer />
@@ -116,7 +133,7 @@ export default function Layout({
               background: var(--bg);
               z-index: -1;
             `,
-            themeSet &&
+            animate &&
               css`
                 animation: ${backgroundSpread} 1s ease-out both;
                 @media (min-width: 768px) {

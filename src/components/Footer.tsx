@@ -1,7 +1,4 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react";
 import { useEffect, useState } from "react";
-import React from "react";
 import { repo, repoAPI } from "@config";
 import Icon from "@icons";
 import styled from "@emotion/styled";

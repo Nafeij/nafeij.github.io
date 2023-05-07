@@ -1,7 +1,5 @@
-/** @jsx jsx */
-import { jsx, css, keyframes } from "@emotion/react";
+import { css, keyframes } from "@emotion/react";
 import { Fragment, useContext, useEffect, useRef, useState } from "react";
-import React from "react";
 import styled from "@emotion/styled";
 import { ScrollContainerRefContext } from "../Layout";
 import { MediaContext } from "@util";

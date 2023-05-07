@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/react";
+import { css } from "@emotion/react";
 import { Helmet } from "react-helmet";
 import { useContext, useState, useEffect, useRef } from "react";
 import { ThemeContext } from "@styles";
@@ -197,15 +196,15 @@ const StyledLinks = styled.div`
   }
 `;
 
-const DarkButton = () => {
-  const { isDark, setDark } = useContext(ThemeContext);
+const DarkButton = ({ toggleDark }: { toggleDark: () => void }) => {
+  const { isDark } = useContext(ThemeContext);
   return (
     <button
       tw="h-8 z-10 aspect-square border-0 outline-0 flex justify-center items-center bg-transparent hover:scale-110 active:scale-90 md:h-10"
       css={{
         "& > svg": [tw`h-full aspect-square text-[var(--text-primary)]`],
       }}
-      onClick={() => setDark(!isDark)}
+      onClick={toggleDark}
     >
       {isDark ? <MoonIcon /> : <SunIcon />}
     </button>
@@ -225,8 +224,10 @@ const innerDuration =
 
 export default function NavBar({
   scrollRef,
+  toggleDark,
 }: {
   scrollRef: React.RefObject<HTMLDivElement>;
+  toggleDark: () => void;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolledToTop, setScrolledToTop] = useState(true);
@@ -370,7 +371,7 @@ export default function NavBar({
             </ol>
           </nav>
         </StyledLinks>
-        <DarkButton />
+        <DarkButton toggleDark={toggleDark} />
         <div tw="z-0 block md:hidden">
           <StyledHamburgerButton onClick={toggleMenu} menuOpen={menuOpen}>
             <div className="ham-box">

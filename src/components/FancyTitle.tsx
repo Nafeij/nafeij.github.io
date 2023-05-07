@@ -1,9 +1,7 @@
-/** @jsx jsx */
-import { jsx, css, keyframes } from "@emotion/react";
+import { css, keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 import { usePrefersReducedMotion } from "@hooks";
 import { useState } from "react";
-import tw from "twin.macro";
 
 const Inspiring = ({ animCallback }: { animCallback: () => void }) => (
   <svg viewBox="0 0 1040 260" height="100%" id="Inspiring">

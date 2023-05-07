@@ -11,4 +11,5 @@ export { default as Projects } from './sections/Projects';
 export { default as Contact } from './sections/Contact';
 export { default as Head } from './Head';
 export { default as Footer } from './Footer';
+export { default as Indicator } from './Indicator';
 export { default as QR } from './qr';

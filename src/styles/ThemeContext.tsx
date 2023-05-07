@@ -18,7 +18,6 @@ const getInitialTheme = () => {
 const ThemeContext = createContext({
   isDark: true,
   setDark: (dark: boolean) => {},
-  themeSet: false,
 });
 
 const ThemeProvider = ({
@@ -29,7 +28,6 @@ const ThemeProvider = ({
   children: ReactNode;
 }) => {
   const [isDark, setDark] = useState(getInitialTheme);
-  const [themeSet, setThemeSet] = useState(false);
 
   const rawSetTheme = (isDark: boolean) => {
     const root = window.document.documentElement;
@@ -53,11 +51,7 @@ const ThemeProvider = ({
     <ThemeContext.Provider
       value={{
         isDark,
-        setDark: (dark) => {
-          setDark(dark);
-          setThemeSet(true);
-        },
-        themeSet,
+        setDark,
       }}
     >
       {children}

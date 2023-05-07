@@ -1,11 +1,9 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react";
 import tw from "twin.macro";
 import { ForwardedRef, forwardRef, ReactNode } from "react";
 import styled from "@emotion/styled";
 
 const StyledSection = styled.section`
-  ${tw`flex justify-center items-start flex-col snap-center tracking-wide px-6 md:px-24`}
+  ${tw`flex justify-center items-start flex-col snap-center snap-always tracking-wide px-6 md:px-24`}
   min-width: 101%; /* need to be >100 to stop some funky nonsense with scroll snapping to 2nd section*/
   max-height: 100%;
   box-sizing: border-box;

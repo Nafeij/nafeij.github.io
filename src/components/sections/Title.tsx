@@ -1,7 +1,5 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react";
+import { css } from "@emotion/react";
 import { Section, FancyTitle, TransitionSeries, genDelays } from "@components";
-import React from "react";
 
 export default function Title() {
   return (

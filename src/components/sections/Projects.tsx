@@ -1,6 +1,5 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react";
-import { MediaContext, sr } from "@util";
+import { css } from "@emotion/react";
+import { sr } from "@util";
 import { Section, TransitionSeries, genDelays } from "@components";
 import { graphql, useStaticQuery } from "gatsby";
 import styled from "@emotion/styled";
@@ -124,7 +123,7 @@ const Grid = styled.div`
     flex-direction: column;
     flex-wrap: wrap;
     padding-bottom: 1rem;
-    max-height: 100%;
+    max-height: 90%;
     gap: 1%;
     align-items: stretch;
     justify-content: start;

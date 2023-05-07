@@ -1,11 +1,10 @@
-/** @jsx jsx */
 import { Section } from "@components";
 import { srConfig } from "@config";
-import { jsx, css } from "@emotion/react";
+import { css } from "@emotion/react";
 import { usePrefersReducedMotion } from "@hooks";
 import { sr } from "@util";
 import { graphql, useStaticQuery } from "gatsby";
-import React, { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import tw from "twin.macro";
 import { ScrollContainerRefContext } from "../Layout";
 import profilepic from "@images/profilepic.jpg";
