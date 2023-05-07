@@ -13,11 +13,11 @@ const StyledFooter = styled.div`
   font-family: var(--font-mono);
   ${tw`text-xs md:text-sm lg:text-base md:p-6 lg:p-8`}
 
-  width: 100svw;
-  margin-left: -50%;
-  translate: -50%;
+  min-width: 100%;
+  margin-left: -100%;
   align-self: end;
-  margin-bottom: 1rem;
+  margin-bottom: 5rem;
+  text-align: center;
 
   a {
     margin: 0 auto;

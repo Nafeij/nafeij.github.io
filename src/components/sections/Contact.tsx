@@ -146,7 +146,7 @@ const Card = styled.div`
       }
     }
     .back {
-      ${tw`flex-row items-center justify-between gap-2 md:gap-4 lg:gap-12 text-sm md:text-base lg:text-2xl`}
+      ${tw`flex-row items-center justify-between gap-2 md:gap-4 lg:gap-12 text-base md:text-lg lg:text-xl`}
 
       background: linear-gradient(
         -45deg,
@@ -296,24 +296,15 @@ export default function Contact() {
 
   return (
     <Fragment>
-      <div
-        css={css`
-          min-height: 100svh;
-          min-width: 100svw;
-          scroll-snap-align: center;
-
-          @media (prefers-reduced-motion) {
-           display: none;
-          }
-        `}
+      <Section
+        tw="min-w-full min-h-full after:hidden motion-reduce:hidden"
         ref={parentRef}
       />
       <Section
         id="contact"
-        tw="motion-reduce:md:items-center h-full"
-        css={css`position: unset;`}
+        tw="min-w-full min-h-full motion-reduce:md:items-center"
       >
-        <Card>
+        <Card id="card">
           <h1 style={{ opacity: interpolate(progress, 0, 200) }}>
             Let's get in touch.
           </h1>

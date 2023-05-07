@@ -4,6 +4,7 @@ title: 'Concurrent Order Matching Engine'
 github: 'https://github.com/Nafeij/order-matching'
 tech:
   - C++20
+  - Multithreading
 big: false
 ---
 

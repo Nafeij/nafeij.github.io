@@ -1,29 +1,22 @@
 const email = "wng.jiefan@gmail.com";
 
-const phone = "+65-9626-6581";
-
 type link = {
   name: string;
   url: string;
   desc?: string;
 };
 
-const repoName = "Nafeij/nafeij.github.io"
+const repoName = "Nafeij/nafeij.github.io";
 
-export const repo = `https://github.com/${repoName}`
+export const repo = `https://github.com/${repoName}`;
 
-export const repoAPI = `https://api.github.com/repos/${repoName}`
+export const repoAPI = `https://api.github.com/repos/${repoName}`;
 
 export const links: link[] = [
   {
     name: "Email",
     url: `mailto:${email}`,
     desc: email,
-  },
-  {
-    name: "Phone",
-    url: `tel:${phone}`,
-    desc: phone.replace(/-/g, " "),
   },
   {
     name: "Resume",
@@ -37,15 +30,15 @@ export const links: link[] = [
     name: "LinkedIn",
     url: "https://www.linkedin.com/in/wang-jiefan/",
   },
-  /* {
+  {
     name: "LeetCode",
     url: "https://leetcode.com/user5917bB/",
-  }, */
-  {
+  },
+  /* {
     name: "Reddit",
     url: "https://reddit.com/u/nafeij",
   },
-  /* {
+  {
     name: "Strava",
     url: "https://www.strava.com/athletes/102314645",
   }, */

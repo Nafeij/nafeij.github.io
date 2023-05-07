@@ -4,6 +4,7 @@ title: 'Sliding Window'
 github: 'https://github.com/Nafeij/PySlidingWindow'
 tech:
   - Python
+  - Networking
 big: false
 ---
 

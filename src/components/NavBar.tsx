@@ -13,6 +13,8 @@ import { Link } from "gatsby";
 import { usePrefersReducedMotion, useScrollDirection } from "@hooks";
 import { KEY_CODES, MediaContext } from "@util";
 
+// https://github.com/bchiang7/v4
+
 const StyledHamburgerButton = styled.button<{ menuOpen: boolean }>`
   @media (max-width: 768px) {
     position: relative;
@@ -99,14 +101,14 @@ const StyledSidebar = styled.aside<{ menuOpen: boolean }>`
     bottom: 0;
     right: 0;
     padding: 50px 10px;
-    width: min(75vw, 400px);
+    width: min(75%, 400px);
     height: 100vh;
     background-color: var(--bg-secondary);
     box-shadow: -10px 0px 30px -15px #00000088;
     outline: 0;
     z-index: 9;
     transform: translateY(-100%)
-      translateX(${({ menuOpen }) => (menuOpen ? 0 : 100)}vw);
+      translateX(${({ menuOpen }) => (menuOpen ? 0 : 100)}%);
     visibility: ${({ menuOpen }) => (menuOpen ? "visible" : "hidden")};
     transition: var(--transition);
   }
@@ -158,9 +160,10 @@ const StyledSidebar = styled.aside<{ menuOpen: boolean }>`
 
 const StyledLinks = styled.div`
   font-family: var(--font-mono);
+  display: none;
 
-  @media (max-width: 768px) {
-    display: none;
+  @media (min-width: 768px) {
+    display: block;
   }
 
   ol {
@@ -310,12 +313,6 @@ export default function NavBar({
     };
   }, []);
 
-  /*
-  useEffect(() => {
-    if (!navRef.current) return;
-    menuFocusables.current = Array.from(navRef.current.querySelectorAll("a"));
-  }, [navRef.current]);
-  */
   return (
     <header
       id="navbar"

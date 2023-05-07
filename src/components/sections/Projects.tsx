@@ -19,7 +19,6 @@ const Scroller = styled.div`
   overflow-x: hidden;
   padding-top: 2rem;
   padding-bottom: 6rem;
-  scrollbar-width: none;
   display: flex;
   flex-direction: column;
   max-width: 100%;
@@ -28,19 +27,15 @@ const Scroller = styled.div`
     overflow: visible;
     padding: 7rem 0;
     height: 100%;
+    width: 100%;
     box-sizing: border-box;
-  }
-
-  @media (min-width: 1280px) {
-    padding-top: 10rem;
   }
 `;
 
 const Grid = styled.div`
   flex: 1 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-auto-flow: row dense;
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
 
   .card {
@@ -89,6 +84,7 @@ const Grid = styled.div`
     }
 
     .card-content {
+      height: 100%;
       background-color: var(--bg-secondary);
       border-radius: inherit;
       display: flex;
@@ -98,19 +94,19 @@ const Grid = styled.div`
       padding: 1.5rem;
       z-index: 2;
       overflow: hidden;
-      ${tw`text-base md:text-lg lg:text-xl`}
+      ${tw`text-sm md:text-base lg:text-lg`}
 
       h1 {
-        ${tw`text-2xl md:text-3xl lg:text-4xl`}
+        ${tw`text-xl md:text-2xl lg:text-3xl`}
       }
 
       h2 {
-        ${tw`text-xl md:text-2xl lg:text-3xl`}
+        ${tw`text-lg md:text-xl lg:text-2xl`}
       }
 
       svg {
         flex: 0 0 auto;
-        ${tw`inline-block align-top aspect-square w-6 md:w-7 lg:w-8`}
+        ${tw`inline-block align-top aspect-square h-full`}
       }
 
       .img {
@@ -125,15 +121,31 @@ const Grid = styled.div`
   @media (min-width: 768px) {
     overflow-x: scroll;
     position: relative;
-    grid-auto-flow: column dense;
-    grid-template-columns: unset;
-    grid-template-rows: repeat(auto-fit, minmax(auto, 49%));
-    grid-auto-columns: minmax(20rem, 1fr);
+    flex-direction: column;
+    flex-wrap: wrap;
     padding-bottom: 1rem;
+    max-height: 100%;
+    gap: 1%;
+    align-items: stretch;
+    justify-content: start;
+    align-content: start;
+
+    .card {
+      flex: 1;
+      max-width: 49%;
+      min-height: 32%;
+    }
 
     /* .card.big {
       grid-column-end: span 2;
     } */
+  }
+
+  @media (min-width: 1024px) {
+    .card {
+      max-width: 32%;
+      min-height: 49%;
+    }
   }
 `;
 
@@ -222,31 +234,31 @@ export default function Projects() {
       >
         <div className="card-content">
           {image && <GatsbyImage image={image} alt={title} className="img" />}
-          <span tw="flex justify-between items-start mb-1">
-            <h2 tw="inline-block pt-2">{title}</h2>
-            <span tw="flex gap-5">
-              {external && (
-                <a
-                  href={external}
-                  aria-label="External Link"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Icon name="External" />
-                </a>
-              )}
-              {github && (
-                <a
-                  href={github}
-                  aria-label="GitHub Link"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Icon name="GitHub" />
-                </a>
-              )}
-            </span>
+          <span tw="flex justify-end gap-4 h-5 md:h-6 lg:h-8">
+            {external && (
+              <a
+                tw="h-full"
+                href={external}
+                aria-label="External Link"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Icon name="External" />
+              </a>
+            )}
+            {github && (
+              <a
+                tw="h-full"
+                href={github}
+                aria-label="GitHub Link"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Icon name="GitHub" />
+              </a>
+            )}
           </span>
+          <h2 tw="inline-block">{title}</h2>
           <p dangerouslySetInnerHTML={{ __html: html }} />
           {tech.length && (
             <ul
@@ -266,8 +278,8 @@ export default function Projects() {
   };
 
   return (
-    <Section id="projects">
-      <Scroller ref={scrollerRef}>
+    <Section id="projects" tw="px-0 md:px-24">
+      <Scroller ref={scrollerRef} tw="px-4 md:px-0">
         <h1 tw="mb-3 md:mb-7 lg:mb-10">Here is some of my work.</h1>
         <Grid
           onMouseMoveCapture={handleMouseMove}
@@ -277,7 +289,7 @@ export default function Projects() {
               opacity: ${isDark ? ".5" : ".25"};
             }
             & > .card:hover::before {
-              opacity: .05;
+              opacity: 0.05;
             }
           `}
           {...events}

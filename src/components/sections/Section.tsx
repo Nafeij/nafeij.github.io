@@ -6,41 +6,39 @@ import styled from "@emotion/styled";
 
 const StyledSection = styled.section`
   ${tw`flex justify-center items-start flex-col snap-center tracking-wide px-6 md:px-24`}
-  min-width: 101svw; /* need to be >100 to stop some funky nonsense with scroll snapping to 2nd section*/
-  max-height: 100svh;
+  min-width: 101%; /* need to be >100 to stop some funky nonsense with scroll snapping to 2nd section*/
+  max-height: 100%;
   box-sizing: border-box;
   position: relative;
   margin-right: 2px;
 
   &::after {
+    display: none;
     content: "";
     margin: 0 auto;
     background-color: var(--text-secondary);
     position: absolute;
     opacity: 0.5;
-    right: -2px;
-    width: 2px;
-    height: 60svw;
+    width: 60svw;
+    bottom: -2px;
+    height: 2px;
     align-self: center;
-  }
-
-  &:last-of-type::after {
-    display: none;
   }
 
   @media (min-width: 768px) {
     min-width: unset;
     width: 100%;
     max-width: 1280px;
-    min-height: 100svh;
+    min-height: 100%;
     margin-right: 0;
     margin-bottom: 2px;
     &::after {
-      right: unset;
-      bottom: -2px;
-      width: 60svw;
-      height: 2px;
+      display: block;
     }
+  }
+
+  &:last-of-type::after {
+    display: none;
   }
 `;
 interface SectionProps extends React.ComponentPropsWithoutRef<"div"> {

@@ -84,7 +84,7 @@ const CustomStyles = css`
   body.blur {
     #content {
       overflow: hidden;
-      & > *:not(#fakeBg) {
+      & > *:not(#fakeBg):not(#contact), #contact #card {
         filter: blur(5px) brightness(0.7);
         pointer-events: none;
         user-select: none;
@@ -101,17 +101,17 @@ const CustomStyles = css`
   body {
     scroll-behavior: smooth;
     scrollbar-width: thin;
-    scrollbar-color: var(--text-primary) transparent;
+    scrollbar-color: var(--text-secondary) transparent;
   }
   ::-webkit-scrollbar {
-    width: 12px;
+    width: 5px;
+    height: 5px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background-color: transparent;
-    border: 3px solid var(--text-primary);
+    background-color: var(--text-secondary);
     border-radius: 10px;
   }
 
