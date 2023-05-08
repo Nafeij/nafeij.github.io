@@ -6,9 +6,9 @@ external: 'https://youtube.com/playlist?list=PLlohcFkey0CXnMqcs3Z3Yg_cWFbcjOPZJ'
 tech:
   - Python
   - Typescript
-  - OpenAI Whisper
-  - Demucs
+  - OpenAI
   - Remotion
+  - AWS Lambda
 big: true
 cover: './demo.png'
 ---
