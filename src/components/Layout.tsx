@@ -13,13 +13,13 @@ import {
 } from "react";
 import {
   scrollHorizontal,
-  usePrefersReducedMotion,
-  useScrollDirection,
+  usePrefersReducedMotion
 } from "@hooks";
 import tw from "twin.macro";
 import { MediaContext } from "@util";
 import { Footer, Indicator, NavBar } from "@components";
 import { WindowLocation } from "@reach/router";
+import { get } from "http";
 
 const backgroundSpread = keyframes`
 from {
@@ -39,6 +39,16 @@ to {
 }
 `;
 
+const getInitialScroll = () => {
+  if (typeof window !== "undefined" && window.localStorage) {
+    const storedPrefs = window.localStorage.getItem("scrolled");
+    if (typeof storedPrefs === "string") {
+      return +storedPrefs;
+    }
+  }
+  return 0;
+};
+
 export const ScrollContainerRefContext =
   createContext<RefObject<HTMLDivElement> | null>(null);
 
@@ -53,16 +63,11 @@ export default function Layout({
   const [animate, setAnimate] = useState(false);
 
   const [showIndicator, setShowIndicator] = useState(false);
+  const scrollNumber = getInitialScroll();
+  const reduceMotion = usePrefersReducedMotion();
 
   const { isMatch } = useContext(MediaContext);
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  const scrollDir = useScrollDirection({
-    containerRef: scrollRef,
-    horizontal: true,
-    thresholdPixels: 100,
-    off: showIndicator,
-  });
 
   const handleScroll = useCallback(
     (e: WheelEvent) => {
@@ -78,6 +83,15 @@ export default function Layout({
     setTimeout(() => setAnimate(false), 1000);
   };
 
+  const checkScroll = () => {
+    if (scrollRef.current) {
+      const { scrollLeft } = scrollRef.current;
+      if (showIndicator && scrollLeft > 100) {
+        setShowIndicator(false);
+      }
+    }
+  };
+
   useEffect(() => {
     if (location.hash) return;
     const el = document.getElementById("home");
@@ -91,8 +105,12 @@ export default function Layout({
     const timeOut = setTimeout(() => {
       setShowIndicator(true);
     }, 10000);
-    return () => clearTimeout(timeOut);
-  }, [location]);
+    scrollRef.current?.addEventListener("scroll", checkScroll);
+    return () => {
+      clearTimeout(timeOut);
+      scrollRef.current?.removeEventListener("scroll", checkScroll);
+    };
+  }, [scrollRef]);
 
   return (
     <div
@@ -134,7 +152,7 @@ export default function Layout({
         onWheel={handleScroll}
       >
         <ScrollContainerRefContext.Provider value={scrollRef}>
-          <Indicator bottom={false} show={showIndicator} />
+          <Indicator bottom={false} show={showIndicator && scrollNumber < 3} />
           {children}
         </ScrollContainerRefContext.Provider>
         <Footer />
