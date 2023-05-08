@@ -31,29 +31,21 @@ const arrow = keyframes`
 }
 `;
 
-const fadeIn = keyframes`
-0% {
-    opacity: 0;
-}
-100% {
-    opacity: 1;
-}
-`;
-
-const StyledIndicator = styled.div<{ bottom: boolean }>`
+const StyledIndicator = styled.div<{ bottom: boolean, show: boolean }>`
   ${({ bottom }) => bottom && "height: 5rem;"}
+  pointer-events: none;
   width: 5rem;
   margin: 0 auto;
   position: absolute;
   left: 0;
   right: 0;
   bottom: 27%;
-  opacity: 0.5;
+  opacity: ${({show}) => show ? 1 : 0};
   display: flex;
   flex-direction: ${({ bottom }) => (bottom ? "column" : "row")};
   align-items: center;
   gap: 10%;
-  animation: ${fadeIn} 5s ease-in-out both;
+  transition: opacity ${({show}) => show ? 5 : 1}s ease-in-out;
 
   &::before,
   &::after {
@@ -108,10 +100,9 @@ const StyledIndicator = styled.div<{ bottom: boolean }>`
   }
 `;
 
-export default function Indicator({ bottom = true }: { bottom?: boolean }) {
-  console.log(bottom);
+export default function Indicator({ bottom = true, show }: { bottom?: boolean, show : boolean }) {
   return (
-    <StyledIndicator bottom={bottom}>
+    <StyledIndicator bottom={bottom} show={show}>
       <div className="dots" />
     </StyledIndicator>
   );

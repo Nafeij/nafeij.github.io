@@ -11,7 +11,11 @@ import {
   useState,
   WheelEvent,
 } from "react";
-import { scrollHorizontal, usePrefersReducedMotion } from "@hooks";
+import {
+  scrollHorizontal,
+  usePrefersReducedMotion,
+  useScrollDirection,
+} from "@hooks";
 import tw from "twin.macro";
 import { MediaContext } from "@util";
 import { Footer, Indicator, NavBar } from "@components";
@@ -47,10 +51,18 @@ export default function Layout({
 }) {
   const { isDark, setDark } = useContext(ThemeContext);
   const [animate, setAnimate] = useState(false);
-  const [scrolled, setScrolled] = useState(true);
-  const reducedMotion = usePrefersReducedMotion();
+
+  const [showIndicator, setShowIndicator] = useState(false);
+
   const { isMatch } = useContext(MediaContext);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollDir = useScrollDirection({
+    containerRef: scrollRef,
+    horizontal: true,
+    thresholdPixels: 100,
+    off: showIndicator,
+  });
 
   const handleScroll = useCallback(
     (e: WheelEvent) => {
@@ -59,6 +71,12 @@ export default function Layout({
     },
     [scrollRef]
   );
+
+  const toggleDark = () => {
+    setAnimate(true);
+    setDark(!isDark);
+    setTimeout(() => setAnimate(false), 1000);
+  };
 
   useEffect(() => {
     if (location.hash) return;
@@ -70,16 +88,11 @@ export default function Layout({
   }, [location]);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setScrolled(false);
-    }, 100);
-  }, []);
-
-  const toggleDark = () => {
-    setAnimate(true);
-    setDark(!isDark);
-    setTimeout(() => setAnimate(false), 1000);
-  };
+    const timeOut = setTimeout(() => {
+      setShowIndicator(true);
+    }, 10000);
+    return () => clearTimeout(timeOut);
+  }, [location]);
 
   return (
     <div
@@ -121,7 +134,7 @@ export default function Layout({
         onWheel={handleScroll}
       >
         <ScrollContainerRefContext.Provider value={scrollRef}>
-          {!scrolled && <Indicator bottom={false} />}
+          <Indicator bottom={false} show={showIndicator} />
           {children}
         </ScrollContainerRefContext.Provider>
         <Footer />
