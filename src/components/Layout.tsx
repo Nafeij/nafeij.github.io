@@ -4,22 +4,17 @@ import {
   createContext,
   ReactNode,
   RefObject,
-  useCallback,
   useContext,
   useEffect,
   useRef,
   useState,
   WheelEvent,
 } from "react";
-import {
-  scrollHorizontal,
-  usePrefersReducedMotion
-} from "@hooks";
+import { scrollHorizontal } from "@hooks";
 import tw from "twin.macro";
 import { MediaContext } from "@util";
 import { Footer, Indicator, NavBar } from "@components";
 import { WindowLocation } from "@reach/router";
-import { get } from "http";
 
 const backgroundSpread = keyframes`
 from {
@@ -39,16 +34,6 @@ to {
 }
 `;
 
-const getInitialScroll = () => {
-  if (typeof window !== "undefined" && window.localStorage) {
-    const storedPrefs = window.localStorage.getItem("scrolled");
-    if (typeof storedPrefs === "string") {
-      return +storedPrefs;
-    }
-  }
-  return 0;
-};
-
 export const ScrollContainerRefContext =
   createContext<RefObject<HTMLDivElement> | null>(null);
 
@@ -61,35 +46,20 @@ export default function Layout({
 }) {
   const { isDark, setDark } = useContext(ThemeContext);
   const [animate, setAnimate] = useState(false);
-
-  const [showIndicator, setShowIndicator] = useState(false);
-  const scrollNumber = getInitialScroll();
-  const reduceMotion = usePrefersReducedMotion();
+  const [scrollX, setScrollX] = useState(0);
 
   const { isMatch } = useContext(MediaContext);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const handleScroll = useCallback(
-    (e: WheelEvent) => {
-      if (isMatch("md")) return;
-      scrollHorizontal(scrollRef, e);
-    },
-    [scrollRef]
-  );
+  const handleScroll = (e: WheelEvent) => {
+    if (isMatch("md")) return;
+    scrollHorizontal(scrollRef, e);
+  };
 
   const toggleDark = () => {
     setAnimate(true);
     setDark(!isDark);
     setTimeout(() => setAnimate(false), 1000);
-  };
-
-  const checkScroll = () => {
-    if (scrollRef.current) {
-      const { scrollLeft } = scrollRef.current;
-      if (showIndicator && scrollLeft > 100) {
-        setShowIndicator(false);
-      }
-    }
   };
 
   useEffect(() => {
@@ -100,17 +70,6 @@ export default function Layout({
       el.focus();
     }
   }, [location]);
-
-  useEffect(() => {
-    const timeOut = setTimeout(() => {
-      setShowIndicator(true);
-    }, 10000);
-    scrollRef.current?.addEventListener("scroll", checkScroll);
-    return () => {
-      clearTimeout(timeOut);
-      scrollRef.current?.removeEventListener("scroll", checkScroll);
-    };
-  }, [scrollRef]);
 
   return (
     <div
@@ -152,7 +111,7 @@ export default function Layout({
         onWheel={handleScroll}
       >
         <ScrollContainerRefContext.Provider value={scrollRef}>
-          <Indicator bottom={false} show={showIndicator && scrollNumber < 3} />
+          <Indicator bottom={false} />
           {children}
         </ScrollContainerRefContext.Provider>
         <Footer />
