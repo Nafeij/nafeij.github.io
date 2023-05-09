@@ -1,5 +1,8 @@
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
+import { usePrefersReducedMotion } from "@hooks";
+import { useEffect, useRef, useState } from "react";
+import ReactDOM from "react-dom";
 
 const dot = keyframes`
 0% {
@@ -31,7 +34,7 @@ const arrow = keyframes`
 }
 `;
 
-const StyledIndicator = styled.div<{ bottom: boolean, show: boolean }>`
+const StyledIndicator = styled.div<{ bottom: boolean; show: boolean }>`
   ${({ bottom }) => bottom && "height: 5rem;"}
   pointer-events: none;
   width: 5rem;
@@ -40,12 +43,12 @@ const StyledIndicator = styled.div<{ bottom: boolean, show: boolean }>`
   left: 0;
   right: 0;
   bottom: 27%;
-  opacity: ${({show}) => show ? 1 : 0};
+  opacity: ${({ show }) => (show ? 1 : 0)};
   display: flex;
   flex-direction: ${({ bottom }) => (bottom ? "column" : "row")};
   align-items: center;
   gap: 10%;
-  transition: opacity ${({show}) => show ? 5 : 1}s ease-in-out;
+  transition: opacity ${({ show }) => (show ? 5 : 1)}s ease-in-out;
 
   &::before,
   &::after {
@@ -100,7 +103,60 @@ const StyledIndicator = styled.div<{ bottom: boolean, show: boolean }>`
   }
 `;
 
-export default function Indicator({ bottom = true, show }: { bottom?: boolean, show : boolean }) {
+const getInitialScroll = (id: string) => {
+  if (typeof window !== "undefined" && window.localStorage) {
+    const storedPrefs = window.localStorage.getItem(`scroll-${id}`);
+    if (typeof storedPrefs === "string") {
+      return +storedPrefs;
+    }
+  }
+  return 0;
+};
+
+const setScroll = (id: string, value: number) => {
+  if (typeof window !== "undefined" && window.localStorage) {
+    window.localStorage.setItem(`scroll-${id}`, `${value}`);
+  }
+};
+
+export default function Indicator({
+  scrollX,
+  bottom = true,
+}: {
+  scrollRef?: React.RefObject<HTMLDivElement>;
+  bottom?: boolean;
+}) {
+  const [show, setShow] = useState(false);
+  const reduceMotion = usePrefersReducedMotion();
+  const scrollNumber = useRef(0);
+  const [parent, setParent] = useState<Element | null>(null);
+
+  const checkScroll = () => {
+    if (!scrollRef?.current || scrollNumber.current > 3) return;
+    const { scrollLeft } = scrollRef.current;
+    if (show && scrollLeft > 100) {
+      setShow(false);
+      setScroll(scrollRef.current.id, scrollNumber.current + 1);
+    }
+  };
+
+  useEffect(() => {
+    console.log(scrollRef?.current);
+    if (!scrollRef?.current) return;
+    scrollNumber.current = getInitialScroll(scrollRef.current.id);
+    scrollRef?.current?.addEventListener("scroll", checkScroll);
+    const timeOut = setTimeout(() => {
+      setShow(true);
+    }, 1000);
+    return () => {
+      clearTimeout(timeOut);
+      scrollRef?.current?.removeEventListener("scroll", checkScroll);
+    };
+  }, [scrollRef]);
+
+  useEffect(() => {
+    setParent(ReactDOM.findDOMNode(this));
+
   return (
     <StyledIndicator bottom={bottom} show={show}>
       <div className="dots" />
