@@ -279,8 +279,7 @@ const Exciting = ({
 );
 
 const FancyTitle = () => {
-  // const [iter, setIter] = useState(Math.floor(Math.random() * 3));
-  const [iter, setIter] = useState(2);
+  const [iter, setIter] = useState(Math.floor(Math.random() * 3));
   const animateBlob = !usePrefersReducedMotion();
   return (
     <div
