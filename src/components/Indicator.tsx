@@ -1,8 +1,7 @@
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
-import { usePrefersReducedMotion } from "@hooks";
-import { useEffect, useRef, useState } from "react";
-import ReactDOM from "react-dom";
+import { useContext, useEffect, useState } from "react";
+import { MediaContext } from "@util"
 
 const dot = keyframes`
 0% {
@@ -103,62 +102,59 @@ const StyledIndicator = styled.div<{ bottom: boolean; show: boolean }>`
   }
 `;
 
-const getInitialScroll = (id: string) => {
+const getInitialScrolled = (id: string) => {
   if (typeof window !== "undefined" && window.localStorage) {
     const storedPrefs = window.localStorage.getItem(`scroll-${id}`);
     if (typeof storedPrefs === "string") {
-      return +storedPrefs;
+      return storedPrefs === 'true';
     }
   }
-  return 0;
+  return false;
 };
 
-const setScroll = (id: string, value: number) => {
+const storeScrolled = (id: string, value: boolean) => {
   if (typeof window !== "undefined" && window.localStorage) {
     window.localStorage.setItem(`scroll-${id}`, `${value}`);
   }
 };
 
 export default function Indicator({
-  scrollX,
+  scrollRef,
   bottom = true,
 }: {
-  scrollRef?: React.RefObject<HTMLDivElement>;
+  scrollRef: React.RefObject<HTMLDivElement>;
   bottom?: boolean;
 }) {
   const [show, setShow] = useState(false);
-  const reduceMotion = usePrefersReducedMotion();
-  const scrollNumber = useRef(0);
-  const [parent, setParent] = useState<Element | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+  const {isMatch} = useContext(MediaContext)
 
   const checkScroll = () => {
-    if (!scrollRef?.current || scrollNumber.current > 3) return;
-    const { scrollLeft } = scrollRef.current;
-    if (show && scrollLeft > 100) {
-      setShow(false);
-      setScroll(scrollRef.current.id, scrollNumber.current + 1);
+    if (!scrollRef.current) return;
+    if (scrollRef.current.scrollLeft > 200) {
+      setScrolled(prevScrolled => {
+        if (scrollRef.current && !prevScrolled) {
+          storeScrolled(scrollRef.current.id, true);
+        }
+        return true
+      });
     }
-  };
+  }
 
   useEffect(() => {
-    console.log(scrollRef?.current);
-    if (!scrollRef?.current) return;
-    scrollNumber.current = getInitialScroll(scrollRef.current.id);
+    if (isMatch('md') || !scrollRef?.current || getInitialScrolled(scrollRef.current.id)) return;
     scrollRef?.current?.addEventListener("scroll", checkScroll);
     const timeOut = setTimeout(() => {
       setShow(true);
-    }, 1000);
+    }, 5000);
     return () => {
       clearTimeout(timeOut);
       scrollRef?.current?.removeEventListener("scroll", checkScroll);
     };
   }, [scrollRef]);
 
-  useEffect(() => {
-    setParent(ReactDOM.findDOMNode(this));
-
   return (
-    <StyledIndicator bottom={bottom} show={show}>
+    <StyledIndicator bottom={bottom} show={show && !scrolled}>
       <div className="dots" />
     </StyledIndicator>
   );

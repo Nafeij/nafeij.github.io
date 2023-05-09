@@ -111,7 +111,7 @@ export default function Layout({
         onWheel={handleScroll}
       >
         <ScrollContainerRefContext.Provider value={scrollRef}>
-          <Indicator bottom={false} />
+          <Indicator bottom={false} scrollRef={scrollRef}/>
           {children}
         </ScrollContainerRefContext.Provider>
         <Footer />
