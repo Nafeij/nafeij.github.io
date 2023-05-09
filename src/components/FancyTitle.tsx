@@ -236,16 +236,15 @@ const H1Styled = styled.h1`
   font-weight: bold;
   text-transform: uppercase;
   font-size: clamp(4rem,14vw,11rem) !important;
-  padding-top: 0.5rem;
+  height: 100%;
   box-sizing: border-box;
-  line-height: 1;
+  line-height: 1.1 !important;
   animation: ${glitchClip} 12s steps(100, end);
   clip-path: inset(50%);
 `;
 
 const SpanStyled = styled.span`
   position: absolute;
-  top: .5rem;
   left: 0;
   height: inherit;
 
@@ -280,7 +279,8 @@ const Exciting = ({
 );
 
 const FancyTitle = () => {
-  const [iter, setIter] = useState(Math.floor(Math.random() * 3));
+  // const [iter, setIter] = useState(Math.floor(Math.random() * 3));
+  const [iter, setIter] = useState(2);
   const animateBlob = !usePrefersReducedMotion();
   return (
     <div
