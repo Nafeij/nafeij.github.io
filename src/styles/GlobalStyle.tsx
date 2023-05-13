@@ -60,32 +60,32 @@ const CustomStyles = css`
     --font-mono: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
 
     --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-  }
 
-  .light {
-    --bg: var(--bg-light);
-    --bg-under: var(--bg-dark);
-    --bg-primary: var(--bg-light1);
-    --bg-secondary: var(--bg-light2);
-    --text-primary: #080808;
-    --text-secondary: #484848;
-    --color-primary: #e11d48;
+    &.light {
+      --bg: var(--bg-light);
+      --bg-under: var(--bg-dark);
+      --bg-primary: var(--bg-light1);
+      --bg-secondary: var(--bg-light2);
 
-    --blob1: #0036dd;
-    --blob2: #db5e04;
-  }
+      --text-primary: #080808;
+      --text-secondary: #484848;
 
-  .dark {
-    --bg: var(--bg-dark);
-    --bg-under: var(--bg-light);
-    --bg-primary: var(--bg-dark1);
-    --bg-secondary: var(--bg-dark2);
-    --text-primary: #f1f5f9;
-    --text-secondary: #c0c0c0;
-    --color-primary: #2563eb;
+      --blob1: #0036dd;
+      --blob2: #db5e04;
+    }
 
-    --blob1: #00cc99;
-    --blob2: #6600ff;
+    &.dark {
+      --bg: var(--bg-dark);
+      --bg-under: var(--bg-light);
+      --bg-primary: var(--bg-dark1);
+      --bg-secondary: var(--bg-dark2);
+
+      --text-primary: #f1f5f9;
+      --text-secondary: #c0c0c0;
+
+      --blob1: #00cc99;
+      --blob2: #6600ff;
+    }
   }
 
   body[data-filter="blur"] {

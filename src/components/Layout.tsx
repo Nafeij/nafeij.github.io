@@ -21,7 +21,7 @@ from {
   clip-path: circle(0% at 0% 100%);
 }
 to {
-  clip-path: circle(283% at 0% 100%);
+  clip-path: circle(150% at 0% 100%);
 }
 `;
 
@@ -30,7 +30,7 @@ from {
   clip-path: circle(0% at 100% 0%);
 }
 to {
-  clip-path: circle(283% at 100% 0%);
+  clip-path: circle(150% at 100% 0%);
 }
 `;
 
@@ -46,11 +46,10 @@ export default function Layout({
 }) {
   const { isDark, setDark } = useContext(ThemeContext);
   const [animate, setAnimate] = useState(false);
-
-  const { isMatch } = useContext(MediaContext);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const toggleDark = () => {
+    if (animate) return;
     setAnimate(true);
     setDark(!isDark);
     setTimeout(() => setAnimate(false), 1000);
