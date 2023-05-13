@@ -63,11 +63,14 @@ const CustomStyles = css`
       --bg-primary: var(--bg-light1);
       --bg-secondary: var(--bg-light2);
 
-      --text-primary: var(--text-dark1);
-      --text-secondary: var(--text-dark2);
+      --text-primary: var(--text-light1);
+      --text-secondary: var(--text-light2);
 
-      --accent1: var(--accent-light1);
-      --accent2: var(--accent-light2);
+      --button: var(--button-light);
+      --accent: var(--accent-light);
+
+      --blob1: var(--blob-light1);
+      --blob2: var(--blob-light2);
     }
 
     &.dark {
@@ -76,47 +79,53 @@ const CustomStyles = css`
       --bg-primary: var(--bg-dark1);
       --bg-secondary: var(--bg-dark2);
 
-      --text-primary: var(--text-light1);
-      --text-secondary: var(--text-light2);
+      --text-primary: var(--text-dark1);
+      --text-secondary: var(--text-dark2);
 
+      --button: var(--button-dark);
       --accent: var(--accent-dark);
 
-      --accent1: var(--accent-light1);
-      --accent2: var(--accent-light2);
+      --blob1: var(--blob-light1);
+      --blob2: var(--blob-light2);
     }
 
-    &[data-variant="0"] , &:not([data-variant]) {
-      --bg-light1: #e8e8e8;
-      --bg-light2: #eeddcc;
-      --bg-dark1: #0f0f0f;
-      --bg-dark2: #181818;
+    --bg-light1: #e8e8e8;
+    --bg-light2: #eeddcc;
+    --bg-dark1: #0f0f0f;
+    --bg-dark2: #181818;
 
-      --text-light1: #f1f5f9;
-      --text-light2: #c0c0c0;
-      --text-dark1: #080808;
-      --text-dark2: #484848;
+    --text-light1: #080808;
+    --text-light2: #484848;
+    --text-dark1: #f1f5f9;
+    --text-dark2: #c0c0c0;
 
-      --accent-light1: #0036dd;
-      --accent-light2: #db5e04;
-      --accent1-dark: #00cc99;
-      --accent2-dark: #6600ff;
-    }
+    --button-light: #484848;
+    --button-dark: #e1e5e9;
+
+    --accent-light: #181818;
+    --accent-dark: #e0e0e0;
+
+    --blob-light1: #0036dd;
+    --blob-light2: #db5e04;
+    --blob1-dark: #00cc99;
+    --blob2-dark: #6600ff;
 
     &[data-variant="1"] {
-      --bg-light1: red;
-      --bg-light2: red;
-      --bg-dark1: red;
-      --bg-dark2: red;
+      --bg-light1: #ffffff;
+      --bg-light2: #f1f5f9;
+      --bg-dark1: #101528;
+      --bg-dark2: #111111;
 
-      --text-light1: red;
-      --text-light2: red;
-      --text-dark1: red;
-      --text-dark2: red;
+      --button-light: #407897;
+      --button-dark: #ff533f;
 
-      --accent-light1: red;
-      --accent-light2: red;
-      --accent1-dark: red;
-      --accent2-dark: red;
+      --accent-light: #407897;
+      --accent-dark: #ab987a;
+
+      --text-light1: #286f99;
+      --text-light2: #407897;
+      --text-dark1: #f6f6f6;
+      --text-dark2: #dddddd;
     }
   }
 

@@ -111,6 +111,7 @@ const Card = styled.div`
       box-shadow: 0 -0.75rem 1rem 0 rgba(#000, 0.2),
         0 0.75rem 1rem 0 rgba(#000, 0.2), 0.75rem 0px 1rem 0 rgba(#000, 0.2),
         -0.75rem 0px 1rem 0 rgba(#000, 0.2);
+      background-color:  var(--accent);
       backface-visibility: hidden;
       overflow: hidden;
 
@@ -134,23 +135,12 @@ const Card = styled.div`
       border-radius: 1rem 0 1rem 0;
       animation: 1s ${fadeIn} ease-out both paused;
       justify-content: center;
-      background: linear-gradient(
-        45deg,
-        var(--text-primary),
-        var(--text-secondary)
-      );
       .shine {
         animation-name: ${swipef};
       }
     }
     .back {
       ${tw`flex-row items-center justify-between gap-2 md:gap-4 lg:gap-12 text-base md:text-lg lg:text-xl`}
-
-      background: linear-gradient(
-        -45deg,
-        var(--text-primary),
-        var(--text-secondary)
-      );
       border-radius: 0 1rem 0 1rem;
       transform: rotateY(180deg);
       .shine {

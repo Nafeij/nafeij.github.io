@@ -15,19 +15,19 @@ module.exports = {
         primary: 'var(--bg-primary)',
         secondary: 'var(--bg-secondary)',
         tertiary: 'var(--color-primary)',
-        accent1: 'var(--accent1)',
-        accent2: 'var(--accent2)'
+        blob1: 'var(--blob1)',
+        blob2: 'var(--blob2)'
       },
       textColor: {
         primary: 'var(--text-primary)',
         secondary: 'var(--text-secondary)',
         tertiary: 'var(--color-primary)',
-        accent1: 'var(--accent1)',
-        accent2: 'var(--accent2)'
+        blob1: 'var(--blob1)',
+        blob2: 'var(--blob2)'
       },
       fill: {
-        accent1: 'var(--accent1)',
-        accent2: 'var(--accent2)'
+        blob1: 'var(--blob1)',
+        blob2: 'var(--blob2)'
       }
     }
   },

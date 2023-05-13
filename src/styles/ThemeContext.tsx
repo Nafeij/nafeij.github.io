@@ -4,7 +4,7 @@ const setVariant = () => {
   const root = window.document.documentElement
   let variant = window.localStorage.getItem('theme-variant')
   console.log(variant)
-  if (variant === null || variant === '2') {
+  if (variant === null || variant === '3') {
     variant = '0'
   }
   root.dataset.variant = variant

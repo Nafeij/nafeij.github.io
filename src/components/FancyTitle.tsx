@@ -101,10 +101,10 @@ const Amazing = ({
     </clipPath>
     <g clipPath="url(#textClip)">
       <g id="group1">
-        <rect width="100%" height="100%" tw="fill-accent2"></rect>
+        <rect width="100%" height="100%" tw="fill-blob2"></rect>
         {animateBlob && (
           <g filter="url(#blur1)">
-            <circle cx="0" cy="0" tw="fill-accent1" r="30%">
+            <circle cx="0" cy="0" tw="fill-blob1" r="30%">
               <animate
                 attributeName="cx"
                 values="-30%;130%;-30%"
@@ -118,7 +118,7 @@ const Amazing = ({
                 repeatCount="999"
               />
             </circle>
-            <circle cx="0" cy="0" tw="fill-accent1" r="30%">
+            <circle cx="0" cy="0" tw="fill-blob1" r="30%">
               <animate
                 attributeName="cx"
                 values="130%;-30%;130%"
@@ -132,7 +132,7 @@ const Amazing = ({
                 repeatCount="999"
               />
             </circle>
-            <circle cx="0" cy="0" tw="fill-accent2" r="30%">
+            <circle cx="0" cy="0" tw="fill-blob2" r="30%">
               <animate
                 attributeName="cx"
                 values="130%;-30%;130%"
@@ -146,7 +146,7 @@ const Amazing = ({
                 repeatCount="999"
               />
             </circle>
-            <circle cx="0" cy="0" tw="fill-accent1" r="30%">
+            <circle cx="0" cy="0" tw="fill-blob1" r="30%">
               <animate
                 attributeName="cx"
                 values="-30%;130%;-30%"

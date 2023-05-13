@@ -39,7 +39,7 @@ const Grid = styled.div`
   gap: 0.5rem;
 
   .card {
-    background: var(--bg-primary);
+    background: var(--bg-secondary);
     border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
@@ -85,7 +85,8 @@ const Grid = styled.div`
 
     .card-content {
       height: 100%;
-      background-color: var(--bg-secondary);
+      background-color: var(--button);
+      color: var(--bg-secondary);
       border-radius: inherit;
       display: flex;
       flex-direction: column;
@@ -102,6 +103,10 @@ const Grid = styled.div`
 
       h2 {
         ${tw`text-lg md:text-xl lg:text-2xl`}
+      }
+
+      a {
+        color: var(--bg-primary);
       }
 
       svg {
