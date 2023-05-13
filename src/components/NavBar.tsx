@@ -342,14 +342,14 @@ export default function NavBar({
           }
           @media (prefers-reduced-motion: reduce) {
             opacity: 1;
-            box-shadow: 0 -10px 30px -10px #00000088;
+            box-shadow: 0 -10px 30px -10px #0008;
             background-color: var(--bg-secondary);
           }
         `,
       ]}
     >
       <Helmet>
-        <body className={menuOpen ? "blur" : ""} />
+        <body data-filter={menuOpen ? "blur" : ""} />
       </Helmet>
       <TransitionSeries duration={ANIM_DURATION} trigger={true}>
         <StyledLinks>

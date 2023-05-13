@@ -39,13 +39,21 @@ const CustomStyles = css`
   ${Fonts}
 
   :root {
+    --light: #fff;
+    --dark: #000;
     --bg-light1: #e8e8e8;
     --bg-light2: #eeddcc;
     --bg-dark1: #0f0f0f;
     --bg-dark2: #181818;
 
-    --bg-light: fixed radial-gradient( ellipse at center, var(--bg-light1) 0%, var(--bg-light2) 100%);
-    --bg-dark: fixed 0% 0% / 8vmin 8vmin var(--bg-dark1) radial-gradient(ellipse at center, var(--bg-dark2) 8%, transparent 8%);
+    --bg-light: fixed
+      radial-gradient(
+        ellipse at center,
+        var(--bg-light1) 0%,
+        var(--bg-light2) 100%
+      );
+    --bg-dark: fixed 0% 0% / 8vmin 8vmin var(--bg-dark1)
+      radial-gradient(ellipse at center, var(--bg-dark2) 8%, transparent 8%);
 
     --link-color: #2563eb;
 
@@ -80,10 +88,11 @@ const CustomStyles = css`
     --blob2: #6600ff;
   }
 
-  body.blur {
+  body[data-filter="blur"] {
     #content {
       overflow: hidden;
-      & > *:not(#fakeBg):not(#contact), #contact #card {
+      & > *:not(#fakeBg):not(#contact),
+      #contact #card {
         filter: blur(5px) brightness(0.7);
         pointer-events: none;
         user-select: none;

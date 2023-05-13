@@ -46,15 +46,9 @@ export default function Layout({
 }) {
   const { isDark, setDark } = useContext(ThemeContext);
   const [animate, setAnimate] = useState(false);
-  const [scrollX, setScrollX] = useState(0);
 
   const { isMatch } = useContext(MediaContext);
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  const handleScroll = (e: WheelEvent) => {
-    if (isMatch("md")) return;
-    scrollHorizontal(scrollRef, e);
-  };
 
   const toggleDark = () => {
     setAnimate(true);
@@ -93,7 +87,6 @@ export default function Layout({
           }
         `,
       ]}
-      className={animate ? "" : "no_anim"}
     >
       <NavBar scrollRef={scrollRef} toggleDark={toggleDark} />
       <div
@@ -108,10 +101,9 @@ export default function Layout({
           `,
         ]}
         ref={scrollRef}
-        onWheel={handleScroll}
       >
         <ScrollContainerRefContext.Provider value={scrollRef}>
-          <Indicator bottom={false} scrollRef={scrollRef}/>
+          <Indicator bottom={false} scrollRef={scrollRef} />
           {children}
         </ScrollContainerRefContext.Provider>
         <Footer />

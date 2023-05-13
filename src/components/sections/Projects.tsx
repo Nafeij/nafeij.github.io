@@ -20,6 +20,7 @@ const Scroller = styled.div`
   padding-bottom: 6rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   max-width: 100%;
 
   @media (min-width: 768px) {
@@ -46,8 +47,8 @@ const Grid = styled.div`
 
     &:hover {
       .card-content .img {
-        opacity: 0.3;
-        filter: blur(0.2rem);
+        opacity: 0.2;
+        filter: blur(0.4rem);
       }
     }
 
@@ -67,7 +68,7 @@ const Grid = styled.div`
     &::before {
       background: radial-gradient(
         800px circle at var(--mouse-x) var(--mouse-y),
-        var(--text-primary),
+        var(--light),
         transparent 40%
       );
       z-index: 3;
@@ -76,7 +77,7 @@ const Grid = styled.div`
     &::after {
       background: radial-gradient(
         600px circle at var(--mouse-x) var(--mouse-y),
-        var(--text-primary),
+        var(--light),
         transparent 40%
       );
       z-index: 1;
@@ -112,7 +113,7 @@ const Grid = styled.div`
         ${tw`absolute inset-0 -z-10 overflow-hidden`}
         border-radius: inherit;
         opacity: 0.1;
-        filter: blur(0.5rem);
+        filter: blur(0.8rem);
       }
     }
   }
@@ -123,7 +124,7 @@ const Grid = styled.div`
     flex-direction: column;
     flex-wrap: wrap;
     padding-bottom: 1rem;
-    max-height: 90%;
+    max-height: 800px;
     gap: 1%;
     align-items: stretch;
     justify-content: start;
