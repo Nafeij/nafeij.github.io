@@ -1,7 +1,9 @@
-import { keyframes } from "@emotion/react";
-import styled from "@emotion/styled";
-import { useContext, useEffect, useState } from "react";
-import { MediaContext } from "@util"
+import { keyframes } from '@emotion/react'
+import styled from '@emotion/styled'
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { MediaContext } from '@util'
+
+// vladshap @ https://codepen.io/vladshap/pen/ezQOEY
 
 const dot = keyframes`
 0% {
@@ -16,7 +18,7 @@ const dot = keyframes`
     transform: scale(.75);
     opacity: .25;
 }
-`;
+`
 
 const arrow = keyframes`
 0% {
@@ -31,10 +33,10 @@ const arrow = keyframes`
     transform: scale(.75) rotate(45deg);
     opacity: .25;
 }
-`;
+`
 
-const StyledIndicator = styled.div<{ bottom: boolean; show: boolean }>`
-  ${({ bottom }) => bottom && "height: 5rem;"}
+const StyledIndicator = styled.div<{ bottom: boolean, show: boolean }>`
+  ${({ bottom }) => bottom && 'height: 5rem;'}
   pointer-events: none;
   width: 5rem;
   margin: 0 auto;
@@ -42,9 +44,9 @@ const StyledIndicator = styled.div<{ bottom: boolean; show: boolean }>`
   left: 0;
   right: 0;
   bottom: 27%;
-  opacity: ${({ show }) => (show ? 1 : 0)};
+  opacity: ${({ show }) => (show ? 0.5 : 0)};
   display: flex;
-  flex-direction: ${({ bottom }) => (bottom ? "column" : "row")};
+  flex-direction: ${({ bottom }) => (bottom ? 'column' : 'row')};
   align-items: center;
   gap: 10%;
   transition: opacity ${({ show }) => (show ? 5 : 1)}s ease-in-out;
@@ -58,14 +60,14 @@ const StyledIndicator = styled.div<{ bottom: boolean; show: boolean }>`
   &::before {
     aspect-ratio: 1/1;
     border-radius: 50%;
-    border: 1px solid var(--text-primary);
+    border: 2px solid var(--text-primary);
     animation: ${dot} 3s infinite ease-in-out;
   }
   &::after {
     aspect-ratio: 1/1;
     flex: 0.6;
     border: solid var(--text-primary);
-    border-width: ${({ bottom }) => (bottom ? "0 1px 1px 0" : "1px 1px 0 0 ")};
+    border-width: ${({ bottom }) => (bottom ? '0 2px 2px 0' : '2px 2px 0 0 ')};
     transform: rotate(45deg);
     animation: ${arrow} 3s infinite ease-in-out;
     animation-delay: 0.75s;
@@ -77,13 +79,13 @@ const StyledIndicator = styled.div<{ bottom: boolean; show: boolean }>`
     flex: 1.4;
     align-items: center;
     gap: 25%;
-    flex-direction: ${({ bottom }) => (bottom ? "column" : "row")};
+    flex-direction: ${({ bottom }) => (bottom ? 'column' : 'row')};
     &::before,
     &::after {
       content: "";
       display: block;
       border-radius: 50%;
-      border: 1px solid var(--text-primary);
+      border: 2px solid var(--text-primary);
       animation: ${dot} 3s infinite ease-in-out;
       aspect-ratio: 1/1;
     }
@@ -100,62 +102,63 @@ const StyledIndicator = styled.div<{ bottom: boolean; show: boolean }>`
   @media (min-width: 768px) {
     display: none;
   }
-`;
+`
 
 const getInitialScrolled = (id: string) => {
-  if (typeof window !== "undefined" && window.localStorage) {
-    const storedPrefs = window.localStorage.getItem(`scroll-${id}`);
-    if (typeof storedPrefs === "string") {
-      return storedPrefs === 'true';
+  if (window?.localStorage !== undefined) {
+    const storedPrefs = window.localStorage.getItem(`scroll-${id}`)
+    if (typeof storedPrefs === 'string') {
+      return storedPrefs === 'true'
     }
   }
-  return false;
-};
+  return false
+}
 
 const storeScrolled = (id: string, value: boolean) => {
-  if (typeof window !== "undefined" && window.localStorage) {
-    window.localStorage.setItem(`scroll-${id}`, `${value}`);
+  if (window?.localStorage !== undefined) {
+    window.localStorage.setItem(`scroll-${id}`, `${value ? 'true' : 'false'}`)
   }
-};
+}
 
-export default function Indicator({
+export default function Indicator ({
   scrollRef,
-  bottom = true,
+  bottom = true
 }: {
-  scrollRef: React.RefObject<HTMLDivElement>;
-  bottom?: boolean;
+  scrollRef: React.RefObject<HTMLDivElement>
+  bottom?: boolean
 }) {
-  const [show, setShow] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const {isMatch} = useContext(MediaContext)
+  const [show, setShow] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const { isMatch } = useContext(MediaContext)
 
-  const checkScroll = () => {
-    if (!scrollRef.current) return;
+  const checkScroll = useCallback(() => {
+    if (scrollRef.current == null) return
     if (scrollRef.current.scrollLeft > 200) {
       setScrolled(prevScrolled => {
-        if (scrollRef.current && !prevScrolled) {
-          storeScrolled(scrollRef.current.id, true);
+        if ((scrollRef.current != null) && !prevScrolled) {
+          storeScrolled(scrollRef.current.id, true)
         }
         return true
-      });
+      })
     }
-  }
+  }, [scrollRef])
 
   useEffect(() => {
-    if (isMatch('md') || !scrollRef?.current || getInitialScrolled(scrollRef.current.id)) return;
-    scrollRef?.current?.addEventListener("scroll", checkScroll);
+    if (isMatch('md') || ((scrollRef?.current) == null) || getInitialScrolled(scrollRef.current.id)) return
+    const scroll = scrollRef.current
+    scroll?.addEventListener('scroll', checkScroll)
     const timeOut = setTimeout(() => {
-      setShow(true);
-    }, 5000);
+      setShow(true)
+    }, 5000)
     return () => {
-      clearTimeout(timeOut);
-      scrollRef?.current?.removeEventListener("scroll", checkScroll);
-    };
-  }, [scrollRef]);
+      clearTimeout(timeOut)
+      scroll?.removeEventListener('scroll', checkScroll)
+    }
+  }, [checkScroll, isMatch, scrollRef])
 
   return (
     <StyledIndicator bottom={bottom} show={show && !scrolled}>
       <div className="dots" />
     </StyledIndicator>
-  );
+  )
 }

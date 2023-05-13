@@ -1,8 +1,8 @@
-import { Fragment } from "react";
-import { css, Global, keyframes } from "@emotion/react";
-import { GlobalStyles as BaseStyles } from "twin.macro";
+import { Fragment } from 'react'
+import { css, Global, keyframes } from '@emotion/react'
+import { GlobalStyles as BaseStyles } from 'twin.macro'
 
-import { Fonts, TransitionStyle } from "@styles";
+import { Fonts, TransitionStyle } from '@styles'
 
 const drawStroke = keyframes`
   0%,
@@ -22,7 +22,7 @@ const drawStroke = keyframes`
     stroke-dashoffset: 0;
     stroke-opacity: 0;
   }
-`;
+`
 
 const fadeInOut = keyframes`
   0%,
@@ -33,18 +33,31 @@ const fadeInOut = keyframes`
   80% {
     opacity: 1;
   }
-`;
+`
 
 const CustomStyles = css`
   ${Fonts}
 
   :root {
-    --light: #fff;
-    --dark: #000;
     --bg-light1: #e8e8e8;
     --bg-light2: #eeddcc;
     --bg-dark1: #0f0f0f;
     --bg-dark2: #181818;
+
+    --text-light1: #f1f5f9;
+    --text-light2: #c0c0c0;
+    --text-dark1: #080808;
+    --text-dark2: #484848;
+
+    --accent-light1: #0036dd;
+    --accent-light2: #db5e04;
+    --accent1-dark: #00cc99;
+    --accent2-dark: #6600ff;
+
+    --link-color: #2563eb;
+
+    --light: #fff;
+    --dark: #000;
 
     --bg-light: fixed
       radial-gradient(
@@ -54,8 +67,6 @@ const CustomStyles = css`
       );
     --bg-dark: fixed 0% 0% / 8vmin 8vmin var(--bg-dark1)
       radial-gradient(ellipse at center, var(--bg-dark2) 8%, transparent 8%);
-
-    --link-color: #2563eb;
 
     --font-mono: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
 
@@ -67,11 +78,11 @@ const CustomStyles = css`
       --bg-primary: var(--bg-light1);
       --bg-secondary: var(--bg-light2);
 
-      --text-primary: #080808;
-      --text-secondary: #484848;
+      --text-primary: var(--text-dark1);
+      --text-secondary: var(--text-dark2);
 
-      --blob1: #0036dd;
-      --blob2: #db5e04;
+      --accent1: var(--accent-light1);
+      --accent2: var(--accent-light2);
     }
 
     &.dark {
@@ -80,11 +91,13 @@ const CustomStyles = css`
       --bg-primary: var(--bg-dark1);
       --bg-secondary: var(--bg-dark2);
 
-      --text-primary: #f1f5f9;
-      --text-secondary: #c0c0c0;
+      --text-primary: var(--text-light1);
+      --text-secondary: var(--text-light2);
 
-      --blob1: #00cc99;
-      --blob2: #6600ff;
+      --accent: var(--accent-dark);
+
+      --accent1: var(--accent-light1);
+      --accent2: var(--accent-light2);
     }
   }
 
@@ -167,13 +180,13 @@ const CustomStyles = css`
   }
 
   ${TransitionStyle}
-`;
+`
 
-export default function GlobalStyle() {
+export default function GlobalStyle (): JSX.Element {
   return (
     <Fragment>
       <BaseStyles />
       <Global styles={CustomStyles} />
     </Fragment>
-  );
+  )
 }

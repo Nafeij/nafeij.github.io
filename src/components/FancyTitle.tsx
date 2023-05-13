@@ -1,7 +1,7 @@
-import { css, keyframes } from "@emotion/react";
-import styled from "@emotion/styled";
-import { usePrefersReducedMotion } from "@hooks";
-import { useState } from "react";
+import { css, keyframes } from '@emotion/react'
+import styled from '@emotion/styled'
+import { usePrefersReducedMotion } from '@hooks'
+import { useState } from 'react'
 
 const Inspiring = ({ animCallback }: { animCallback: () => void }) => (
   <svg viewBox="0 0 1040 260" height="100%" id="Inspiring">
@@ -57,14 +57,14 @@ const Inspiring = ({ animCallback }: { animCallback: () => void }) => (
       tw="fill-[var(--text-primary)] stroke-[var(--text-primary)]"
     />
   </svg>
-);
+)
 
 const Amazing = ({
   animCallback,
-  animateBlob,
+  animateBlob
 }: {
-  animCallback: () => void;
-  animateBlob: boolean;
+  animCallback: () => void
+  animateBlob: boolean
 }) => (
   <svg
     id="Amazing"
@@ -90,9 +90,9 @@ const Amazing = ({
     <clipPath id="textClip" className="filled-heading">
       <text
         css={{
-          fontFamily: "source_sans_pro",
-          fontSize: "230px",
-          fontWeight: "bold"
+          fontFamily: 'source_sans_pro',
+          fontSize: '230px',
+          fontWeight: 'bold'
         }}
         y=".75em"
       >
@@ -101,10 +101,10 @@ const Amazing = ({
     </clipPath>
     <g clipPath="url(#textClip)">
       <g id="group1">
-        <rect width="100%" height="100%" tw="fill-blob2"></rect>
+        <rect width="100%" height="100%" tw="fill-accent2"></rect>
         {animateBlob && (
           <g filter="url(#blur1)">
-            <circle cx="0" cy="0" tw="fill-blob1" r="30%">
+            <circle cx="0" cy="0" tw="fill-accent1" r="30%">
               <animate
                 attributeName="cx"
                 values="-30%;130%;-30%"
@@ -118,7 +118,7 @@ const Amazing = ({
                 repeatCount="999"
               />
             </circle>
-            <circle cx="0" cy="0" tw="fill-blob1" r="30%">
+            <circle cx="0" cy="0" tw="fill-accent1" r="30%">
               <animate
                 attributeName="cx"
                 values="130%;-30%;130%"
@@ -132,7 +132,7 @@ const Amazing = ({
                 repeatCount="999"
               />
             </circle>
-            <circle cx="0" cy="0" tw="fill-blob2" r="30%">
+            <circle cx="0" cy="0" tw="fill-accent2" r="30%">
               <animate
                 attributeName="cx"
                 values="130%;-30%;130%"
@@ -146,7 +146,7 @@ const Amazing = ({
                 repeatCount="999"
               />
             </circle>
-            <circle cx="0" cy="0" tw="fill-blob1" r="30%">
+            <circle cx="0" cy="0" tw="fill-accent1" r="30%">
               <animate
                 attributeName="cx"
                 values="-30%;130%;-30%"
@@ -165,7 +165,7 @@ const Amazing = ({
       </g>
     </g>
   </svg>
-);
+)
 
 const glitch = keyframes`
   0% {
@@ -201,7 +201,7 @@ const glitch = keyframes`
       -0.025em -0.025em 0 rgba(0, 255, 0, 0.75),
       -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
   }
-`;
+`
 
 const glitchClip = keyframes`
   0%,
@@ -224,11 +224,7 @@ const glitchClip = keyframes`
   97% {
     clip-path: none;
   }
-`;
-
-interface H1Props {
-  height: string | number;
-}
+`
 
 const H1Styled = styled.h1`
   position: relative;
@@ -241,7 +237,7 @@ const H1Styled = styled.h1`
   line-height: 1.1 !important;
   animation: ${glitchClip} 12s steps(100, end);
   clip-path: inset(50%);
-`;
+`
 
 const SpanStyled = styled.span`
   position: absolute;
@@ -261,12 +257,12 @@ const SpanStyled = styled.span`
     transform: translate(0.0125em, 0.025em);
     opacity: 0.8;
   }
-`;
+`
 
 const Exciting = ({
-  animCallback,
+  animCallback
 }: {
-  animCallback: () => void;
+  animCallback: () => void
 }) => (
   <H1Styled
     id="Exciting"
@@ -276,11 +272,11 @@ const Exciting = ({
     Exciting.
     <SpanStyled aria-hidden="true">Exciting.</SpanStyled>
   </H1Styled>
-);
+)
 
 const FancyTitle = () => {
-  const [iter, setIter] = useState(Math.floor(Math.random() * 3));
-  const animateBlob = !usePrefersReducedMotion();
+  const [iter, setIter] = useState(Math.floor(Math.random() * 3))
+  const animateBlob = !usePrefersReducedMotion()
   return (
     <div
       css={css`
@@ -291,14 +287,14 @@ const FancyTitle = () => {
       {iter === 0 && (
         <Inspiring
           animCallback={() => {
-            setIter(1);
+            setIter(1)
           }}
         />
       )}
       {iter === 1 && (
         <Amazing
           animCallback={() => {
-            setIter(2);
+            setIter(2)
           }}
           animateBlob={animateBlob}
         />
@@ -306,12 +302,12 @@ const FancyTitle = () => {
       {iter === 2 && (
         <Exciting
           animCallback={() => {
-            setIter(0);
+            setIter(0)
           }}
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default FancyTitle;
+export default FancyTitle

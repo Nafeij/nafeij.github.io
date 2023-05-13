@@ -1,4 +1,4 @@
-import { css } from "@emotion/react";
+import { css } from '@emotion/react'
 
 // https://reactcommunity.org/react-transition-group/css-transition
 
@@ -47,6 +47,6 @@ const TransitionStyles = css`
   .fadedown-enter-done, .fadeup-enter-done, .fade-enter-done, .fade-exit-done {
     transition-delay: 0s !important;
   }
-`;
+`
 
-export default TransitionStyles;
+export default TransitionStyles

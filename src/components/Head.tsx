@@ -1,27 +1,26 @@
-import React from "react";
-import { Helmet } from "react-helmet";
-import { useLocation } from "@reach/router";
-import { useStaticQuery, graphql } from "gatsby";
+import { Helmet } from 'react-helmet'
+import { useLocation } from '@reach/router'
+import { useStaticQuery, graphql } from 'gatsby'
 
-import appleIcon from "@images/favicon/apple-touch-icon.png";
-import favicon16 from "@images/favicon/favicon-16x16.png";
-import favicon32 from "@images/favicon/favicon-32x32.png";
-import favicon from "@images/favicon/favicon.ico";
-import msIcon from "@images/favicon/mstile-150x150.png";
-import safariIcon from "@images/favicon/safari-pinned-tab.svg";
+import appleIcon from '@images/favicon/apple-touch-icon.png'
+import favicon16 from '@images/favicon/favicon-16x16.png'
+import favicon32 from '@images/favicon/favicon-32x32.png'
+import favicon from '@images/favicon/favicon.ico'
+import msIcon from '@images/favicon/mstile-150x150.png'
+import safariIcon from '@images/favicon/safari-pinned-tab.svg'
 
 // https://www.gatsbyjs.com/docs/add-seo-component/
 
 const Head = ({
   title,
   description,
-  image,
+  image
 }: {
-  title?: string;
-  description?: string;
-  image?: string;
+  title?: string
+  description?: string
+  image?: string
 }) => {
-  const { pathname } = useLocation();
+  const { pathname } = useLocation()
 
   const { site } = useStaticQuery(
     graphql`
@@ -37,22 +36,28 @@ const Head = ({
         }
       }
     `
-  );
+  )
 
   const {
     defaultTitle,
     defaultDescription,
     siteUrl,
     defaultImage,
-    twitterUsername,
-  } = site.siteMetadata;
+    twitterUsername
+  } = site.siteMetadata as {
+    defaultTitle: string
+    defaultDescription: string
+    siteUrl: string
+    defaultImage: string
+    twitterUsername: string
+  }
 
   const seo = {
-    title: title || defaultTitle,
-    description: description || defaultDescription,
-    image: `${siteUrl}${image || defaultImage}`,
-    url: `${siteUrl}${pathname}`,
-  };
+    title: title ?? defaultTitle,
+    description: description ?? defaultDescription,
+    image: `${siteUrl}${image ?? defaultImage}`,
+    url: `${siteUrl}${pathname}`
+  }
 
   return (
     <Helmet
@@ -90,7 +95,7 @@ const Head = ({
         content="1X8DcHxZJeKEYJ0YAEMNV-s0Y4s_8LFg40Re8ArZ4Mo"
       />
     </Helmet>
-  );
-};
+  )
+}
 
-export default Head;
+export default Head

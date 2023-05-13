@@ -1,6 +1,6 @@
-import tw from "twin.macro";
-import { ForwardedRef, forwardRef, ReactNode } from "react";
-import styled from "@emotion/styled";
+import tw from 'twin.macro'
+import { type ForwardedRef, forwardRef, type ReactNode } from 'react'
+import styled from '@emotion/styled'
 
 const StyledSection = styled.section`
   ${tw`flex justify-center items-start flex-col snap-center snap-always tracking-wide px-6 md:px-24`}
@@ -38,20 +38,22 @@ const StyledSection = styled.section`
   &:last-of-type::after {
     display: none;
   }
-`;
-interface SectionProps extends React.ComponentPropsWithoutRef<"div"> {
-  background?: string;
-  children?: ReactNode;
+`
+interface SectionProps extends React.ComponentPropsWithoutRef<'div'> {
+  background?: string
+  children?: ReactNode
 }
 
 const Section = forwardRef<HTMLDivElement, SectionProps>(
   (props: SectionProps, ref: ForwardedRef<HTMLDivElement>) => {
     return (
-      <StyledSection {...props} ref={ref} style={{background : props.background}}>
+      <StyledSection {...props} ref={ref} style={{ background: props.background }}>
         {props.children}
       </StyledSection>
-    );
+    )
   }
-);
+)
 
-export default Section;
+Section.displayName = 'Section'
+
+export default Section

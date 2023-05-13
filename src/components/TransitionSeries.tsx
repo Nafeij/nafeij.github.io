@@ -1,81 +1,82 @@
-import { ReactNode, useState, useEffect } from "react";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { type ReactNode, useState, useEffect, useRef } from 'react'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
-const DEFAULT_DURATION = 500;
+const DEFAULT_DURATION = 500
 
 export const genDelays = (n: number, duration = DEFAULT_DURATION, delay = 0) => {
-  const interval = duration / n;
-  let styles : {[key : string] : any} = {};
+  const interval = duration / n
+  const styles: Record<string, any> = {}
   for (let i = 0; i < n; i++) {
     styles[`& > *:nth-child(${i + 1})`] = {
-      transitionDelay: `${i * interval + delay}ms`,
-    };
+      transitionDelay: `${i * interval + delay}ms`
+    }
   }
-  return styles;
+  return styles
 }
 
-export const genDelayIntervals = (intvs : number[], duration = DEFAULT_DURATION, delay = 0) => {
-  const interval = duration / intvs.reduce((a, b) => a + b, 0);
-  let styles : {[key : string] : any} = {};
+export const genDelayIntervals = (intvs: number[], duration = DEFAULT_DURATION, delay = 0) => {
+  const interval = duration / intvs.reduce((a, b) => a + b, 0)
+  const styles: Record<string, any> = {}
   for (let i = 0; i < intvs.length; i++) {
     styles[`& > *:nth-child(${i + 1})`] = {
-      transitionDelay: `${intvs[i] * interval + delay}ms`,
-    };
+      transitionDelay: `${intvs[i] * interval + delay}ms`
+    }
   }
-  return styles;
-};
+  return styles
+}
 
-export default function TransitionSeries({
+export default function TransitionSeries ({
   children,
   classNames,
-  timeout,
+  timeout = 0,
   duration,
-  trigger
+  trigger = false
 }: {
-  children: ReactNode[];
+  children: ReactNode[]
   classNames?:
-    | string
-    | {
-        appear?: string;
-        appearActive?: string;
-        appearDone?: string;
-        enter?: string;
-        enterActive?: string;
-        enterDone?: string;
-        exit?: string;
-        exitActive?: string;
-        exitDone?: string;
-      };
-  timeout?: number;
-  duration?: number;
-  trigger?: boolean;
+  | string
+  | {
+    appear?: string
+    appearActive?: string
+    appearDone?: string
+    enter?: string
+    enterActive?: string
+    enterDone?: string
+    exit?: string
+    exitActive?: string
+    exitDone?: string
+  }
+  timeout?: number
+  duration?: number
+  trigger?: boolean
 }) {
-  const [show, setShow] = useState(false);
-  const d = duration ?? DEFAULT_DURATION;
-  let timeout_func : NodeJS.Timeout;
+  const [show, setShow] = useState(false)
+  const d = duration ?? DEFAULT_DURATION
+  const timeoutFunc = useRef<NodeJS.Timeout | null>(null)
+
   useEffect(() => {
-    if (trigger && timeout) {
-      timeout_func = setTimeout(() => {
-        setShow(true);
-      }, timeout);
+    if (trigger && timeout > 0) {
+      timeoutFunc.current = setTimeout(() => {
+        setShow(true)
+      }, timeout)
     } else if (trigger) {
-      setShow(true);
+      setShow(true)
     }
     return () => {
-      if (timeout_func) clearTimeout(timeout_func);
+      if (timeoutFunc.current !== null) clearTimeout(timeoutFunc.current)
     }
-  }, [trigger, timeout]);
+  }, [trigger, timeout])
   return (
     <TransitionGroup component={null}>
       {show && children.map((child, i) => (
           <CSSTransition
             key={i}
-            classNames={classNames ?? "fadedown"}
+            classNames={classNames ?? 'fadedown'}
             timeout={d}
           >
             {child}
           </CSSTransition>
-        ))}
+      ))}
     </TransitionGroup>
-  );
+  )
 }

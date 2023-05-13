@@ -1,17 +1,17 @@
-import { css } from "@emotion/react";
-import { sr } from "@util";
-import { Section, TransitionSeries, genDelays } from "@components";
-import { graphql, useStaticQuery } from "gatsby";
-import styled from "@emotion/styled";
-import { useContext, useEffect, useRef, useState } from "react";
-import tw from "twin.macro";
-import Icon from "@icons";
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import { usePrefersReducedMotion } from "@hooks";
-import { srConfig } from "@config";
-import { ScrollContainerRefContext } from "../Layout";
-import { ThemeContext } from "@styles";
-import { useDraggable } from "react-use-draggable-scroll";
+import { Section, TransitionSeries, genDelays } from '@components'
+import { srConfig } from '@config'
+import { css } from '@emotion/react'
+import styled from '@emotion/styled'
+import { usePrefersReducedMotion } from '@hooks'
+import Icon from '@icons'
+import { ThemeContext } from '@styles'
+import { sr } from '@util'
+import { graphql, useStaticQuery } from 'gatsby'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { useDraggable } from 'react-use-draggable-scroll'
+import tw from 'twin.macro'
+import { ScrollContainerRefContext } from '../Layout'
 
 const Scroller = styled.div`
   overflow-y: auto;
@@ -20,7 +20,6 @@ const Scroller = styled.div`
   padding-bottom: 6rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   max-width: 100%;
 
   @media (min-width: 768px) {
@@ -28,9 +27,10 @@ const Scroller = styled.div`
     padding: 7rem 0;
     height: 100%;
     width: 100%;
+    justify-content: center;
     box-sizing: border-box;
   }
-`;
+`
 
 const Grid = styled.div`
   flex: 1 0 auto;
@@ -147,10 +147,10 @@ const Grid = styled.div`
       min-height: 49%;
     }
   }
-`;
+`
 
-export default function Projects() {
-  const { isDark } = useContext(ThemeContext);
+export default function Projects () {
+  const { isDark } = useContext(ThemeContext)
   const { projects } = useStaticQuery(
     graphql`
       {
@@ -187,55 +187,62 @@ export default function Projects() {
         }
       }
     `
-  );
-  const posts = projects.edges;
-  if (!posts) return null;
-  const cardRefs = useRef<Array<HTMLDivElement>>([]);
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const ScrollContainerRef = useContext(ScrollContainerRefContext);
-  const scrollerRef = useRef<HTMLDivElement>(null);
+  )
+  const posts = projects.edges
+  // if (posts === null) return null
+  const cardRefs = useRef<HTMLDivElement[]>([])
+  const prefersReducedMotion = usePrefersReducedMotion()
+  const ScrollContainerRef = useContext(ScrollContainerRefContext)
+  const scrollerRef = useRef<HTMLDivElement>(null)
   const horiScrollerRef =
-    useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
-  const { events } = useDraggable(horiScrollerRef);
-  const [isRevealed, setIsRevealed] = useState(prefersReducedMotion);
+    useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>
+  const { events } = useDraggable(horiScrollerRef)
+  const [isRevealed, setIsRevealed] = useState(prefersReducedMotion)
 
   useEffect(() => {
     if (!prefersReducedMotion) {
-      scrollerRef.current &&
+      (scrollerRef.current != null) &&
         sr?.reveal(scrollerRef.current, {
           ...srConfig(),
           container: ScrollContainerRef?.current,
-          beforeReveal: () => setIsRevealed(true),
-        });
+          beforeReveal: () => { setIsRevealed(true) }
+        })
     }
-  }, [posts]);
+  }, [ScrollContainerRef, posts, prefersReducedMotion])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    cardRefs.current.map((card) => {
-      const rect = card.getBoundingClientRect(),
-        x = e.clientX - rect.left,
-        y = e.clientY - rect.top;
-      card.style.setProperty("--mouse-x", `${x}px`);
-      card.style.setProperty("--mouse-y", `${y}px`);
-    });
-  };
+    cardRefs.current.forEach((card) => {
+      const rect = card.getBoundingClientRect()
+      const x = e.clientX - rect.left
+      const y = e.clientY - rect.top
+      card.style.setProperty('--mouse-x', `${x}px`)
+      card.style.setProperty('--mouse-y', `${y}px`)
+    })
+  }
 
   const projInner = (node: any, i: number) => {
-    const { frontmatter, html } = node;
-    const { github, external, title, tech, big, cover } = frontmatter;
-    const image = getImage(cover);
+    const { frontmatter, html } = node
+    const { github, external, title, tech, big, cover } = frontmatter as {
+      github: string
+      external: string
+      title: string
+      tech: string[]
+      big: boolean
+      cover: any
+    }
+    const image = getImage(cover)
     return (
       <div
         key={i}
         ref={(el) => {
-          el && (cardRefs.current[i] = el);
+          (el != null) && (cardRefs.current[i] = el)
         }}
-        className={big ? "card big" : "card"}
+        className={big ? 'card big' : 'card'}
       >
         <div className="card-content">
-          {image && <GatsbyImage image={image} alt={title} className="img" />}
-          <span tw="flex justify-end gap-4 h-5 md:h-6 lg:h-8">
-            {external && (
+          {(image != null) && <GatsbyImage image={image} alt={title} className="img" />}
+          <span tw="flex h-5 justify-end gap-4 md:h-6 lg:h-8">
+            {external?.length > 0 && (
               <a
                 tw="h-full"
                 href={external}
@@ -246,7 +253,7 @@ export default function Projects() {
                 <Icon name="External" />
               </a>
             )}
-            {github && (
+            {github?.length > 0 && (
               <a
                 tw="h-full"
                 href={github}
@@ -260,13 +267,13 @@ export default function Projects() {
           </span>
           <h2 tw="inline-block">{title}</h2>
           <p dangerouslySetInnerHTML={{ __html: html }} />
-          {tech.length && (
+          {(tech.length > 0) && (
             <ul
               className="project-tech-list"
-              tw="flex flex-wrap list-none mt-auto pt-5 align-bottom opacity-75 font-mono text-sm md:text-base lg:text-lg"
+              tw="mt-auto flex list-none flex-wrap pt-5 align-bottom font-mono text-sm opacity-75 md:text-base lg:text-lg"
             >
               {tech.map((t: string, i: number) => (
-                <li tw="whitespace-nowrap mr-5" key={i}>
+                <li tw="mr-5 whitespace-nowrap" key={i}>
                   {t}
                 </li>
               ))}
@@ -274,8 +281,8 @@ export default function Projects() {
           )}
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   return (
     <Section id="projects" tw="px-0 md:px-24">
@@ -286,7 +293,7 @@ export default function Projects() {
           css={css`
             ${genDelays(posts.length, 1000, 700)}
             &:hover > .card::after {
-              opacity: ${isDark ? ".5" : ".25"};
+              opacity: ${isDark ? '.5' : '.25'};
             }
             & > .card:hover::before {
               opacity: 0.05;
@@ -303,5 +310,5 @@ export default function Projects() {
         </Grid>
       </Scroller>
     </Section>
-  );
+  )
 }

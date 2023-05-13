@@ -1,62 +1,65 @@
-import React, { ReactNode, createContext, useEffect, useState } from "react";
+import { type ReactNode, createContext, useEffect, useState } from 'react'
+
+const setVariant = () => {}
 
 const getInitialTheme = () => {
-  if (typeof window !== "undefined" && window.localStorage) {
-    const storedPrefs = window.localStorage.getItem("color-theme");
-    if (typeof storedPrefs === "string") {
-      return storedPrefs === "dark";
+  if (window?.localStorage !== undefined) {
+    setVariant()
+    const storedPrefs = window.localStorage.getItem('color-theme')
+    if (typeof storedPrefs === 'string') {
+      return storedPrefs === 'dark'
     }
 
-    const userMedia = window.matchMedia("(prefers-color-scheme: dark)");
+    const userMedia = window.matchMedia('(prefers-color-scheme: dark)')
     if (userMedia.matches) {
-      return true;
+      return true
     }
   }
-  return true;
-};
+  return true
+}
 
 const ThemeContext = createContext({
   isDark: true,
-  setDark: (dark: boolean) => {},
-});
+  setDark: (dark: boolean) => {}
+})
 
 const ThemeProvider = ({
   initialThemeIsDark,
-  children,
+  children
 }: {
-  initialThemeIsDark?: boolean;
-  children: ReactNode;
+  initialThemeIsDark?: boolean
+  children: ReactNode
 }) => {
-  const [isDark, setDark] = useState(getInitialTheme);
+  const [isDark, setDark] = useState(getInitialTheme)
 
   const rawSetTheme = (isDark: boolean) => {
-    const root = window.document.documentElement;
-    const theme = isDark ? "dark" : "light";
+    const root = window.document.documentElement
+    const theme = isDark ? 'dark' : 'light'
 
-    root.classList.remove(isDark ? "light" : "dark");
-    root.classList.add(theme);
+    root.classList.remove(isDark ? 'light' : 'dark')
+    root.classList.add(theme)
 
-    localStorage.setItem("color-theme", theme);
-  };
+    localStorage.setItem('color-theme', theme)
+  }
 
-  if (initialThemeIsDark) {
-    rawSetTheme(initialThemeIsDark);
+  if (initialThemeIsDark ?? false) {
+    rawSetTheme(initialThemeIsDark ?? false)
   }
 
   useEffect(() => {
-    rawSetTheme(isDark);
-  }, [isDark]);
+    rawSetTheme(isDark)
+  }, [isDark])
 
   return (
     <ThemeContext.Provider
       value={{
         isDark,
-        setDark,
+        setDark
       }}
     >
       {children}
     </ThemeContext.Provider>
-  );
-};
+  )
+}
 
-export { ThemeContext, ThemeProvider };
+export { ThemeContext, ThemeProvider }

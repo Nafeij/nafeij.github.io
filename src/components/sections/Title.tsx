@@ -1,12 +1,12 @@
-import { css } from "@emotion/react";
-import { Section, FancyTitle, TransitionSeries, genDelays } from "@components";
+import { FancyTitle, Section, TransitionSeries, genDelays } from '@components'
+import { css } from '@emotion/react'
 
-export default function Title() {
+export default function Title () {
   return (
-    <Section tw="select-none pointer-events-none" id="home" css={genDelays(2,600)}>
+    <Section tw="pointer-events-none select-none" id="home" css={genDelays(2, 600)}>
       <TransitionSeries timeout={600} trigger={true}>
         <p
-          tw="text-primary mb-5 font-mono"
+          tw="mb-5 font-mono text-primary"
           css={css`
             font-size: clamp(1.4rem, 3vw, 3rem);
           `}
@@ -16,5 +16,5 @@ export default function Title() {
         <FancyTitle />
       </TransitionSeries>
     </Section>
-  );
+  )
 }

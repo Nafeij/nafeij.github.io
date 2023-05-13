@@ -6,22 +6,30 @@
 
 // https://www.gatsbyjs.org/docs/node-apis/#onCreateWebpackConfig
 
-export const onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+export const onCreateWebpackConfig = ({
+  stage,
+  loaders,
+  actions,
+}: {
+  stage: string;
+  loaders: any;
+  actions: any;
+}) => {
   // https://www.gatsbyjs.org/docs/debugging-html-builds/#fixing-third-party-modules
-  if (stage === 'build-html' || stage === 'develop-html') {
+  if (stage === "build-html" || stage === "develop-html") {
     actions.setWebpackConfig({
       module: {
         rules: [
           {
             test: /scrollreveal/,
-            use: loaders.null()
+            use: loaders.null(),
           },
           {
             test: /miniraf/,
-            use: loaders.null()
-          }
-        ]
-      }
-    })
+            use: loaders.null(),
+          },
+        ],
+      },
+    });
   }
-}
+};

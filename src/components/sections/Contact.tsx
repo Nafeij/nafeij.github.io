@@ -1,13 +1,13 @@
-import { css, keyframes } from "@emotion/react";
-import { Fragment, useContext, useEffect, useRef, useState } from "react";
-import styled from "@emotion/styled";
-import { ScrollContainerRefContext } from "../Layout";
-import { MediaContext } from "@util";
-import { links } from "@config";
-import Icon from "@icons";
-import tw from "twin.macro";
-import { usePrefersReducedMotion } from "@hooks";
-import { QR, Section } from "@components";
+import { QR, Section } from '@components'
+import { links } from '@config'
+import { css, keyframes } from '@emotion/react'
+import styled from '@emotion/styled'
+import { usePrefersReducedMotion } from '@hooks'
+import Icon from '@icons'
+import { MediaContext } from '@util'
+import { Fragment, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import tw from 'twin.macro'
+import { ScrollContainerRefContext } from '../Layout'
 
 const flip = keyframes`
   0% {
@@ -16,7 +16,7 @@ const flip = keyframes`
   100% {
     transform: translateX(-100%) rotateY(-180deg);
   }
-`;
+`
 
 const swipe = keyframes`
   0% {
@@ -25,7 +25,7 @@ const swipe = keyframes`
   100% {
     left: 0;
   }
-`;
+`
 
 const fadeIn = keyframes`
   0% {
@@ -34,7 +34,7 @@ const fadeIn = keyframes`
   100% {
     opacity: 1;
   }
-`;
+`
 
 const swipef = keyframes`
   0% {
@@ -43,7 +43,7 @@ const swipef = keyframes`
   50% {
     left: 110%;
   }
-`;
+`
 
 const swipeb = keyframes`
   50% {
@@ -52,11 +52,11 @@ const swipeb = keyframes`
   100% {
     left: 110%;
   }
-`;
+`
 
 const interpolate = (i: number, j: number, k: number, a = 0, b = 1) => {
-  return a + (b - a) * Math.max(0, Math.min(1, (i - j) / (k - j)));
-};
+  return a + (b - a) * Math.max(0, Math.min(1, (i - j) / (k - j)))
+}
 
 const Card = styled.div`
   padding: 0 10%;
@@ -236,75 +236,76 @@ const Card = styled.div`
       }
     }
   }
-`;
+`
 
 const getDOMVars = ({
   container,
   parent,
-  isMatch,
+  isMatch
 }: {
-  container: HTMLDivElement;
-  parent: HTMLDivElement;
-  isMatch: (media: string) => boolean;
+  container: HTMLDivElement
+  parent: HTMLDivElement
+  isMatch: (media: string) => boolean
 }) =>
-  isMatch("md")
+  isMatch('md')
     ? {
         start: parent.offsetTop - parent.clientHeight / 4,
         end: parent.offsetTop + parent.clientHeight,
-        scroll: container.scrollTop,
+        scroll: container.scrollTop
       }
     : {
         start: parent.offsetLeft - parent.clientWidth / 4,
         end: parent.offsetLeft + parent.clientWidth,
-        scroll: container.scrollLeft,
-      };
+        scroll: container.scrollLeft
+      }
 
-export default function Contact() {
+export default function Contact () {
   // const [flip, forceFlip] = React.useState(true);
-  const ScrollContainerRef = useContext(ScrollContainerRefContext);
-  const { isMatch } = useContext(MediaContext);
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const parentRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
+  const ScrollContainerRef = useContext(ScrollContainerRefContext)
+  const { isMatch } = useContext(MediaContext)
+  const prefersReducedMotion = usePrefersReducedMotion()
+  const parentRef = useRef<HTMLDivElement>(null)
+  const [progress, setProgress] = useState(0)
 
-  const calcProgress = () => {
-    const container = ScrollContainerRef?.current;
-    if (!container) return;
-    const parent = parentRef.current;
-    if (!parent) return;
+  const calcProgress = useCallback(() => {
+    const container = ScrollContainerRef?.current
+    if (container == null) return
+    const parent = parentRef.current
+    if (parent == null) return
 
     const { start, end, scroll } = getDOMVars({
       container,
       parent,
-      isMatch,
-    });
+      isMatch
+    })
 
-    const newProgress = Math.round(interpolate(scroll, start, end, 0, 1000));
-    setProgress(newProgress);
-  };
+    const newProgress = Math.round(interpolate(scroll, start, end, 0, 1000))
+    setProgress(newProgress)
+  }, [ScrollContainerRef, isMatch])
 
   useEffect(() => {
-    if (prefersReducedMotion) return;
-    calcProgress();
-    ScrollContainerRef?.current?.addEventListener("scroll", calcProgress);
+    if (prefersReducedMotion) return
+    calcProgress()
+    const container = ScrollContainerRef?.current
+    container?.addEventListener('scroll', calcProgress)
     return () => {
-      ScrollContainerRef?.current?.removeEventListener("scroll", calcProgress);
-    };
-  }, [prefersReducedMotion]);
+      container?.removeEventListener('scroll', calcProgress)
+    }
+  }, [ScrollContainerRef, calcProgress, prefersReducedMotion])
 
   return (
     <Fragment>
       <Section
-        tw="min-w-full min-h-full after:hidden motion-reduce:hidden"
+        tw="min-h-full min-w-full after:hidden motion-reduce:hidden"
         ref={parentRef}
       />
       <Section
         id="contact"
-        tw="min-w-full min-h-full motion-reduce:md:items-center"
+        tw="min-h-full min-w-full motion-reduce:md:items-center"
       >
         <Card id="card">
           <h1 style={{ opacity: interpolate(progress, 0, 200) }}>
-            Let's get in touch.
+            Let&apos;s get in touch.
           </h1>
           <div
             className="card"
@@ -314,13 +315,13 @@ export default function Contact() {
                 progress,
                 0,
                 350
-              )}s`,
+              )}s`
             }}
           >
             <div
               className="front"
               style={{
-                animationDelay: `${-interpolate(progress, 0, 200)}s`,
+                animationDelay: `${-interpolate(progress, 0, 200)}s`
               }}
             >
               <h1>Wang Jiefan</h1>
@@ -328,14 +329,14 @@ export default function Contact() {
               <div
                 className="shine"
                 style={{
-                  animationDelay: `${-interpolate(progress, 450, 1000)}s`,
+                  animationDelay: `${-interpolate(progress, 450, 1000)}s`
                 }}
               />
             </div>
             <div className="back">
               <QR />
               <div
-                tw="relative flex-1 flex flex-col md:ml-12 gap-2 lg:gap-6 motion-reduce:lg:gap-4 motion-reduce:lg:text-lg"
+                tw="relative flex flex-1 flex-col gap-2 md:ml-12 lg:gap-6 motion-reduce:lg:gap-4 motion-reduce:lg:text-lg"
                 css={css`
                   svg {
                     ${tw`h-5 md:h-6 lg:h-8`}
@@ -361,7 +362,7 @@ export default function Contact() {
                     href={url}
                     target="_blank"
                     rel="noreferrer"
-                    tw="flex-initial flex flex-row items-center justify-between gap-2 md:gap-4 lg:gap-6"
+                    tw="flex flex-initial flex-row items-center justify-between gap-2 md:gap-4 lg:gap-6"
                   >
                     <Icon name={name} />
                     <p>{desc ?? name}</p>
@@ -371,7 +372,7 @@ export default function Contact() {
               <div
                 className="shine"
                 style={{
-                  animationDelay: `${-interpolate(progress, 450, 1000)}s`,
+                  animationDelay: `${-interpolate(progress, 450, 1000)}s`
                 }}
               />
             </div>
@@ -379,5 +380,5 @@ export default function Contact() {
         </Card>
       </Section>
     </Fragment>
-  );
+  )
 }

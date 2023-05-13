@@ -1,15 +1,15 @@
-import { Section } from "@components";
-import { srConfig } from "@config";
-import { css } from "@emotion/react";
-import { usePrefersReducedMotion } from "@hooks";
-import { sr } from "@util";
-import { graphql, useStaticQuery } from "gatsby";
-import { useContext, useEffect, useRef } from "react";
-import tw from "twin.macro";
-import { ScrollContainerRefContext } from "../Layout";
-import profilepic from "@images/profilepic.jpg";
+import { Section } from '@components'
+import { srConfig } from '@config'
+import { css } from '@emotion/react'
+import { usePrefersReducedMotion } from '@hooks'
+import profilepic from '@images/profilepic.jpg'
+import { sr } from '@util'
+import { graphql, useStaticQuery } from 'gatsby'
+import { useContext, useEffect, useRef } from 'react'
+import tw from 'twin.macro'
+import { ScrollContainerRefContext } from '../Layout'
 
-export default function About() {
+export default function About () {
   const { markdownRemark } = useStaticQuery(
     graphql`
       query {
@@ -22,31 +22,31 @@ export default function About() {
         }
       }
     `
-  );
+  )
 
-  const techs: string[] = markdownRemark.frontmatter.tech;
-  const techRefs = useRef<HTMLDivElement[]>([]);
+  const techs: string[] = markdownRemark.frontmatter.tech
+  const techRefs = useRef<HTMLDivElement[]>([])
 
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const revealRef = useRef<HTMLDivElement | null>(null);
-  const ScrollContainerRef = useContext(ScrollContainerRefContext);
+  const prefersReducedMotion = usePrefersReducedMotion()
+  const revealRef = useRef<HTMLDivElement | null>(null)
+  const ScrollContainerRef = useContext(ScrollContainerRefContext)
 
   useEffect(() => {
     if (!prefersReducedMotion) {
-      revealRef.current &&
+      (revealRef.current != null) &&
         sr?.reveal(revealRef.current, {
           ...srConfig(),
           container: ScrollContainerRef?.current
-        });
+        })
       techRefs.current.forEach((el, i) => {
         sr?.reveal(el, {
           ...srConfig(i * 100 + 300),
-          container: ScrollContainerRef?.current,
-        });
-      });
+          container: ScrollContainerRef?.current
+        })
+      })
     }
-    return sr?.destroy;
-  }, [revealRef, techs]);
+    return sr?.destroy
+  }, [ScrollContainerRef, prefersReducedMotion, revealRef, techs])
 
   return (
     <Section id="about">
@@ -73,9 +73,9 @@ export default function About() {
           <div
             key={i}
             ref={(el) => {
-              el && (techRefs.current[i] = el);
+              (el != null) && (techRefs.current[i] = el)
             }}
-            tw="grow relative basis-1/2 text-center md:basis-1/3"
+            tw="relative grow basis-1/2 text-center md:basis-1/3"
             css={css`
               :before {
                 ${tw`absolute -left-2`}
@@ -88,5 +88,5 @@ export default function About() {
         ))}
       </div>
     </Section>
-  );
+  )
 }

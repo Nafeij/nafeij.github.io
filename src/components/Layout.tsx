@@ -1,20 +1,17 @@
-import { css, keyframes } from "@emotion/react";
-import { ThemeContext } from "@styles";
+import { Footer, Indicator, NavBar } from '@components'
+import { css, keyframes } from '@emotion/react'
+import { type WindowLocation } from '@reach/router'
+import { ThemeContext } from '@styles'
 import {
   createContext,
-  ReactNode,
-  RefObject,
   useContext,
   useEffect,
   useRef,
   useState,
-  WheelEvent,
-} from "react";
-import { scrollHorizontal } from "@hooks";
-import tw from "twin.macro";
-import { MediaContext } from "@util";
-import { Footer, Indicator, NavBar } from "@components";
-import { WindowLocation } from "@reach/router";
+  type ReactNode,
+  type RefObject
+} from 'react'
+import tw from 'twin.macro'
 
 const backgroundSpread = keyframes`
 from {
@@ -23,7 +20,7 @@ from {
 to {
   clip-path: circle(150% at 0% 100%);
 }
-`;
+`
 
 const backgroundSpreadBelow = keyframes`
 from {
@@ -32,37 +29,37 @@ from {
 to {
   clip-path: circle(150% at 100% 0%);
 }
-`;
+`
 
 export const ScrollContainerRefContext =
-  createContext<RefObject<HTMLDivElement> | null>(null);
+  createContext<RefObject<HTMLDivElement> | null>(null)
 
-export default function Layout({
+export default function Layout ({
   children,
-  location,
+  location
 }: {
-  children: ReactNode;
-  location: WindowLocation;
+  children: ReactNode
+  location: WindowLocation
 }) {
-  const { isDark, setDark } = useContext(ThemeContext);
-  const [animate, setAnimate] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const { isDark, setDark } = useContext(ThemeContext)
+  const [animate, setAnimate] = useState(false)
+  const scrollRef = useRef<HTMLDivElement>(null)
 
   const toggleDark = () => {
-    if (animate) return;
-    setAnimate(true);
-    setDark(!isDark);
-    setTimeout(() => setAnimate(false), 1000);
-  };
+    if (animate) return
+    setAnimate(true)
+    setDark(!isDark)
+    setTimeout(() => { setAnimate(false) }, 1000)
+  }
 
   useEffect(() => {
-    if (location.hash) return;
-    const el = document.getElementById("home");
-    if (el) {
-      el.scrollIntoView();
-      el.focus();
+    if (location.hash.length > 0) return
+    const el = document.getElementById('home')
+    if (el != null) {
+      el.scrollIntoView()
+      el.focus()
     }
-  }, [location]);
+  }, [location])
 
   return (
     <div
@@ -84,7 +81,7 @@ export default function Layout({
               color: var(--link-color);
             }
           }
-        `,
+        `
       ]}
     >
       <NavBar scrollRef={scrollRef} toggleDark={toggleDark} />
@@ -97,7 +94,7 @@ export default function Layout({
             counter-reset: section;
             width: 100svw;
             height: 100svh;
-          `,
+          `
         ]}
         ref={scrollRef}
       >
@@ -120,11 +117,11 @@ export default function Layout({
                 @media (min-width: 768px) {
                   animation: ${backgroundSpreadBelow} 1s ease-out both;
                 }
-              `,
+              `
           ]}
-          key={isDark + ""}
+          key={isDark ? 'dark' : 'light'}
         />
       </div>
     </div>
-  );
+  )
 }

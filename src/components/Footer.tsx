@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { repo, repoAPI } from "@config";
-import Icon from "@icons";
-import styled from "@emotion/styled";
-import tw from "twin.macro";
+import { repo, repoAPI } from '@config'
+import styled from '@emotion/styled'
+import Icon from '@icons'
+import { useEffect, useState } from 'react'
+import tw from 'twin.macro'
 
 const StyledFooter = styled.div`
   opacity: 0.6;
@@ -43,31 +43,31 @@ const StyledFooter = styled.div`
     align-self: center;
     width: auto;
   }
-`;
+`
 
-export default function Footer() {
+export default function Footer () {
   const [githubInfo, setGitHubInfo] = useState<{
-    stars: string;
-    forks: string;
+    stars: string
+    forks: string
   }>({
-    stars: "-",
-    forks: "-",
-  });
+    stars: '-',
+    forks: '-'
+  })
 
   useEffect(() => {
-    if (process.env.NODE_ENV !== "production") return;
+    if (process.env.NODE_ENV !== 'production') return
 
     fetch(repoAPI)
-      .then((response) => response.json())
+      .then(async (response) => await response.json())
       .then((json) => {
-        const { stargazers_count, forks_count } = json;
+        const { stargazers_count: stars, forks_count: forks } = json
         setGitHubInfo({
-          stars: stargazers_count,
-          forks: forks_count,
-        });
+          stars,
+          forks
+        })
       })
-      .catch((e) => console.error(e));
-  }, []);
+      .catch((e) => { console.error(e) })
+  }, [])
 
   return (
     <StyledFooter>
@@ -90,5 +90,5 @@ export default function Footer() {
         </div>
       </a>
     </StyledFooter>
-  );
+  )
 }

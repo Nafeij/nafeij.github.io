@@ -1,5 +1,3 @@
-import React from "react";
-
 const QR = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -1081,6 +1079,6 @@ const QR = () => (
       </g>
     </g>
   </svg>
-);
+)
 
-export default QR;
+export default QR

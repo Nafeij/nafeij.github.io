@@ -1,16 +1,16 @@
-import { css } from "@emotion/react";
-import { Helmet } from "react-helmet";
-import { useContext, useState, useEffect, useRef } from "react";
-import { ThemeContext } from "@styles";
-import { SunIcon } from "@heroicons/react/24/outline";
-import { MoonIcon } from "@heroicons/react/24/solid";
-import tw from "twin.macro";
-import TransitionSeries, { genDelays } from "./TransitionSeries";
-import styled from "@emotion/styled";
-import { navLinks } from "@config";
-import { Link } from "gatsby";
-import { usePrefersReducedMotion, useScrollDirection } from "@hooks";
-import { KEY_CODES, MediaContext } from "@util";
+import { navLinks } from '@config'
+import { css } from '@emotion/react'
+import styled from '@emotion/styled'
+import { SunIcon } from '@heroicons/react/24/outline'
+import { MoonIcon } from '@heroicons/react/24/solid'
+import { usePrefersReducedMotion, useScrollDirection } from '@hooks'
+import { ThemeContext } from '@styles'
+import { KEY_CODES, MediaContext } from '@util'
+import { Link } from 'gatsby'
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
+import tw from 'twin.macro'
+import TransitionSeries, { genDelays } from './TransitionSeries'
 
 // https://github.com/bchiang7/v4
 
@@ -48,11 +48,11 @@ const StyledHamburgerButton = styled.button<{ menuOpen: boolean }>`
     background-color: var(--text-primary);
     transition-duration: 0.22s;
     transition-property: transform;
-    transition-delay: ${({ menuOpen }) => (menuOpen ? `0.12s` : `0s`)};
-    transform: rotate(${({ menuOpen }) => (menuOpen ? `225deg` : `0deg`)});
+    transition-delay: ${({ menuOpen }) => (menuOpen ? '0.12s' : '0s')};
+    transform: rotate(${({ menuOpen }) => (menuOpen ? '225deg' : '0deg')});
     transition-timing-function: cubic-bezier(
       ${({ menuOpen }) =>
-        menuOpen ? `0.215, 0.61, 0.355, 1` : `0.55, 0.055, 0.675, 0.19`}
+        menuOpen ? '0.215, 0.61, 0.355, 1' : '0.55, 0.055, 0.675, 0.19'}
     );
     &:before,
     &:after {
@@ -70,25 +70,25 @@ const StyledHamburgerButton = styled.button<{ menuOpen: boolean }>`
       transition-property: transform;
     }
     &:before {
-      width: ${({ menuOpen }) => (menuOpen ? `100%` : `120%`)};
-      top: ${({ menuOpen }) => (menuOpen ? `0` : `-10px`)};
+      width: ${({ menuOpen }) => (menuOpen ? '100%' : '120%')};
+      top: ${({ menuOpen }) => (menuOpen ? '0' : '-10px')};
       opacity: ${({ menuOpen }) => (menuOpen ? 0 : 1)};
       transition: ${({ menuOpen }) =>
         menuOpen
-          ? "top 0.1s ease-out, opacity 0.1s ease-out 0.12s, width 0.34s"
-          : "top 0.1s ease-in 0.25s, opacity 0.1s ease-in, width 0.34s"};
+          ? 'top 0.1s ease-out, opacity 0.1s ease-out 0.12s, width 0.34s'
+          : 'top 0.1s ease-in 0.25s, opacity 0.1s ease-in, width 0.34s'};
     }
     &:after {
-      width: ${({ menuOpen }) => (menuOpen ? `100%` : `80%`)};
-      bottom: ${({ menuOpen }) => (menuOpen ? `0` : `-10px`)};
-      transform: rotate(${({ menuOpen }) => (menuOpen ? `90deg` : `0`)});
+      width: ${({ menuOpen }) => (menuOpen ? '100%' : '80%')};
+      bottom: ${({ menuOpen }) => (menuOpen ? '0' : '-10px')};
+      transform: rotate(${({ menuOpen }) => (menuOpen ? '90deg' : '0')});
       transition: ${({ menuOpen }) =>
         menuOpen
-          ? "bottom 0.1s ease-out, transform 0.1s ease-out 0.12s, width 0.34s"
-          : "bottom 0.1s ease-in 0.25s, transform 0.22s cubic-bezier(0.55, 0.055, 0.675, 0.19), width 0.34s"};
+          ? 'bottom 0.1s ease-out, transform 0.1s ease-out 0.12s, width 0.34s'
+          : 'bottom 0.1s ease-in 0.25s, transform 0.22s cubic-bezier(0.55, 0.055, 0.675, 0.19), width 0.34s'};
     }
   }
-`;
+`
 
 const StyledSidebar = styled.aside<{ menuOpen: boolean }>`
   @media (max-width: 768px) {
@@ -108,7 +108,7 @@ const StyledSidebar = styled.aside<{ menuOpen: boolean }>`
     z-index: 9;
     transform: translateY(-100%)
       translateX(${({ menuOpen }) => (menuOpen ? 0 : 100)}%);
-    visibility: ${({ menuOpen }) => (menuOpen ? "visible" : "hidden")};
+    visibility: ${({ menuOpen }) => (menuOpen ? 'visible' : 'hidden')};
     transition: var(--transition);
   }
 
@@ -155,7 +155,7 @@ const StyledSidebar = styled.aside<{ menuOpen: boolean }>`
     margin: 1.75rem 6rem;
     opacity: 0.4;
   }
-`;
+`
 
 const StyledLinks = styled.div`
   font-family: var(--font-mono);
@@ -194,64 +194,64 @@ const StyledLinks = styled.div`
   .resume-button {
     margin-left: 15px;
   }
-`;
+`
 
 const DarkButton = ({ toggleDark }: { toggleDark: () => void }) => {
-  const { isDark } = useContext(ThemeContext);
+  const { isDark } = useContext(ThemeContext)
   return (
     <button
-      tw="h-8 z-10 aspect-square border-0 outline-0 flex justify-center items-center bg-transparent hover:scale-110 active:scale-90 md:h-10"
+      tw="z-10 flex aspect-square h-8 items-center justify-center border-0 bg-transparent outline-0 hover:scale-110 active:scale-90 md:h-10"
       css={{
-        "& > svg": [tw`h-full aspect-square text-[var(--text-primary)]`],
+        '& > svg': [tw`h-full aspect-square text-[var(--text-primary)]`]
       }}
       onClick={toggleDark}
     >
       {isDark ? <MoonIcon /> : <SunIcon />}
     </button>
-  );
-};
+  )
+}
 
 const Resume = () => (
   <a href="/Resume_Jiefan.pdf" className="resume-link">
     Resume
   </a>
-);
+)
 
-const ANIM_DURATION = 600;
+const ANIM_DURATION = 600
 
 const innerDuration =
-  (ANIM_DURATION * (navLinks.length + 1)) / (navLinks.length + 3);
+  (ANIM_DURATION * (navLinks.length + 1)) / (navLinks.length + 3)
 
-export default function NavBar({
+export default function NavBar ({
   scrollRef,
-  toggleDark,
+  toggleDark
 }: {
-  scrollRef: React.RefObject<HTMLDivElement>;
-  toggleDark: () => void;
+  scrollRef: React.RefObject<HTMLDivElement>
+  toggleDark: () => void
 }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolledToTop, setScrolledToTop] = useState(true);
-  const [overrideScroll, setOverrideScroll] = useState(false);
-  const { isMatch } = useContext(MediaContext);
-  const prefersReducedMotion = usePrefersReducedMotion();
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolledToTop, setScrolledToTop] = useState(true)
+  const [overrideScroll, setOverrideScroll] = useState(false)
+  const { isMatch } = useContext(MediaContext)
+  const prefersReducedMotion = usePrefersReducedMotion()
 
   const scrollDirection = useScrollDirection({
     containerRef: scrollRef,
-    horizontal: !isMatch("md"),
+    horizontal: !isMatch('md'),
     thresholdPixels: 50,
-    off: overrideScroll,
-  });
+    off: overrideScroll
+  })
 
-  const handleScroll = () => {
-    setOverrideScroll(false);
-    const scroll = scrollRef.current;
+  const handleScroll = useCallback(() => {
+    setOverrideScroll(false)
+    const scroll = scrollRef.current
     // console.log(scroll?.scrollTop, scroll?.scrollLeft);
     setScrolledToTop(
-      scroll ? scroll.scrollTop < 50 && scroll.scrollLeft < 50 : false
-    );
-  };
+      (scroll != null) ? scroll.scrollTop < 50 && scroll.scrollLeft < 50 : false
+    )
+  }, [scrollRef])
 
-  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const toggleMenu = () => { setMenuOpen(!menuOpen) }
 
   /*
   const navRef = useRef<HTMLElement>(null);
@@ -261,9 +261,9 @@ export default function NavBar({
 
   const onResize = () => {
     if (window.innerWidth > 768) {
-      setMenuOpen(false);
+      setMenuOpen(false)
     }
-  };
+  }
 
   /*
   const handleBackwardTab = (e: KeyboardEvent) => {
@@ -285,51 +285,41 @@ export default function NavBar({
     switch (e.key) {
       case KEY_CODES.ESCAPE:
       case KEY_CODES.ESCAPE_IE11: {
-        setOverrideScroll(false);
-        break;
+        setOverrideScroll(false)
+        break
       }
-
       case KEY_CODES.TAB: {
-        setOverrideScroll(true);
-      }
-
-      default: {
-        break;
+        setOverrideScroll(true)
+        break
       }
     }
-  };
+  }
 
   useEffect(() => {
-    document.addEventListener("keydown", onKeyDown);
-    window.addEventListener("resize", onResize);
+    document.addEventListener('keydown', onKeyDown)
+    window.addEventListener('resize', onResize)
 
+    const container = scrollRef.current
     if (!prefersReducedMotion) {
-      scrollRef.current?.addEventListener("scroll", handleScroll);
+      container?.addEventListener('scroll', handleScroll)
     }
 
     return () => {
-      scrollRef.current?.removeEventListener("scroll", handleScroll);
-      document.removeEventListener("keydown", onKeyDown);
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
+      if (!prefersReducedMotion) {
+        container?.removeEventListener('scroll', handleScroll)
+      }
+      document.removeEventListener('keydown', onKeyDown)
+      window.removeEventListener('resize', onResize)
+    }
+  }, [handleScroll, prefersReducedMotion, scrollRef])
 
-  return (
-    <header
-      id="navbar"
-      css={[
-        tw`w-full bottom-0 flex items-center overflow-visible justify-between fixed z-10 p-5 md:top-0 md:bottom-auto opacity-50 md:hover:opacity-100 lg:p-8`,
-        css`
-          ${genDelays(3, ANIM_DURATION)}
-          ${menuOpen && `opacity: 1;`}
-          @media (prefers-reduced-motion: no-preference) {
-            transform: translateY(0);
-            ${!scrolledToTop &&
-            ((scrollDirection === "forward" &&
-              `transform: translateY(${isMatch("md") ? `-100%` : `100%`});
-                box-shadow: 0 -10px 30px -10px #00000088;`) ||
-              (scrollDirection === "backward" &&
-                `box-shadow: 0 -10px 30px -10px #00000088;
+  const scrollstyle = () => {
+    if (!scrolledToTop) {
+      if (scrollDirection === 'forward') {
+        return `transform: translateY(${isMatch('md') ? '-100%' : '100%'});
+                box-shadow: 0 -10px 30px -10px #00000088;`
+      } else if (scrollDirection === 'backward') {
+        return `box-shadow: 0 -10px 30px -10px #00000088;
                 opacity: 1;
                 background-color: var(--bg-secondary);
                 padding-top: .5rem;
@@ -338,18 +328,32 @@ export default function NavBar({
                   padding-top: 1rem;
                   padding-bottom: 1rem;
                 }
-                `))}
-          }
+                `
+      }
+    }
+  }
+
+  return (
+    <header
+      id="navbar"
+      css={[
+        tw`w-full bottom-0 flex items-center overflow-visible justify-between fixed z-10 p-5 md:top-0 md:bottom-auto opacity-50 md:hover:opacity-100 lg:p-8`,
+        css`
+          ${genDelays(3, ANIM_DURATION)}
+          ${menuOpen && 'opacity: 1;'}
+          @media (prefers-reduced-motion: no-preference) {
+            transform: translateY(0);
+            ${scrollstyle()}
           @media (prefers-reduced-motion: reduce) {
             opacity: 1;
             box-shadow: 0 -10px 30px -10px #0008;
             background-color: var(--bg-secondary);
           }
-        `,
+        `
       ]}
     >
       <Helmet>
-        <body data-filter={menuOpen ? "blur" : ""} />
+        <body data-filter={menuOpen ? 'blur' : ''} />
       </Helmet>
       <TransitionSeries duration={ANIM_DURATION} trigger={true}>
         <StyledLinks>
@@ -365,7 +369,7 @@ export default function NavBar({
                   .concat([
                     <li key={-1}>
                       <Resume />
-                    </li>,
+                    </li>
                   ])}
               </TransitionSeries>
             </ol>
@@ -390,7 +394,7 @@ export default function NavBar({
                     <Link
                       to={`/${url}`}
                       onClick={() => {
-                        setMenuOpen(false);
+                        setMenuOpen(false)
                       }}
                     >
                       {name}
@@ -404,5 +408,5 @@ export default function NavBar({
         </div>
       </TransitionSeries>
     </header>
-  );
+  )
 }

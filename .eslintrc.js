@@ -11,27 +11,25 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:tailwindcss/recommended'
   ],
-  overrides: [
-  ],
+  overrides: [],
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module'
+    sourceType: 'module',
+    project: './tsconfig.json'
   },
-  plugins: [
-    'react',
-    'react-hooks',
-    '@emotion'
-  ],
+  plugins: ['react', 'react-hooks', '@emotion'],
   rules: {
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
+    '@typescript-eslint/explicit-function-return-type': 'off',
     '@emotion/pkg-renaming': 'error',
-    '@emotion/jsx-import': 'error',
+    '@emotion/jsx-import': 'off',
     '@emotion/no-vanilla': 'error',
     '@emotion/import-from-emotion': 'error',
-    '@emotion/styled-import': 'error'
+    '@emotion/styled-import': 'error',
+    'react/no-unknown-property': ['error', { ignore: ['css', 'tw'] }]
   },
   settings: {
     'import/resolver': {

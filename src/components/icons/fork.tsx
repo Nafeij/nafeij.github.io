@@ -1,4 +1,3 @@
-import React from "react";
 
 const IconFork = () => (
   <svg
@@ -15,6 +14,6 @@ const IconFork = () => (
     <circle cx="4" cy="12" r="2"></circle>
     <path d="M12 6a6 6 0 0 1-6 6"></path>
   </svg>
-);
+)
 
-export default IconFork;
+export default IconFork
