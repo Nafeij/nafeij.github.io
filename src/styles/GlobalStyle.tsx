@@ -39,21 +39,6 @@ const CustomStyles = css`
   ${Fonts}
 
   :root {
-    --bg-light1: #e8e8e8;
-    --bg-light2: #eeddcc;
-    --bg-dark1: #0f0f0f;
-    --bg-dark2: #181818;
-
-    --text-light1: #f1f5f9;
-    --text-light2: #c0c0c0;
-    --text-dark1: #080808;
-    --text-dark2: #484848;
-
-    --accent-light1: #0036dd;
-    --accent-light2: #db5e04;
-    --accent1-dark: #00cc99;
-    --accent2-dark: #6600ff;
-
     --link-color: #2563eb;
 
     --light: #fff;
@@ -98,6 +83,40 @@ const CustomStyles = css`
 
       --accent1: var(--accent-light1);
       --accent2: var(--accent-light2);
+    }
+
+    &[data-variant="0"] , &:not([data-variant]) {
+      --bg-light1: #e8e8e8;
+      --bg-light2: #eeddcc;
+      --bg-dark1: #0f0f0f;
+      --bg-dark2: #181818;
+
+      --text-light1: #f1f5f9;
+      --text-light2: #c0c0c0;
+      --text-dark1: #080808;
+      --text-dark2: #484848;
+
+      --accent-light1: #0036dd;
+      --accent-light2: #db5e04;
+      --accent1-dark: #00cc99;
+      --accent2-dark: #6600ff;
+    }
+
+    &[data-variant="1"] {
+      --bg-light1: red;
+      --bg-light2: red;
+      --bg-dark1: red;
+      --bg-dark2: red;
+
+      --text-light1: red;
+      --text-light2: red;
+      --text-dark1: red;
+      --text-dark2: red;
+
+      --accent-light1: red;
+      --accent-light2: red;
+      --accent1-dark: red;
+      --accent2-dark: red;
     }
   }
 

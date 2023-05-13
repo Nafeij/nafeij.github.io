@@ -1,10 +1,18 @@
 import { type ReactNode, createContext, useEffect, useState } from 'react'
 
-const setVariant = () => {}
+const setVariant = () => {
+  const root = window.document.documentElement
+  let variant = window.localStorage.getItem('theme-variant')
+  console.log(variant)
+  if (variant === null || variant === '2') {
+    variant = '0'
+  }
+  root.dataset.variant = variant
+  localStorage.setItem('theme-variant', `${(+variant) + 1}`)
+}
 
 const getInitialTheme = () => {
   if (window?.localStorage !== undefined) {
-    setVariant()
     const storedPrefs = window.localStorage.getItem('color-theme')
     if (typeof storedPrefs === 'string') {
       return storedPrefs === 'dark'
@@ -49,6 +57,10 @@ const ThemeProvider = ({
   useEffect(() => {
     rawSetTheme(isDark)
   }, [isDark])
+
+  useEffect(() => {
+    setVariant()
+  }, [])
 
   return (
     <ThemeContext.Provider
