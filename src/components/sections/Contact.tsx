@@ -108,9 +108,9 @@ const Card = styled.div`
       flex-direction: column;
       box-sizing: border-box;
       gap: 0.5rem;
-      box-shadow: 0 -0.75rem 1rem 0 rgba(#000, 0.2),
-        0 0.75rem 1rem 0 rgba(#000, 0.2), 0.75rem 0px 1rem 0 rgba(#000, 0.2),
-        -0.75rem 0px 1rem 0 rgba(#000, 0.2);
+      box-shadow: 0 -0.75rem 1rem 0 rgba(0,0,0,0.05),
+        0 0.75rem 1rem 0 rgba(0,0,0,0.05), 0.75rem 0px 1rem 0 rgba(0,0,0,0.05),
+        -0.75rem 0px 1rem 0 rgba(0,0,0,0.05);
       background-color:  var(--accent);
       backface-visibility: hidden;
       overflow: hidden;

@@ -14,16 +14,16 @@ module.exports = {
       backgroundColor: {
         primary: 'var(--bg-primary)',
         secondary: 'var(--bg-secondary)',
-        tertiary: 'var(--color-primary)',
-        blob1: 'var(--blob1)',
-        blob2: 'var(--blob2)'
+        tertiary: 'var(--button-primary)',
+        quaternary: 'var(--button-secondary)',
+        quinary: 'var(--accent)'
       },
       textColor: {
         primary: 'var(--text-primary)',
         secondary: 'var(--text-secondary)',
-        tertiary: 'var(--color-primary)',
-        blob1: 'var(--blob1)',
-        blob2: 'var(--blob2)'
+        tertiary: 'var(--bg-primary)',
+        quaternary: 'var(--bg-secondary)',
+        quinary: 'var(--accent)'
       },
       fill: {
         blob1: 'var(--blob1)',

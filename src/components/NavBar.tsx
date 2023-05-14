@@ -11,6 +11,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import tw from 'twin.macro'
 import TransitionSeries, { genDelays } from './TransitionSeries'
+import Button from './Button'
 
 // https://github.com/bchiang7/v4
 
@@ -102,7 +103,7 @@ const StyledSidebar = styled.aside<{ menuOpen: boolean }>`
     padding: 50px 10px;
     width: min(75%, 400px);
     height: 100vh;
-    background-color: var(--bg-secondary);
+    background-color: var(--button-secondary);
     box-shadow: -10px 0px 30px -15px #00000088;
     outline: 0;
     z-index: 9;
@@ -117,6 +118,8 @@ const StyledSidebar = styled.aside<{ menuOpen: boolean }>`
     flex-direction: column;
     font-family: var(--font-mono);
     text-align: center;
+    display: flex;
+    align-items: center;
   }
 
   ol {
@@ -146,15 +149,6 @@ const StyledSidebar = styled.aside<{ menuOpen: boolean }>`
       padding: 3px 20px 20px;
     }
   }
-
-  .resume-link::before {
-    content: "";
-    display: block;
-    height: 2px;
-    background-color: var(--text-secondary);
-    margin: 1.75rem 6rem;
-    opacity: 0.4;
-  }
 `
 
 const StyledLinks = styled.div`
@@ -165,27 +159,33 @@ const StyledLinks = styled.div`
     display: block;
   }
 
-  ol {
+  nav {
+    flex-direction: row;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-    list-style: none;
+    gap: 1rem;
 
-    li {
-      margin: 0 5px;
-      position: relative;
-      counter-increment: item 1;
+    ol {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+      list-style: none;
 
-      a {
-        padding: 10px;
+      li {
+        margin: 0 5px;
+        position: relative;
+        counter-increment: item 1;
 
-        &:before {
-          content: "0" counter(item) ".";
-          margin-right: 5px;
-          text-align: right;
-          color: var(--text-secondary);
+        a {
+          padding: 10px;
+
+          &:before {
+            content: "0" counter(item) ".";
+            margin-right: 5px;
+            text-align: right;
+            color: var(--text-secondary);
+          }
         }
       }
     }
@@ -212,9 +212,9 @@ const DarkButton = ({ toggleDark }: { toggleDark: () => void }) => {
 }
 
 const Resume = () => (
-  <a href="/Resume_Jiefan.pdf" className="resume-link">
+  <Button as="a" href="/Resume_Jiefan.pdf" className="resume-link" target="_blank" rel="noopener noreferrer">
     Resume
-  </a>
+  </Button>
 )
 
 const ANIM_DURATION = 600
@@ -301,6 +301,7 @@ export default function NavBar ({
 
     const container = scrollRef.current
     if (!prefersReducedMotion) {
+      handleScroll()
       container?.addEventListener('scroll', handleScroll)
     }
 
@@ -358,21 +359,17 @@ export default function NavBar ({
       <TransitionSeries duration={ANIM_DURATION} trigger={true}>
         <StyledLinks>
           <nav /* ref={navRef} */>
-            <ol css={genDelays(navLinks.length + 1)}>
+            <ol css={genDelays(navLinks.length)}>
               <TransitionSeries duration={innerDuration} trigger={true}>
                 {navLinks
                   .map(({ url, name }, i) => (
                     <li key={i}>
                       <Link to={`/${url}`}>{name}</Link>
                     </li>
-                  ))
-                  .concat([
-                    <li key={-1}>
-                      <Resume />
-                    </li>
-                  ])}
+                  ))}
               </TransitionSeries>
             </ol>
+            <Resume />
           </nav>
         </StyledLinks>
         <DarkButton toggleDark={toggleDark} />
@@ -402,6 +399,13 @@ export default function NavBar ({
                   </li>
                 ))}
               </ol>
+              <div css={css`
+                background-color: var(--text-secondary);
+                margin: 1.75rem 0 2rem;
+                opacity: 0.4;
+                height: 1px;
+                width: 39%;
+              `} />
               <Resume />
             </nav>
           </StyledSidebar>

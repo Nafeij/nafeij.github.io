@@ -1,5 +1,5 @@
 export { default as FancyTitle } from './FancyTitle'
-export { default as Layout } from './Layout'
+export { default as Layout, ScrollContainerRefContext } from './Layout'
 export { default as NavBar } from './NavBar'
 
 export { default as TransitionSeries, genDelays } from './TransitionSeries'
@@ -12,4 +12,5 @@ export { default as Contact } from './sections/Contact'
 export { default as Head } from './Head'
 export { default as Footer } from './Footer'
 export { default as Indicator } from './Indicator'
+export { default as Button } from './Button'
 export { default as QR } from './qr'

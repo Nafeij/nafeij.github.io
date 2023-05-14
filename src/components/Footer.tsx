@@ -6,7 +6,6 @@ import tw from 'twin.macro'
 
 const StyledFooter = styled.div`
   opacity: 0.6;
-  color: var(--text-secondary);
   font-family: var(--font-mono);
   ${tw`text-xs md:text-sm lg:text-base md:p-6 lg:p-8`}
 
@@ -18,6 +17,7 @@ const StyledFooter = styled.div`
 
   a {
     margin: 0 auto;
+    color: var(--text-secondary);
 
     .github-stats {
       margin-top: 10px;

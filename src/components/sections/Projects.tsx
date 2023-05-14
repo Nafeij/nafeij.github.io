@@ -1,8 +1,8 @@
-import { Section, TransitionSeries, genDelays } from '@components'
+import { Section, TransitionSeries, genDelays, ScrollContainerRefContext } from '@components'
 import { srConfig } from '@config'
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { usePrefersReducedMotion } from '@hooks'
+import { usePrefersReducedMotion, setMousePos } from '@hooks'
 import Icon from '@icons'
 import { ThemeContext } from '@styles'
 import { sr } from '@util'
@@ -11,7 +11,6 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useDraggable } from 'react-use-draggable-scroll'
 import tw from 'twin.macro'
-import { ScrollContainerRefContext } from '../Layout'
 
 const Scroller = styled.div`
   overflow-y: auto;
@@ -85,8 +84,7 @@ const Grid = styled.div`
 
     .card-content {
       height: 100%;
-      background-color: var(--button);
-      color: var(--bg-secondary);
+      background-color: var(--button-secondary);
       border-radius: inherit;
       display: flex;
       flex-direction: column;
@@ -103,10 +101,6 @@ const Grid = styled.div`
 
       h2 {
         ${tw`text-lg md:text-xl lg:text-2xl`}
-      }
-
-      a {
-        color: var(--bg-primary);
       }
 
       svg {
@@ -217,11 +211,7 @@ export default function Projects () {
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     cardRefs.current.forEach((card) => {
-      const rect = card.getBoundingClientRect()
-      const x = e.clientX - rect.left
-      const y = e.clientY - rect.top
-      card.style.setProperty('--mouse-x', `${x}px`)
-      card.style.setProperty('--mouse-y', `${y}px`)
+      setMousePos(e, card)
     })
   }
 

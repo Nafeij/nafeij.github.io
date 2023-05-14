@@ -66,7 +66,8 @@ const CustomStyles = css`
       --text-primary: var(--text-light1);
       --text-secondary: var(--text-light2);
 
-      --button: var(--button-light);
+      --button-primary: var(--button-light1);
+      --button-secondary: var(--button-light2);
       --accent: var(--accent-light);
 
       --blob1: var(--blob-light1);
@@ -82,7 +83,8 @@ const CustomStyles = css`
       --text-primary: var(--text-dark1);
       --text-secondary: var(--text-dark2);
 
-      --button: var(--button-dark);
+      --button-primary: var(--button-dark1);
+      --button-secondary: var(--button-dark2);
       --accent: var(--accent-dark);
 
       --blob1: var(--blob-light1);
@@ -91,41 +93,54 @@ const CustomStyles = css`
 
     --bg-light1: #e8e8e8;
     --bg-light2: #eeddcc;
-    --bg-dark1: #0f0f0f;
-    --bg-dark2: #181818;
 
     --text-light1: #080808;
     --text-light2: #484848;
-    --text-dark1: #f1f5f9;
-    --text-dark2: #c0c0c0;
 
-    --button-light: #484848;
-    --button-dark: #e1e5e9;
+    --button-light1: #484848;
+    --button-light2: #f3d6b9;
 
     --accent-light: #181818;
-    --accent-dark: #e0e0e0;
 
     --blob-light1: #0036dd;
     --blob-light2: #db5e04;
+
+    --bg-dark1: #0f0f0f;
+    --bg-dark2: #181818;
+
+    --text-dark1: #f1f5f9;
+    --text-dark2: #aaaaaa;
+
+    --button-dark1: #e1e5e9;
+    --button-dark2: #2e2e2e;
+
+    --accent-dark: #e0e0e0;
+
     --blob1-dark: #00cc99;
     --blob2-dark: #6600ff;
 
     &[data-variant="1"] {
-      --bg-light1: #ffffff;
-      --bg-light2: #f1f5f9;
-      --bg-dark1: #101528;
-      --bg-dark2: #111111;
+      --bg-light1: #e7e7e7;
+      --bg-light2: #e6e6e6;
 
-      --button-light: #407897;
-      --button-dark: #ff533f;
-
-      --accent-light: #407897;
-      --accent-dark: #ab987a;
-
-      --text-light1: #286f99;
+      --text-light1: #1f5474;
       --text-light2: #407897;
+
+      --button-light1: #407897;
+      --button-light2: #dadada;
+
+      --accent-light: #ff533f;
+
+      --bg-dark1: #101528;
+      --bg-dark2: #22273d;
+
       --text-dark1: #f6f6f6;
       --text-dark2: #dddddd;
+
+      --button-dark1: #ff602c;
+      --button-dark2: #000000;
+
+      --accent-dark: #ffffff;
     }
   }
 
