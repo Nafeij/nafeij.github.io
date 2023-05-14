@@ -3,7 +3,7 @@ import { type ReactNode, createContext, useEffect, useState } from 'react'
 const setVariant = () => {
   const root = window.document.documentElement
   let variant = window.localStorage.getItem('theme-variant')
-  if (variant === null || variant === '3') {
+  if (variant === null || variant === '4') {
     variant = '0'
   }
   root.dataset.variant = variant

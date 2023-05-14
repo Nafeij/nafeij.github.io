@@ -142,6 +142,54 @@ const CustomStyles = css`
 
       --accent-dark: #ff533f;
     }
+
+    &[data-variant="2"] {
+      --bg-light1: #d3d8de;
+      --bg-light2: #ffffff;
+
+      --text-light1: #000000;
+      --text-light2: #444444;
+
+      --button-light1: #000000;
+      --button-light2: #f5f5f5;
+
+      --accent-light: #da9619;
+
+      --bg-dark1: #323232;
+      --bg-dark2: #4d4d4d;
+
+      --text-dark1: #b8ffc9;
+      --text-dark2: #7db38a;
+
+      --button-dark1: #54b46c;
+      --button-dark2: #38473c;
+
+      --accent-dark: #92f2aa;
+    }
+
+    &[data-variant="3"] {
+      --bg-light1: #efefef;
+      --bg-light2: #ffffff;
+
+      --text-light1: #474747;
+      --text-light2: #636363;
+
+      --button-light1: #ff3a3f;
+      --button-light2: #fafafa;
+
+      --accent-light: #28aecc;
+
+      --bg-dark1: #1f2041;
+      --bg-dark2: #2d2e4e;
+
+      --text-dark1: #ffffff;
+      --text-dark2: #cecece;
+
+      --button-dark1: #ffc857;
+      --button-dark2: #4b3f72;
+
+      --accent-dark: #ffc857;
+    }
   }
 
   body[data-filter="blur"] {
