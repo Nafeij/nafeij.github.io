@@ -111,7 +111,7 @@ const Card = styled.div`
       box-shadow: 0 -0.75rem 1rem 0 rgba(0,0,0,0.05),
         0 0.75rem 1rem 0 rgba(0,0,0,0.05), 0.75rem 0px 1rem 0 rgba(0,0,0,0.05),
         -0.75rem 0px 1rem 0 rgba(0,0,0,0.05);
-      background-color:  var(--accent);
+      background-color:  var(--button-primary);
       backface-visibility: hidden;
       overflow: hidden;
 

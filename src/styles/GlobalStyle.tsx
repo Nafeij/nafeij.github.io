@@ -120,14 +120,14 @@ const CustomStyles = css`
     --blob2-dark: #6600ff;
 
     &[data-variant="1"] {
-      --bg-light1: #e7e7e7;
-      --bg-light2: #e6e6e6;
+      --bg-light1: #e4e4e4;
+      --bg-light2: #d1d1d1;
 
-      --text-light1: #1f5474;
-      --text-light2: #407897;
+      --text-light1: #136091;
+      --text-light2: #327da5;
 
       --button-light1: #407897;
-      --button-light2: #dadada;
+      --button-light2: #d1d1d1;
 
       --accent-light: #ff533f;
 
@@ -140,7 +140,7 @@ const CustomStyles = css`
       --button-dark1: #ff602c;
       --button-dark2: #000000;
 
-      --accent-dark: #ffffff;
+      --accent-dark: #ff533f;
     }
   }
 

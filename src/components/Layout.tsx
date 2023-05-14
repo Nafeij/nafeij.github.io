@@ -68,7 +68,7 @@ export default function Layout ({
         css`
           font-family: "source_sans_pro";
           h1 {
-            ${tw`font-bold text-3xl text-quinary md:text-4xl lg:text-5xl`}
+            ${tw`font-bold text-3xl text-primary md:text-4xl lg:text-5xl`}
           }
 
           h2 {
