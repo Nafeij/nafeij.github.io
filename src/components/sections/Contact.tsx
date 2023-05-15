@@ -8,6 +8,7 @@ import { MediaContext } from '@util'
 import { Fragment, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import tw from 'twin.macro'
 import { ScrollContainerRefContext } from '../Layout'
+import { navigate } from 'gatsby'
 
 const flip = keyframes`
   0% {
@@ -91,13 +92,6 @@ const Card = styled.div`
     animation-fill-mode: forwards;
     animation-play-state: paused;
 
-    p,
-    h1,
-    svg {
-      color: var(--bg-primary);
-      opacity: 0.9;
-    }
-
     .front,
     .back {
       padding: 0 10%;
@@ -114,6 +108,16 @@ const Card = styled.div`
       background-color:  var(--button-primary);
       backface-visibility: hidden;
       overflow: hidden;
+      pointer-events: none;
+
+      p, h1, svg {
+        color: var(--bg-primary);
+        opacity: 0.9;
+      }
+
+      a {
+        pointer-events: all;
+      }
 
       .shine {
         content: "";
@@ -288,6 +292,7 @@ export default function Contact () {
       <Section
         tw="min-h-full min-w-full after:hidden motion-reduce:hidden"
         ref={parentRef}
+        onClick={() => { if (!isMatch('md')) void navigate('/#contact') }}
       />
       <Section
         id="contact"
