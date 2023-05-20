@@ -1,14 +1,14 @@
 import { QR, Section } from '@components'
 import { links } from '@config'
-import { css, keyframes } from '@emotion/react'
+import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { usePrefersReducedMotion } from '@hooks'
 import Icon from '@icons'
 import { MediaContext } from '@util'
+import { navigate } from 'gatsby'
 import { Fragment, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import tw from 'twin.macro'
 import { ScrollContainerRefContext } from '../Layout'
-import { navigate } from 'gatsby'
 
 const flip = keyframes`
   0% {
@@ -73,10 +73,6 @@ const Card = styled.div`
     transition: none !important;
   }
 
-  a {
-    pointer-events: all;
-  }
-
   .card {
     margin-top: 3rem;
     width: 100%;
@@ -108,15 +104,10 @@ const Card = styled.div`
       background-color:  var(--button-primary);
       backface-visibility: hidden;
       overflow: hidden;
-      pointer-events: none;
 
       p, h1, svg {
         color: var(--bg-primary);
         opacity: 0.9;
-      }
-
-      a {
-        pointer-events: all;
       }
 
       .shine {
@@ -147,8 +138,13 @@ const Card = styled.div`
       ${tw`flex-row items-center justify-between gap-2 md:gap-4 lg:gap-12 text-base md:text-lg lg:text-xl`}
       border-radius: 0 1rem 0 1rem;
       transform: rotateY(180deg);
+
       .shine {
         animation-name: ${swipeb};
+      }
+
+      .contact-links svg {
+        ${tw`h-5 md:h-6 lg:h-8`}
       }
     }
   }
@@ -158,6 +154,18 @@ const Card = styled.div`
     max-width: 500px;
     .card {
       aspect-ratio: 7/4;
+
+      .back .contact-links::before {
+        content: "";
+        width: 2px;
+        height: 80%;
+        background-color: var(--bg-primary);
+        position: absolute;
+        top: 50%;
+        translate: 0 -50%;
+        opacity: 0.6;
+        ${tw`md:-left-9 lg:-left-14`}
+      }
     }
   }
 
@@ -326,24 +334,8 @@ export default function Contact () {
               {isMatch('md') ? <QR /> : null}
               <div
                 tw="relative flex flex-1 flex-col gap-2 md:ml-12 lg:gap-6 motion-reduce:lg:gap-4 motion-reduce:lg:text-lg"
-                css={css`
-                  svg {
-                    ${tw`h-5 md:h-6 lg:h-8`}
-                  }
-                  @media (min-width: 768px) {
-                    &::before {
-                      content: "";
-                      width: 2px;
-                      height: 80%;
-                      background-color: var(--bg-primary);
-                      position: absolute;
-                      top: 50%;
-                      translate: 0 -50%;
-                      opacity: 0.6;
-                      ${tw`md:-left-9 lg:-left-14`}
-                    }
-                  }
-                `}
+                className='contact-links'
+                css={progress > 950 && tw`pointer-events-auto`}
               >
                 {links.map(({ name, url, desc }, i) => (
                   <a
