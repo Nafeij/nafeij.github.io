@@ -10,8 +10,8 @@ import { Link } from 'gatsby'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import tw from 'twin.macro'
-import Button from './Button'
 import TransitionSeries, { genDelays } from './TransitionSeries'
+import Button from './Button'
 
 // https://github.com/bchiang7/v4
 
@@ -153,6 +153,11 @@ const StyledSidebar = styled.aside<{ menuOpen: boolean }>`
 
 const StyledLinks = styled.div`
   font-family: var(--font-mono);
+  display: none;
+
+  @media (min-width: 768px) {
+    display: block;
+  }
 
   nav {
     flex-direction: row;
@@ -352,9 +357,7 @@ export default function NavBar ({
         <body data-filter={menuOpen ? 'blur' : ''} />
       </Helmet>
       <TransitionSeries duration={ANIM_DURATION} trigger={true}>
-        {isMatch('md')
-          ? (
-          <StyledLinks>
+        <StyledLinks>
           <nav /* ref={navRef} */>
             <ol css={genDelays(navLinks.length)}>
               <TransitionSeries duration={innerDuration} trigger={true}>
@@ -369,8 +372,6 @@ export default function NavBar ({
             <Resume />
           </nav>
         </StyledLinks>
-            )
-          : null}
         <DarkButton toggleDark={toggleDark} />
         <div tw="z-0 block md:hidden">
           <StyledHamburgerButton onClick={toggleMenu} menuOpen={menuOpen}>
