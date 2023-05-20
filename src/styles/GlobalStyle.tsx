@@ -46,10 +46,10 @@ const CustomStyles = css`
 
     --bg-light: fixed
       radial-gradient(
-        ellipse at center,
-        var(--bg-light1) 0%,
-        var(--bg-light2) 100%
-      );
+        closest-side ellipse at center,
+        var(--bg-light1),
+        var(--bg-light2)
+      ), var(--bg-light2);
     --bg-dark: fixed 0% 0% / 8vmin 8vmin var(--bg-dark1)
       radial-gradient(ellipse at center, var(--bg-dark2) 8%, transparent 8%);
 
