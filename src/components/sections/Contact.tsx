@@ -150,9 +150,6 @@ const Card = styled.div`
       .shine {
         animation-name: ${swipeb};
       }
-      > svg {
-        display: none;
-      }
     }
   }
 
@@ -161,9 +158,6 @@ const Card = styled.div`
     max-width: 500px;
     .card {
       aspect-ratio: 7/4;
-      .back > svg {
-        display: block;
-      }
     }
   }
 
@@ -329,7 +323,7 @@ export default function Contact () {
               />
             </div>
             <div className="back">
-              <QR />
+              {isMatch('md') ? <QR /> : null}
               <div
                 tw="relative flex flex-1 flex-col gap-2 md:ml-12 lg:gap-6 motion-reduce:lg:gap-4 motion-reduce:lg:text-lg"
                 css={css`

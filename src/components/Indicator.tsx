@@ -1,7 +1,6 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { useCallback, useContext, useEffect, useState } from 'react'
-import { MediaContext } from '@util'
+import { useCallback, useEffect, useState } from 'react'
 
 // vladshap @ https://codepen.io/vladshap/pen/ezQOEY
 
@@ -98,10 +97,6 @@ const StyledIndicator = styled.div<{ bottom: boolean, show: boolean }>`
       animation-delay: 0.5s;
     }
   }
-
-  @media (min-width: 768px) {
-    display: none;
-  }
 `
 
 const getInitialScrolled = (id: string) => {
@@ -129,7 +124,6 @@ export default function Indicator ({
 }) {
   const [show, setShow] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const { isMatch } = useContext(MediaContext)
 
   const checkScroll = useCallback(() => {
     if (scrollRef.current == null) return
@@ -144,7 +138,7 @@ export default function Indicator ({
   }, [scrollRef])
 
   useEffect(() => {
-    if (isMatch('md') || ((scrollRef?.current) == null) || getInitialScrolled(scrollRef.current.id)) return
+    if ((scrollRef?.current) == null || getInitialScrolled(scrollRef.current.id)) return
     const scroll = scrollRef.current
     scroll?.addEventListener('scroll', checkScroll)
     const timeOut = setTimeout(() => {
@@ -154,7 +148,7 @@ export default function Indicator ({
       clearTimeout(timeOut)
       scroll?.removeEventListener('scroll', checkScroll)
     }
-  }, [checkScroll, isMatch, scrollRef])
+  }, [checkScroll, scrollRef])
 
   return (
     <StyledIndicator bottom={bottom} show={show && !scrolled}>

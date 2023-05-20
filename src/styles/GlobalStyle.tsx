@@ -156,7 +156,7 @@ const CustomStyles = css`
       --accent-light: #da9619;
 
       --bg-dark1: #323232;
-      --bg-dark2: #4d4d4d;
+      --bg-dark2: #424242;
 
       --text-dark1: #b8ffc9;
       --text-dark2: #7db38a;

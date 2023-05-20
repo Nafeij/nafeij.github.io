@@ -2,6 +2,7 @@ import { Footer, Indicator, NavBar } from '@components'
 import { css, keyframes } from '@emotion/react'
 import { type WindowLocation } from '@reach/router'
 import { ThemeContext } from '@styles'
+import { MediaContext } from '@util'
 import {
   createContext,
   useContext,
@@ -42,6 +43,7 @@ export default function Layout ({
   location: WindowLocation
 }) {
   const { isDark, setDark } = useContext(ThemeContext)
+  const { isMatch } = useContext(MediaContext)
   const [animate, setAnimate] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
 
@@ -98,7 +100,7 @@ export default function Layout ({
         ref={scrollRef}
       >
         <ScrollContainerRefContext.Provider value={scrollRef}>
-          <Indicator bottom={false} scrollRef={scrollRef} />
+          {!isMatch('md') ? <Indicator bottom={false} scrollRef={scrollRef} /> : null}
           {children}
         </ScrollContainerRefContext.Provider>
         <Footer />
