@@ -17,17 +17,9 @@ const Scroller = styled.div`
   overflow-x: hidden;
   padding-top: 2rem;
   padding-bottom: 6rem;
-  display: flex;
-  flex-direction: column;
-  max-width: 100%;
 
   @media (min-width: 768px) {
-    overflow: visible;
     padding: 7rem 0;
-    height: 100%;
-    width: 100%;
-    justify-content: center;
-    box-sizing: border-box;
   }
 `
 
@@ -281,7 +273,7 @@ export default function Projects () {
 
   return (
     <Section id="projects" tw="px-0 md:px-24">
-      <Scroller ref={scrollerRef} tw="px-4 md:px-0">
+      <Scroller ref={scrollerRef} tw="flex max-w-full flex-col px-4  md:box-border md:h-full md:w-full md:justify-center md:overflow-visible md:px-0">
         <h1 tw="mb-3 md:mb-7 lg:mb-10">Here is some of my work.</h1>
         <Grid
           onMouseMoveCapture={handleMouseMove}
