@@ -1,8 +1,9 @@
-import { Fragment } from 'react'
 import { css, Global, keyframes } from '@emotion/react'
+import { Fragment } from 'react'
 import { GlobalStyles as BaseStyles } from 'twin.macro'
 
 import { Fonts, TransitionStyle } from '@styles'
+import { shuffle } from '@util'
 
 const drawStroke = keyframes`
   0%,
@@ -24,16 +25,52 @@ const drawStroke = keyframes`
   }
 `
 
+const bounceX = keyframes`
+  0% {
+    cx: 0%;
+  }
+  100% {
+    cx: 100%;
+  }
+`
+const bounceY = keyframes`
+  0% {
+    cy: 0%;
+  }
+  100% {
+    cy: 100%;
+  }
+`
+
 const fadeInOut = keyframes`
   0%,
   100% {
     opacity: 0;
   }
-  20%,
-  80% {
+  10%,
+  90% {
     opacity: 1;
   }
 `
+
+const DIRECTIONS = ['alternate', 'alternate-reverse']
+
+const genAnimStyles = (num = 5, max = 10) => {
+  const coff = Math.random() * max / num
+  const delays = Array.from({ length: num }, (_, i) => i * max / num + coff)
+  shuffle(delays)
+  console.log(coff, delays)
+  let styles = ''
+  for (let i = 0; i < num; i++) {
+    styles += `
+      &:nth-of-type(${i + 1}) {
+        animation-delay: -${delays[i]}s, -${delays[num - i - 1]}s;
+        animation-direction: alternate, ${DIRECTIONS[i % 2]};
+      }
+    `
+  }
+  return styles
+}
 
 const CustomStyles = css`
   ${Fonts}
@@ -241,6 +278,12 @@ const CustomStyles = css`
   svg#Amazing {
     opacity: 0;
     animation: ${fadeInOut} 12s linear forwards 0.3s;
+
+    circle {
+      animation: ${bounceX} 12s linear infinite 0.3s, ${bounceY} 12s linear infinite 0.3s;
+
+      ${genAnimStyles(8, 24)}
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -262,6 +305,10 @@ const CustomStyles = css`
     svg#Amazing {
       animation: fade-in-out 12s linear forwards !important;
       opacity: 1 !important;
+
+      circle {
+        display: none !important;
+      }
     }
 
     h1#Exciting {

@@ -1,6 +1,5 @@
 import { css, keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { usePrefersReducedMotion } from '@hooks'
 import { useState } from 'react'
 
 const Inspiring = ({ animCallback }: { animCallback: () => void }) => (
@@ -12,11 +11,9 @@ const Inspiring = ({ animCallback }: { animCallback: () => void }) => (
 )
 
 const Amazing = ({
-  animCallback,
-  animateBlob
+  animCallback
 }: {
   animCallback: () => void
-  animateBlob: boolean
 }) => (
   <svg
     id="Amazing"
@@ -24,21 +21,6 @@ const Amazing = ({
     height="100%"
     onAnimationEnd={animCallback}
   >
-    <defs>
-      <filter id="blur1" x="-10%" y="-10%" width="120%" height="120%">
-        <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-        <feBlend
-          mode="normal"
-          in="SourceGraphic"
-          in2="BackgroundImageFix"
-          result="shape"
-        ></feBlend>
-        <feGaussianBlur
-          stdDeviation="60"
-          result="effect1_foregroundBlur"
-        ></feGaussianBlur>
-      </filter>
-    </defs>
     <clipPath id="textClip" className="filled-heading">
       <text
         css={{
@@ -52,69 +34,14 @@ const Amazing = ({
       </text>
     </clipPath>
     <g clipPath="url(#textClip)">
-      <g id="group1">
-        <rect width="100%" height="100%" tw="fill-blob2"></rect>
-        {animateBlob && (
-          <g filter="url(#blur1)">
-            <circle cx="0" cy="0" tw="fill-blob1" r="30%">
-              <animate
-                attributeName="cx"
-                values="-30%;130%;-30%"
-                dur="18s"
-                repeatCount="999"
-              />
-              <animate
-                attributeName="cy"
-                values="-30%;130%;-30%"
-                dur="12s"
-                repeatCount="999"
-              />
-            </circle>
-            <circle cx="0" cy="0" tw="fill-blob1" r="30%">
-              <animate
-                attributeName="cx"
-                values="130%;-30%;130%"
-                dur="12s"
-                repeatCount="999"
-              />
-              <animate
-                attributeName="cy"
-                values="-30%;130%;-30%"
-                dur="18s"
-                repeatCount="999"
-              />
-            </circle>
-            <circle cx="0" cy="0" tw="fill-blob2" r="30%">
-              <animate
-                attributeName="cx"
-                values="130%;-30%;130%"
-                dur="14s"
-                repeatCount="999"
-              />
-              <animate
-                attributeName="cy"
-                values="130%;-30%;130%"
-                dur="16s"
-                repeatCount="999"
-              />
-            </circle>
-            <circle cx="0" cy="0" tw="fill-blob1" r="30%">
-              <animate
-                attributeName="cx"
-                values="-30%;130%;-30%"
-                dur="16s"
-                repeatCount="999"
-              />
-              <animate
-                attributeName="cy"
-                values="130%;-30%;130%"
-                dur="14s"
-                repeatCount="999"
-              />
-            </circle>
-          </g>
-        )}
-      </g>
+      <circle cx="0" cy="0" tw="fill-blob2" r="20%"/>
+      <circle cx="0" cy="0" tw="fill-blob1" r="20%"/>
+      <circle cx="0" cy="0" tw="fill-blob2" r="20%"/>
+      <circle cx="0" cy="0" tw="fill-blob1" r="20%"/>
+      <circle cx="0" cy="0" tw="fill-blob1" r="20%"/>
+      <circle cx="0" cy="0" tw="fill-blob2" r="20%"/>
+      <circle cx="0" cy="0" tw="fill-blob2" r="20%"/>
+      <circle cx="0" cy="0" tw="fill-blob1" r="20%"/>
     </g>
   </svg>
 )
@@ -227,8 +154,7 @@ const Exciting = ({
 )
 
 const FancyTitle = () => {
-  const [iter, setIter] = useState(Math.floor(Math.random() * 3))
-  const animateBlob = !usePrefersReducedMotion()
+  const [iter, setIter] = useState(Math.random() * 3)
   return (
     <div
       css={css`
@@ -248,7 +174,6 @@ const FancyTitle = () => {
           animCallback={() => {
             setIter(2)
           }}
-          animateBlob={animateBlob}
         />
       )}
       {iter === 2 && (
