@@ -40,6 +40,23 @@ const bounceY = keyframes`
   }
 `
 
+const backgroundSpreadBelow = keyframes`
+  from {
+    clip-path: circle(0% at 0% 100%);
+  }
+  to {
+    clip-path: circle(150% at 0% 100%);
+  }
+`
+
+const backgroundSpread = keyframes`
+  from {
+    clip-path: circle(0% at 100% 0%);
+  }
+  to {
+    clip-path: circle(150% at 100% 0%);
+  }
+`
 const fadeInOut = keyframes`
   0%,
   100% {
@@ -57,7 +74,7 @@ const genAnimStyles = (num = 5, max = 10) => {
   const coff = Math.random() * max / num
   const delays = Array.from({ length: num }, (_, i) => i * max / num + coff)
   shuffle(delays)
-  console.log(coff, delays)
+  // console.log(coff, delays)
   let styles = ''
   for (let i = 0; i < num; i++) {
     styles += `
@@ -281,6 +298,22 @@ const CustomStyles = css`
       animation: ${bounceX} 12s linear infinite 0.3s, ${bounceY} 12s linear infinite 0.3s;
 
       ${genAnimStyles(8, 24)}
+    }
+  }
+
+  #content {
+    background: var(--bg-under);
+    width: 100svw;
+    height: 100svh;
+
+    #fakeBg {
+      background: var(--bg);
+      z-index: -1;
+      animation: ${backgroundSpreadBelow} 1s ease-out forwards;
+
+      @media (min-width: 768px) {
+        animation: ${backgroundSpread} 1s ease-out forwards;
+      }
     }
   }
 

@@ -1,5 +1,5 @@
 import { Footer, Indicator, NavBar } from '@components'
-import { css, keyframes } from '@emotion/react'
+import { css } from '@emotion/react'
 import { type WindowLocation } from '@reach/router'
 import { ThemeContext } from '@styles'
 import { MediaContext } from '@util'
@@ -14,24 +14,6 @@ import {
 } from 'react'
 import tw from 'twin.macro'
 
-const backgroundSpread = keyframes`
-from {
-  clip-path: circle(0% at 0% 100%);
-}
-to {
-  clip-path: circle(150% at 0% 100%);
-}
-`
-
-const backgroundSpreadBelow = keyframes`
-from {
-  clip-path: circle(0% at 100% 0%);
-}
-to {
-  clip-path: circle(150% at 100% 0%);
-}
-`
-
 export const ScrollContainerRefContext =
   createContext<RefObject<HTMLDivElement> | null>(null)
 
@@ -44,14 +26,16 @@ export default function Layout ({
 }) {
   const { isDark, setDark } = useContext(ThemeContext)
   const { isMatch } = useContext(MediaContext)
-  const [animate, setAnimate] = useState(false)
+  const [animating, setAnimating] = useState(false)
+  const [animated, setAnimated] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const toggleDark = () => {
-    if (animate) return
-    setAnimate(true)
+    if (animating) return
+    setAnimating(true)
+    if (!animated) setAnimated(true)
     setDark(!isDark)
-    setTimeout(() => { setAnimate(false) }, 1000)
+    setTimeout(() => { setAnimating(false) }, 1000)
   }
 
   useEffect(() => {
@@ -89,14 +73,7 @@ export default function Layout ({
       <NavBar scrollRef={scrollRef} toggleDark={toggleDark} />
       <div
         id="content"
-        css={[
-          tw`relative transition-none isolate flex flex-nowrap items-center overflow-x-auto overflow-y-hidden snap-mandatory snap-x md:snap-none flex-row md:flex-col md:overflow-x-hidden md:overflow-y-auto scroll-smooth motion-reduce:scroll-auto`,
-          css`
-            background: var(--bg-under);
-            width: 100svw;
-            height: 100svh;
-          `
-        ]}
+        tw="relative isolate flex snap-x snap-mandatory flex-row flex-nowrap items-center overflow-x-auto overflow-y-hidden scroll-smooth transition-none motion-reduce:scroll-auto md:snap-none md:flex-col md:overflow-y-auto md:overflow-x-hidden"
         ref={scrollRef}
       >
         <ScrollContainerRefContext.Provider value={scrollRef}>
@@ -106,20 +83,8 @@ export default function Layout ({
         <Footer />
         <div
           id="fakeBg"
-          css={[
-            tw`transition-none fixed h-full w-full top-0 left-0 pointer-events-none`,
-            css`
-              background: var(--bg);
-              z-index: -1;
-            `,
-            animate &&
-              css`
-                animation: ${backgroundSpread} 1s ease-out both;
-                @media (min-width: 768px) {
-                  animation: ${backgroundSpreadBelow} 1s ease-out both;
-                }
-              `
-          ]}
+          tw="pointer-events-none fixed left-0 top-0 h-full w-full transition-none"
+          css={!animated && css`animation: none!important;`}
           key={isDark ? 'dark' : 'light'}
         />
       </div>
