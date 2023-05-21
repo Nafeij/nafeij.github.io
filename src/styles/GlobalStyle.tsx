@@ -256,9 +256,11 @@ const CustomStyles = css`
     }
   }
 
+  /*
   *:not(body):not(html) {
     transition: var(--transition);
   }
+  */
 
   /* Scrollbar Styles */
   html,

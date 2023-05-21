@@ -340,6 +340,7 @@ export default function NavBar ({
       css={[
         tw`w-full bottom-0 flex items-center overflow-visible justify-between fixed z-10 p-5 md:top-0 md:bottom-auto opacity-50 md:hover:opacity-100 lg:p-8`,
         css`
+          transition: var(--transition);
           ${genDelays(3, ANIM_DURATION)}
           ${menuOpen && 'opacity: 1;'}
           @media (prefers-reduced-motion: no-preference) {
