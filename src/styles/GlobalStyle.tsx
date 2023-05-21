@@ -1,9 +1,7 @@
 import { css, Global, keyframes } from '@emotion/react'
-import { Fragment } from 'react'
-import { GlobalStyles as BaseStyles } from 'twin.macro'
-
 import { Fonts, TransitionStyle } from '@styles'
 import { shuffle } from '@util'
+import { GlobalStyles as BaseStyles } from 'twin.macro'
 
 const drawStroke = keyframes`
   0%,
@@ -322,9 +320,9 @@ const CustomStyles = css`
 
 export default function GlobalStyle (): JSX.Element {
   return (
-    <Fragment>
+    <>
       <BaseStyles />
       <Global styles={CustomStyles} />
-    </Fragment>
+    </>
   )
 }
