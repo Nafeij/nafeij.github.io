@@ -90,11 +90,11 @@ export default function Layout ({
       <div
         id="content"
         css={[
-          tw`relative transition-none isolate flex flex-nowrap items-center  overflow-x-auto snap-mandatory snap-x md:snap-none flex-row md:flex-col md:overflow-x-hidden md:overflow-y-auto scroll-smooth motion-reduce:scroll-auto`,
+          tw`relative transition-none isolate flex flex-nowrap items-center overflow-x-auto overflow-y-hidden snap-mandatory snap-x md:snap-none flex-row md:flex-col md:overflow-x-hidden md:overflow-y-auto scroll-smooth motion-reduce:scroll-auto`,
           css`
             background: var(--bg-under);
-            width: 100vw;
-            height: 100vh;
+            width: 100svw;
+            height: 100svh;
           `
         ]}
         ref={scrollRef}

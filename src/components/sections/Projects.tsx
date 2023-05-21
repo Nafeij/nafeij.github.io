@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import { usePrefersReducedMotion, setMousePos } from '@hooks'
 import Icon from '@icons'
 import { ThemeContext } from '@styles'
-import { sr } from '@util'
+import { MediaContext, sr } from '@util'
 import { graphql, useStaticQuery } from 'gatsby'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import { useContext, useEffect, useRef, useState } from 'react'
@@ -184,6 +184,7 @@ export default function Projects () {
   const cardRefs = useRef<HTMLDivElement[]>([])
   const prefersReducedMotion = usePrefersReducedMotion()
   const ScrollContainerRef = useContext(ScrollContainerRefContext)
+  const { isMatch } = useContext(MediaContext)
   const scrollerRef = useRef<HTMLDivElement>(null)
   const horiScrollerRef =
     useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>
@@ -194,12 +195,12 @@ export default function Projects () {
     if (!prefersReducedMotion) {
       (scrollerRef.current != null) &&
         sr?.reveal(scrollerRef.current, {
-          ...srConfig(),
+          ...srConfig(500, isMatch('md') ? 0.25 : 0.8),
           container: ScrollContainerRef?.current,
-          beforeReveal: () => { setIsRevealed(true) }
+          afterReveal: () => { setIsRevealed(true) }
         })
     }
-  }, [ScrollContainerRef, posts, prefersReducedMotion])
+  }, [ScrollContainerRef, posts, prefersReducedMotion, isMatch])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     cardRefs.current.forEach((card) => {
@@ -272,13 +273,13 @@ export default function Projects () {
   }
 
   return (
-    <Section id="projects" tw="px-0 md:px-24">
-      <Scroller ref={scrollerRef} tw="flex max-w-full flex-col px-4 md:box-border md:h-full md:w-full md:justify-center md:overflow-visible md:px-0">
+    <Section id="projects" tw="min-h-full px-0 md:px-24">
+      <Scroller ref={scrollerRef} tw="flex w-full flex-1 flex-col px-4 md:box-border md:h-full md:w-full md:justify-center md:overflow-visible md:px-0">
         <h1 tw="mb-3 md:mb-7 lg:mb-10">Here is some of my work.</h1>
         <Grid
           onMouseMoveCapture={handleMouseMove}
           css={css`
-            ${genDelays(posts.length, 1000, 700)}
+            ${genDelays(posts.length, 1000)}
 
             &:hover > .card::after {
               opacity: ${isDark ? '.5' : '.25'};
