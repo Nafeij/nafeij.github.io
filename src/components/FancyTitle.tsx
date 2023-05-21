@@ -1,5 +1,6 @@
 import { css, keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
+import { random } from '@util'
 import { useState } from 'react'
 
 const Inspiring = ({ animCallback }: { animCallback: () => void }) => (
@@ -154,7 +155,7 @@ const Exciting = ({
 )
 
 const FancyTitle = () => {
-  const [iter, setIter] = useState(Math.random() * 3)
+  const [iter, setIter] = useState(random(0, 2))
   return (
     <div
       css={css`
