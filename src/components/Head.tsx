@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet'
-import { useLocation } from '@reach/router'
+import { useLocation } from '@gatsbyjs/reach-router'
 import { useStaticQuery, graphql } from 'gatsby'
 
 import appleIcon from '@images/favicon/apple-touch-icon.png'

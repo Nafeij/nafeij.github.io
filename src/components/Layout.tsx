@@ -1,6 +1,6 @@
 import { Footer, Indicator, NavBar } from '@components'
 import { css } from '@emotion/react'
-import { type WindowLocation } from '@reach/router'
+import { type WindowLocation } from '@gatsbyjs/reach-router'
 import { ThemeContext } from '@styles'
 import { MediaContext } from '@util'
 import {

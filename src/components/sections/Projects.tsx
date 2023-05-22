@@ -195,7 +195,7 @@ export default function Projects () {
     if (!prefersReducedMotion) {
       (scrollerRef.current != null) &&
         sr?.reveal(scrollerRef.current, {
-          ...srConfig(500, isMatch('md') ? 0.25 : 0.8),
+          ...srConfig(350, isMatch('md') ? 0.25 : 0.9),
           container: ScrollContainerRef?.current,
           afterReveal: () => { setIsRevealed(true) }
         })
