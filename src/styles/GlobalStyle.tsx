@@ -42,10 +42,10 @@ const bounceY = keyframes`
 
 const backgroundSpreadBelow = keyframes`
   from {
-    clip-path: circle(0% at 0% 100%);
+    opacity: 0;
   }
   to {
-    clip-path: circle(150% at 0% 100%);
+    opacity: 1;
   }
 `
 
@@ -255,7 +255,10 @@ const CustomStyles = css`
     }
   }
 
-  /*
+  #card {
+    will-change: transform;
+  }
+
   *:not(body):not(html) {
     transition: var(--transition);
   }
@@ -310,6 +313,7 @@ const CustomStyles = css`
     #fakeBg {
       background: var(--bg);
       z-index: -1;
+      will-change: opacity;
       animation: ${backgroundSpreadBelow} 1s ease-out forwards;
 
       @media (min-width: 768px) {
