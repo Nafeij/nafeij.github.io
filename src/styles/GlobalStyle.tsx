@@ -246,12 +246,11 @@ const CustomStyles = css`
 
   body[data-filter="blur"] {
     #content {
-      overflow: hidden;
+      pointer-events: none;
+      user-select: none;
       & > *:not(#fakeBg):not(#contact),
       #contact #card {
         filter: blur(5px) brightness(0.7);
-        pointer-events: none;
-        user-select: none;
       }
     }
   }
