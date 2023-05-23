@@ -45,7 +45,7 @@ const backgroundSpreadBelow = keyframes`
     clip-path: circle(0% at 0% 100%);
   }
   to {
-    clip-path: circle(150% at 0% 100%);
+    clip-path: circle(142% at 0% 100%);
   }
 `
 
@@ -54,7 +54,7 @@ const backgroundSpread = keyframes`
     clip-path: circle(0% at 100% 0%);
   }
   to {
-    clip-path: circle(150% at 100% 0%);
+    clip-path: circle(142% at 100% 0%);
   }
 `
 const fadeInOut = keyframes`
@@ -257,6 +257,7 @@ const CustomStyles = css`
 
   *:not(body):not(html) {
     transition: var(--transition);
+    -webkit-tap-highlight-color: transparent;
   }
 
   /* Scrollbar Styles */
@@ -306,12 +307,14 @@ const CustomStyles = css`
     height: 100svh;
 
     #fakeBg {
+      transition: none;
+      will-change: clip-path;
       background: var(--bg);
       z-index: -1;
-      animation: ${backgroundSpreadBelow} 1s ease-out forwards;
+      animation: ${backgroundSpreadBelow} 1.4s ease-in-out forwards;
 
       @media (min-width: 768px) {
-        animation: ${backgroundSpread} 1s ease-out forwards;
+        animation: ${backgroundSpread} 1.4s ease-in-out forwards;
       }
     }
   }

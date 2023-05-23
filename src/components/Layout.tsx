@@ -35,7 +35,6 @@ export default function Layout ({
     setAnimating(true)
     if (!animated) setAnimated(true)
     setDark(!isDark)
-    setTimeout(() => { setAnimating(false) }, 1000)
   }
 
   useEffect(() => {
@@ -85,6 +84,7 @@ export default function Layout ({
           id="fakeBg"
           tw="pointer-events-none fixed left-0 top-0 h-full w-full transition-none"
           css={!animated && css`animation: none!important;`}
+          onAnimationEnd={() => { setAnimating(false) }}
           key={isDark ? 'dark' : 'light'}
         />
       </div>
