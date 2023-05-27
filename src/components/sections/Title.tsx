@@ -11,7 +11,7 @@ export default function Title () {
             font-size: clamp(1.4rem, 3vw, 3rem);
           `}
         >
-          Create something
+          <span tw='transition-[color]'>Create something</span>
         </p>
         <FancyTitle />
       </TransitionSeries>

@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   darkMode: 'class',
   content: [
@@ -28,10 +29,13 @@ module.exports = {
       fill: {
         blob1: 'var(--blob1)',
         blob2: 'var(--blob2)'
+      },
+      transitionDuration: {
+        DEFAULT: 'var(--transition-duration)'
+      },
+      transitionTimingFunction: {
+        DEFAULT: 'var(--easing)'
       }
     }
-  },
-  plugins: [
-    require('tailwindcss-animate')
-  ]
+  }
 }

@@ -48,7 +48,7 @@ const StyledIndicator = styled.div<{ bottom: boolean, show: boolean }>`
   flex-direction: ${({ bottom }) => (bottom ? 'column' : 'row')};
   align-items: center;
   gap: 10%;
-  transition: opacity ${({ show }) => (show ? 5 : 1)}s ease-in-out;
+  transition: opacity ${({ show }) => (show ? 5 : 1)}s var(--easing);
 
   &::before,
   &::after {

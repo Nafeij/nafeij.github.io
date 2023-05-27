@@ -18,6 +18,7 @@ const StyledFooter = styled.div`
   a {
     margin: 0 auto;
     color: var(--text-secondary);
+    transition: color var(--transition-props);
 
     .github-stats {
       margin-top: 10px;

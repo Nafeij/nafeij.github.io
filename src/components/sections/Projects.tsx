@@ -19,6 +19,7 @@ const Scroller = styled.div`
   padding-bottom: 6rem;
 
   @media (min-width: 768px) {
+    overflow: visible;
     padding: 7rem 0;
   }
 `
@@ -29,88 +30,103 @@ const Grid = styled.div`
   flex-direction: column;
   gap: 0.5rem;
 
-  .card {
-    background: var(--bg-secondary);
-    border-radius: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-
-    &:hover {
-      .card-content .img {
-        opacity: 0.2;
-        filter: blur(0.4rem);
+  .card-outer {
+    /* Workaround for Chrome mobil optimization */
+    @-moz-document url-prefix() {
+      .card, .card-content {
+        transition: background-color var(--transition-props);
+      }
+      .card-content * {
+        h1, h2, p, a, svg, li {
+          transition: color var(--transition-props);
+        }
       }
     }
-
-    &::after,
-    &::before {
-      border-radius: inherit;
-      content: "";
-      height: 100%;
-      left: 0px;
-      opacity: 0;
-      position: absolute;
-      top: 0px;
-      width: 100%;
-      pointer-events: none;
-    }
-
-    &::before {
-      background: radial-gradient(
-        800px circle at var(--mouse-x) var(--mouse-y),
-        var(--light),
-        transparent 40%
-      );
-      z-index: 3;
-    }
-
-    &::after {
-      background: radial-gradient(
-        600px circle at var(--mouse-x) var(--mouse-y),
-        var(--light),
-        transparent 40%
-      );
-      z-index: 1;
-    }
-
-    .card-content {
-      height: 100%;
-      background-color: var(--button-secondary);
-      border-radius: inherit;
+    .card {
+      background-color: var(--bg-secondary);
+      border-radius: 0.5rem;
       display: flex;
       flex-direction: column;
-      flex-grow: 1;
-      margin: 0.1rem;
-      padding: 1.5rem;
-      z-index: 2;
-      overflow: hidden;
-      ${tw`text-sm md:text-base lg:text-lg`}
+      position: relative;
+      width: 100%;
+      height: 100%;
 
-      h1 {
-        ${tw`text-xl md:text-2xl lg:text-3xl`}
+      &:hover {
+        .card-content .img {
+          opacity: 0.2;
+          filter: blur(0.4rem);
+        }
       }
 
-      h2 {
-        ${tw`text-lg md:text-xl lg:text-2xl`}
-      }
-
-      svg {
-        flex: 0 0 auto;
-        ${tw`inline-block align-top aspect-square h-full`}
-      }
-
-      .img {
-        ${tw`absolute inset-0 -z-10 overflow-hidden`}
+      &::after,
+      &::before {
         border-radius: inherit;
-        opacity: 0.1;
-        filter: blur(0.8rem);
+        content: "";
+        height: 100%;
+        left: 0px;
+        opacity: 0;
+        position: absolute;
+        top: 0px;
+        width: 100%;
+        pointer-events: none;
+      }
+
+      &::before {
+        background: radial-gradient(
+          800px circle at var(--mouse-x) var(--mouse-y),
+          var(--light),
+          transparent 40%
+        );
+        z-index: 3;
+      }
+
+      &::after {
+        background: radial-gradient(
+          600px circle at var(--mouse-x) var(--mouse-y),
+          var(--light),
+          transparent 40%
+        );
+        z-index: 1;
+      }
+
+      .card-content {
+        height: 100%;
+        background-color: var(--button-secondary);
+        border-radius: inherit;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        margin: 0.1rem;
+        padding: 1.5rem;
+        z-index: 2;
+        overflow: hidden;
+        ${tw`text-sm md:text-base lg:text-lg`}
+
+        h1 {
+          ${tw`text-xl md:text-2xl lg:text-3xl`}
+        }
+
+        h2 {
+          ${tw`text-lg md:text-xl lg:text-2xl`}
+        }
+
+        svg {
+          flex: 0 0 auto;
+          ${tw`inline-block align-top aspect-square h-full`}
+        }
+
+        .img {
+          ${tw`absolute inset-0 -z-10 overflow-hidden`}
+          border-radius: inherit;
+          opacity: 0.1;
+          filter: blur(0.8rem);
+        }
       }
     }
   }
 
   @media (min-width: 768px) {
-    overflow-x: scroll;
+    overflow: visible;
     position: relative;
     flex-direction: column;
     flex-wrap: wrap;
@@ -121,10 +137,18 @@ const Grid = styled.div`
     justify-content: start;
     align-content: start;
 
-    .card {
+    .card-outer {
       flex: 1;
       max-width: 49%;
       min-height: 32%;
+      .card, .card-content {
+        transition: background-color var(--transition-props);
+      }
+      .card-content {
+        h1, h2, li, svg, p p, p a {
+          transition: color var(--transition-props);
+        }
+      }
     }
 
     /* .card.big {
@@ -133,7 +157,7 @@ const Grid = styled.div`
   }
 
   @media (min-width: 1024px) {
-    .card {
+    .card-outer {
       max-width: 32%;
       min-height: 49%;
     }
@@ -220,53 +244,54 @@ export default function Projects () {
     }
     const image = getImage(cover)
     return (
-      <div
-        key={i}
-        ref={(el) => {
-          (el != null) && (cardRefs.current[i] = el)
-        }}
-        className={big ? 'card big' : 'card'}
-      >
-        <div className="card-content">
-          {(image != null) && <GatsbyImage image={image} alt={title} className="img" />}
-          <span tw="flex h-5 justify-end gap-4 md:h-6 lg:h-8">
-            {external?.length > 0 && (
-              <a
-                tw="h-full"
-                href={external}
-                aria-label="External Link"
-                target="_blank"
-                rel="noreferrer"
+      <div key={i} className='card-outer'>
+        <div
+          ref={(el) => {
+            (el != null) && (cardRefs.current[i] = el)
+          }}
+          className={big ? 'card big' : 'card'}
+        >
+          <div className="card-content">
+            {(image != null) && <GatsbyImage image={image} alt={title} className="img" />}
+            <span tw="flex h-5 justify-end gap-4 md:h-6 lg:h-8">
+              {external?.length > 0 && (
+                <a
+                  tw="h-full"
+                  href={external}
+                  aria-label="External Link"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Icon name="External" />
+                </a>
+              )}
+              {github?.length > 0 && (
+                <a
+                  tw="h-full"
+                  href={github}
+                  aria-label="GitHub Link"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Icon name="GitHub" />
+                </a>
+              )}
+            </span>
+            <h2 tw="inline-block">{title}</h2>
+            <p dangerouslySetInnerHTML={{ __html: html }} />
+            {(tech.length > 0) && (
+              <ul
+                className="project-tech-list"
+                tw="mt-auto flex list-none flex-wrap pt-5 align-bottom font-mono text-sm opacity-75 md:text-base lg:text-lg"
               >
-                <Icon name="External" />
-              </a>
+                {tech.map((t: string, i: number) => (
+                  <li tw="mr-5 whitespace-nowrap" key={i}>
+                    {t}
+                  </li>
+                ))}
+              </ul>
             )}
-            {github?.length > 0 && (
-              <a
-                tw="h-full"
-                href={github}
-                aria-label="GitHub Link"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Icon name="GitHub" />
-              </a>
-            )}
-          </span>
-          <h2 tw="inline-block">{title}</h2>
-          <p dangerouslySetInnerHTML={{ __html: html }} />
-          {(tech.length > 0) && (
-            <ul
-              className="project-tech-list"
-              tw="mt-auto flex list-none flex-wrap pt-5 align-bottom font-mono text-sm opacity-75 md:text-base lg:text-lg"
-            >
-              {tech.map((t: string, i: number) => (
-                <li tw="mr-5 whitespace-nowrap" key={i}>
-                  {t}
-                </li>
-              ))}
-            </ul>
-          )}
+          </div>
         </div>
       </div>
     )
@@ -275,16 +300,16 @@ export default function Projects () {
   return (
     <Section id="projects" tw="min-h-full px-0 md:px-24">
       <Scroller ref={scrollerRef} tw="flex w-full flex-1 flex-col px-4 md:box-border md:h-full md:w-full md:justify-center md:overflow-visible md:px-0">
-        <h1 tw="mb-3 md:mb-7 lg:mb-10">Here is some of my work.</h1>
+        <h1 tw="mb-3 transition-[color] md:mb-7 lg:mb-10">Here is some of my work.</h1>
         <Grid
           onMouseMoveCapture={handleMouseMove}
           css={css`
             ${genDelays(posts.length, 1000)}
-
-            &:hover > .card::after {
+            overflow: visible;
+            &:hover .card::after {
               opacity: ${isDark ? '.5' : '.25'};
             }
-            & > .card:hover::before {
+            & .card:hover::before {
               opacity: 0.05;
             }
           `}

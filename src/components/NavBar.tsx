@@ -1,17 +1,17 @@
 import { navLinks } from '@config'
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { SunIcon } from '@heroicons/react/24/outline'
+import { ChevronUpIcon, SunIcon } from '@heroicons/react/24/outline'
 import { MoonIcon } from '@heroicons/react/24/solid'
-import { usePrefersReducedMotion, useScrollDirection } from '@hooks'
+import { useDebounce, usePrefersReducedMotion, useScrollDirection } from '@hooks'
 import { ThemeContext } from '@styles'
 import { KEY_CODES, MediaContext } from '@util'
 import { Link } from 'gatsby'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import tw from 'twin.macro'
-import TransitionSeries, { genDelays } from './TransitionSeries'
 import Button from './Button'
+import TransitionSeries, { genDelays } from './TransitionSeries'
 
 // https://github.com/bchiang7/v4
 
@@ -27,9 +27,6 @@ const StyledHamburgerButton = styled.button<{ menuOpen: boolean }>`
     background-color: transparent;
     color: inherit;
     text-transform: none;
-    transition-timing-function: linear;
-    transition-duration: 0.15s;
-    transition-property: opacity, filter;
   }
 
   .ham-box {
@@ -47,14 +44,14 @@ const StyledHamburgerButton = styled.button<{ menuOpen: boolean }>`
     height: 2px;
     border-radius: 4px;
     background-color: var(--text-primary);
-    transition-duration: 0.22s;
-    transition-property: transform;
-    transition-delay: ${({ menuOpen }) => (menuOpen ? '0.12s' : '0s')};
+    transition-duration: 0.22s, var(--transition-duration);
+    transition-property: transform, background-color;
+    transition-delay: ${({ menuOpen }) => (menuOpen ? '0.12s' : '0s')}, 0s;
     transform: rotate(${({ menuOpen }) => (menuOpen ? '225deg' : '0deg')});
     transition-timing-function: cubic-bezier(
       ${({ menuOpen }) =>
         menuOpen ? '0.215, 0.61, 0.355, 1' : '0.55, 0.055, 0.675, 0.19'}
-    );
+    ), var(--easing);
     &:before,
     &:after {
       content: "";
@@ -66,9 +63,6 @@ const StyledHamburgerButton = styled.button<{ menuOpen: boolean }>`
       height: 2px;
       border-radius: 4px;
       background-color: var(--text-primary);
-      transition-timing-function: ease;
-      transition-duration: 0.15s;
-      transition-property: transform;
     }
     &:before {
       width: ${({ menuOpen }) => (menuOpen ? '100%' : '120%')};
@@ -77,7 +71,7 @@ const StyledHamburgerButton = styled.button<{ menuOpen: boolean }>`
       transition: ${({ menuOpen }) =>
         menuOpen
           ? 'top 0.1s ease-out, opacity 0.1s ease-out 0.12s, width 0.34s'
-          : 'top 0.1s ease-in 0.25s, opacity 0.1s ease-in, width 0.34s'};
+          : 'top 0.1s ease-in 0.25s, opacity 0.1s ease-in, width 0.34s'}, background-color var(--transition-props);
     }
     &:after {
       width: ${({ menuOpen }) => (menuOpen ? '100%' : '80%')};
@@ -86,7 +80,7 @@ const StyledHamburgerButton = styled.button<{ menuOpen: boolean }>`
       transition: ${({ menuOpen }) =>
         menuOpen
           ? 'bottom 0.1s ease-out, transform 0.1s ease-out 0.12s, width 0.34s'
-          : 'bottom 0.1s ease-in 0.25s, transform 0.22s cubic-bezier(0.55, 0.055, 0.675, 0.19), width 0.34s'};
+          : 'bottom 0.1s ease-in 0.25s, transform 0.22s cubic-bezier(0.55, 0.055, 0.675, 0.19), width 0.34s'}, background-color var(--transition-props);
     }
   }
 `
@@ -110,7 +104,9 @@ const StyledSidebar = styled.aside<{ menuOpen: boolean }>`
     transform: translateY(-100%)
       translateX(${({ menuOpen }) => (menuOpen ? 0 : 100)}%);
     visibility: ${({ menuOpen }) => (menuOpen ? 'visible' : 'hidden')};
-    transition: var(--transition);
+    transition-property: visibility, transform, background-color;
+    transition-duration: 250ms, 250ms, var(--transition-duration);
+    transition-timing-function: var(--easing);
   }
 
   nav {
@@ -147,6 +143,7 @@ const StyledSidebar = styled.aside<{ menuOpen: boolean }>`
     a {
       width: 100%;
       padding: 3px 20px 20px;
+      transition: color var(--transition-props);
     }
   }
 `
@@ -179,12 +176,14 @@ const StyledLinks = styled.div`
 
         a {
           padding: 10px;
+          transition: color var(--transition-props);
 
           &:before {
             content: "0" counter(item) ".";
             margin-right: 5px;
             text-align: right;
             color: var(--text-secondary);
+            transition: color var(--transition-props);
           }
         }
       }
@@ -200,13 +199,18 @@ const DarkButton = ({ toggleDark }: { toggleDark: () => void }) => {
   const { isDark } = useContext(ThemeContext)
   return (
     <button
-      tw="z-10 flex aspect-square h-8 items-center justify-center border-0 bg-transparent outline-0 hover:scale-110 active:scale-90 md:h-10"
+      tw="relative z-10 aspect-square h-7 border-0 bg-transparent outline-0 hover:scale-110 active:scale-90 md:h-9"
       css={{
-        '& > svg': [tw`h-full aspect-square text-[var(--text-primary)]`]
+        '& > svg': [tw`absolute inset-0 text-primary transition-[color]`]
       }}
       onClick={toggleDark}
     >
-      {isDark ? <MoonIcon /> : <SunIcon />}
+      <SunIcon style={{
+        visibility: isDark ? 'visible' : 'hidden'
+      }} />
+      <MoonIcon style={{
+        visibility: isDark ? 'hidden' : 'visible'
+      }}/>
     </button>
   )
 }
@@ -222,6 +226,12 @@ const ANIM_DURATION = 600
 const innerDuration =
   (ANIM_DURATION * (navLinks.length + 1)) / (navLinks.length + 3)
 
+enum NavState {
+  OPEN,
+  CLOSE,
+  FADE
+}
+
 export default function NavBar ({
   scrollRef,
   toggleDark
@@ -230,26 +240,34 @@ export default function NavBar ({
   toggleDark: () => void
 }) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [scrolledToTop, setScrolledToTop] = useState(true)
+  const [navState, setNavState] = useState(NavState.OPEN)
   const [overrideScroll, setOverrideScroll] = useState(false)
   const { isMatch } = useContext(MediaContext)
   const prefersReducedMotion = usePrefersReducedMotion()
 
-  const scrollDirection = useScrollDirection({
-    containerRef: scrollRef,
-    horizontal: !isMatch('md'),
-    thresholdPixels: 50,
-    off: overrideScroll
-  })
+  const scrollDirection = useDebounce(
+    useScrollDirection({
+      containerRef: scrollRef,
+      horizontal: !isMatch('md'),
+      thresholdPixels: 100,
+      off: overrideScroll
+    }),
+    100
+  )
 
   const handleScroll = useCallback(() => {
     setOverrideScroll(false)
     const scroll = scrollRef.current
     // console.log(scroll?.scrollTop, scroll?.scrollLeft);
-    setScrolledToTop(
-      (scroll != null) ? scroll.scrollTop < 50 && scroll.scrollLeft < 50 : false
-    )
-  }, [scrollRef])
+    const scrolledToTop = (scroll != null) ? scroll.scrollTop < 50 && scroll.scrollLeft < 50 : false
+    if (scrolledToTop) {
+      setNavState(NavState.FADE)
+    } else if (scrollDirection === 'backward') {
+      setNavState(NavState.OPEN)
+    } else if (scrollDirection === 'forward') {
+      setNavState(NavState.CLOSE)
+    }
+  }, [scrollDirection, scrollRef])
 
   const toggleMenu = () => { setMenuOpen(!menuOpen) }
 
@@ -315,22 +333,22 @@ export default function NavBar ({
   }, [handleScroll, prefersReducedMotion, scrollRef])
 
   const scrollstyle = () => {
-    if (!scrolledToTop) {
-      if (scrollDirection === 'forward') {
-        return `transform: translateY(${isMatch('md') ? '-100%' : '100%'});
-                box-shadow: 0 -10px 30px -10px #00000088;`
-      } else if (scrollDirection === 'backward') {
-        return `box-shadow: 0 -10px 30px -10px #00000088;
-                opacity: 1;
-                background-color: var(--bg-secondary);
-                padding-top: .5rem;
-                padding-bottom: .5rem;
-                @media (min-width: 768px) {
-                  padding-top: 1rem;
-                  padding-bottom: 1rem;
-                }
-                `
-      }
+    if (navState === NavState.CLOSE) {
+      return `transform: translateY(${isMatch('md') ? '-100%' : '100%'});
+              box-shadow: 0 -10px 30px -10px #00000088;
+              opacity: 1;
+              background-color: var(--bg-secondary);
+              `
+    } else if (navState === NavState.OPEN || menuOpen) {
+      return `box-shadow: 0 -10px 30px -10px #00000088;
+              opacity: 1;
+              padding-top: .5rem;
+              padding-bottom: .5rem;
+              background-color: var(--bg-secondary);
+              @media (min-width: 768px) {
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+              }`
     }
   }
 
@@ -341,10 +359,11 @@ export default function NavBar ({
         tw`w-full bottom-0 flex items-center overflow-visible justify-between fixed z-10 p-5 md:top-0 md:bottom-auto opacity-50 md:hover:opacity-100 lg:p-8`,
         css`
           ${genDelays(3, ANIM_DURATION)}
-          ${menuOpen && 'opacity: 1;'}
-          @media (prefers-reduced-motion: no-preference) {
-            transform: translateY(0);
-            ${scrollstyle()}
+          transform: translateY(0);
+          transition-property: all, background-color, color, fill;
+          transition-duration: 250ms, var(--transition-duration);
+          transition-timing-function: var(--easing);
+          ${scrollstyle()}
           @media (prefers-reduced-motion: reduce) {
             opacity: 1;
             box-shadow: 0 -10px 30px -10px #0008;
@@ -401,6 +420,7 @@ export default function NavBar ({
               </ol>
               <div css={css`
                 background-color: var(--text-secondary);
+                transition: background-color var(--transition-props);
                 margin: 1.75rem 0 2rem;
                 opacity: 0.4;
                 height: 1px;
@@ -411,6 +431,17 @@ export default function NavBar ({
           </StyledSidebar>
         </div>
       </TransitionSeries>
+      <ChevronUpIcon
+        tw='absolute -top-1/3 left-1/2 block h-10 -translate-x-1/2 -translate-y-full text-primary transition-[color] md:top-full md:h-14 md:translate-y-0 md:rotate-180'
+        style={{
+          pointerEvents: navState === NavState.CLOSE ? 'auto' : 'none',
+          opacity: navState === NavState.CLOSE ? 0.7 : 0,
+          transitionProperty: 'opacity, color',
+          transitionDuration: '250ms, var(--transition-duration)',
+          transitionTimingFunction: 'var(--easing)'
+        }}
+        onClick={() => { setOverrideScroll(true); setNavState(NavState.OPEN) }}
+      />
     </header>
   )
 }

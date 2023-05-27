@@ -72,7 +72,12 @@ export default function Layout ({
       <NavBar scrollRef={scrollRef} toggleDark={toggleDark} />
       <div
         id="content"
-        tw="relative isolate flex snap-x snap-mandatory flex-row flex-nowrap items-center overflow-x-auto overflow-y-hidden scroll-smooth transition-none motion-reduce:scroll-auto md:snap-none md:flex-col md:overflow-y-auto md:overflow-x-hidden"
+        tw="relative isolate flex snap-x snap-mandatory flex-row flex-nowrap items-center overflow-x-auto overflow-y-hidden scroll-smooth transition-none motion-reduce:scroll-auto md:snap-none md:flex-col md:overflow-auto"
+        css={css`
+          @media (min-width: 768px) {
+            overflow-x: overlay;
+          }
+        `}
         ref={scrollRef}
       >
         <ScrollContainerRefContext.Provider value={scrollRef}>

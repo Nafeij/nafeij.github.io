@@ -7,6 +7,9 @@ const StyledButton = styled.button`
   color: var(--button-primary) !important;
   background-color: transparent;
   border: 1px solid var(--button-primary);
+  transition-property: color, border-color;
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--easing);
   border-radius: 0.2rem;
   padding: 0.75rem 1.25rem;
   font-family: var(--font-mono);
@@ -24,13 +27,14 @@ const StyledButton = styled.button`
     right: -1px;
     background-color: var(--button-primary);
     clip-path: circle(0% at var(--mouse-x) var(--mouse-y));
-    transition: clip-path 0.3s ease-in-out;
+    transition: clip-path 250ms var(--easing);
     border-radius: inherit;
     z-index: -1;
   }
 
   &:hover {
     color: var(--bg-primary) !important;
+    transition-duration: 250ms;
     &::after {
         clip-path: circle(144% at var(--mouse-x) var(--mouse-y));
     }

@@ -1,4 +1,5 @@
-import { QR, Section } from '@components'
+import { Section } from '@components'
+import qr from '@images/qr.png'
 import { links } from '@config'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
@@ -69,10 +70,6 @@ const Card = styled.div`
   width: 100%;
   perspective: 100vmax;
 
-  > * {
-    transition: none !important;
-  }
-
   .card {
     margin-top: 3rem;
     width: 100%;
@@ -101,12 +98,14 @@ const Card = styled.div`
       box-shadow: 0 -0.75rem 1rem 0 rgba(0,0,0,0.05),
         0 0.75rem 1rem 0 rgba(0,0,0,0.05), 0.75rem 0px 1rem 0 rgba(0,0,0,0.05),
         -0.75rem 0px 1rem 0 rgba(0,0,0,0.05);
-      background-color:  var(--button-primary);
+      background-color: var(--button-primary);
+      transition: background-color var(--transition-props);
       backface-visibility: hidden;
       overflow: hidden;
 
       p, h1, svg {
         color: var(--bg-primary);
+        transition: color var(--transition-props);
         opacity: 0.9;
       }
 
@@ -160,6 +159,7 @@ const Card = styled.div`
         width: 2px;
         height: 80%;
         background-color: var(--bg-primary);
+        transition: background-color var(--transition-props);
         position: absolute;
         top: 50%;
         translate: 0 -50%;
@@ -301,7 +301,7 @@ export default function Contact () {
         tw="min-h-full min-w-full motion-reduce:md:items-center"
       >
         <Card id="card">
-          <h1 style={{ opacity: interpolate(progress, 0, 200) }}>
+          <h1 style={{ opacity: interpolate(progress, 0, 200), transition: 'color var(--transition-props)' }}>
             Let&apos;s get in touch.
           </h1>
           <div
@@ -331,7 +331,17 @@ export default function Contact () {
               />
             </div>
             <div className="back">
-              {isMatch('md') ? <QR /> : null}
+              {isMatch('md')
+                ? <div
+                  tw="aspect-square flex-1 bg-primary transition-[background-color]"
+                  style={{
+                    maskImage: `url(${qr})`,
+                    maskSize: 'contain',
+                    WebkitMaskImage: `url(${qr})`,
+                    WebkitMaskSize: 'contain'
+                  }}
+              />
+                : null}
               <div
                 tw="relative flex flex-1 flex-col gap-2 md:ml-12 lg:gap-6 motion-reduce:lg:gap-4 motion-reduce:lg:text-lg"
                 className='contact-links'

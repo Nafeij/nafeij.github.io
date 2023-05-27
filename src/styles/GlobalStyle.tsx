@@ -107,7 +107,9 @@ const CustomStyles = css`
 
     --font-mono: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
 
-    --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+    --transition-duration: 1s;
+
+    --transition-props: var(--transition-duration) var(--easing);
 
     &.light {
       --bg: var(--bg-light);
@@ -244,19 +246,22 @@ const CustomStyles = css`
     }
   }
 
+  #content > *:not(#fakeBg):not(#contact), #card {
+    transition: filter 250ms var(--easing);
+  }
+
   body[data-filter="blur"] {
     #content {
       pointer-events: none;
       user-select: none;
       & > *:not(#fakeBg):not(#contact),
-      #contact #card {
+      #card {
         filter: blur(5px) brightness(0.7);
       }
     }
   }
 
   *:not(body):not(html) {
-    transition: var(--transition);
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -266,10 +271,12 @@ const CustomStyles = css`
     scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: var(--text-secondary) transparent;
+    transition: scrollbar-color var(--transition-props);
   }
   ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
+    z-index: 1;
   }
   ::-webkit-scrollbar-track {
     background: transparent;

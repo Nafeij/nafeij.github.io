@@ -53,6 +53,9 @@ export default function About () {
       <div
         dangerouslySetInnerHTML={{ __html: markdownRemark.html }}
         css={css`
+          h1, h2, p, a {
+            transition: color var(--transition-props);
+          }
           h1 {
             ${tw`md:!text-5xl lg:!text-6xl`}
 
@@ -78,12 +81,12 @@ export default function About () {
             tw="relative grow basis-1/2 text-center md:basis-1/3"
             css={css`
               :before {
-                ${tw`absolute -left-2`}
+                ${tw`absolute -left-2 transition-[color]`}
                 content: "▹";
               }
             `}
           >
-            {tech}
+            <span tw="transition-[color]">{tech}</span>
           </div>
         ))}
       </div>

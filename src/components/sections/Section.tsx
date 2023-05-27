@@ -15,6 +15,7 @@ const StyledSection = styled.section`
     content: "";
     margin: 0 auto;
     background-color: var(--text-secondary);
+    transition: background-color var(--transition-props);
     position: absolute;
     opacity: 0.5;
     width: 60svw;
