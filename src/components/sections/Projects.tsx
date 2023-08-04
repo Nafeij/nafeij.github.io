@@ -216,13 +216,12 @@ export default function Projects () {
   const [isRevealed, setIsRevealed] = useState(prefersReducedMotion)
 
   useEffect(() => {
-    if (!prefersReducedMotion) {
-      (scrollerRef.current != null) &&
-        sr?.reveal(scrollerRef.current, {
-          ...srConfig(350, isMatch('md') ? 0.25 : 0.9),
-          container: ScrollContainerRef?.current,
-          afterReveal: () => { setIsRevealed(true) }
-        })
+    if (!prefersReducedMotion && scrollerRef.current != null) {
+      sr?.reveal(scrollerRef.current, {
+        ...srConfig(350, isMatch('md') ? 0.25 : 0.9),
+        container: ScrollContainerRef?.current,
+        afterReveal: () => { setIsRevealed(true) }
+      })
     }
   }, [ScrollContainerRef, posts, prefersReducedMotion, isMatch])
 
