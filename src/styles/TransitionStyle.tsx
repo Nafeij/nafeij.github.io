@@ -17,6 +17,15 @@ const TransitionStyles = css`
     transform: translateY(0vh);
     transition: opacity 300ms var(--easing), transform 300ms var(--easing);
   }
+  .fadeup-exit {
+    opacity: 1;
+    transform: translateY(0vh);
+  }
+  .fadeup-exit-active, .fadeup-exit-done {
+    opacity: 0;
+    transform: translateY(-5vh);
+    transition: opacity 300ms var(--easing), transform 300ms var(--easing);
+  }
   /* Fade down */
   .fadedown-enter {
     opacity: 0.01;

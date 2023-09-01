@@ -1,3 +1,4 @@
+import { A } from '@components'
 import { repo, repoAPI } from '@config'
 import styled from '@emotion/styled'
 import Icon from '@icons'
@@ -72,11 +73,9 @@ export default function Footer () {
 
   return (
     <StyledFooter>
-      <a
+      <A
         href={repo}
-        aria-label="External Link"
-        target="_blank"
-        rel="noreferrer"
+        aria-label="Repository Link"
       >
         <p>Designed by Wang Jiefan.</p>
         <div className="github-stats">
@@ -89,7 +88,7 @@ export default function Footer () {
             <span>{githubInfo.forks.toLocaleString()}</span>
           </span>
         </div>
-      </a>
+      </A>
     </StyledFooter>
   )
 }

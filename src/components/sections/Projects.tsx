@@ -1,4 +1,4 @@
-import { Section, TransitionSeries, genDelays, ScrollContainerRefContext } from '@components'
+import { Section, TransitionSeries, genDelays, ScrollContainerRefContext, A } from '@components'
 import { srConfig } from '@config'
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
@@ -218,7 +218,7 @@ export default function Projects () {
   useEffect(() => {
     if (!prefersReducedMotion && scrollerRef.current != null) {
       sr?.reveal(scrollerRef.current, {
-        ...srConfig(350, isMatch('md') ? 0.25 : 0.9),
+        ...srConfig(),
         container: ScrollContainerRef?.current,
         afterReveal: () => { setIsRevealed(true) }
       })
@@ -254,26 +254,21 @@ export default function Projects () {
             {(image != null) && <GatsbyImage image={image} alt={title} className="img" />}
             <span tw="flex h-5 justify-end gap-4 md:h-6 lg:h-8">
               {external?.length > 0 && (
-                <a
+                <A
                   tw="h-full"
                   href={external}
                   aria-label="External Link"
-                  target="_blank"
-                  rel="noreferrer"
                 >
                   <Icon name="External" />
-                </a>
+                </A>
               )}
               {github?.length > 0 && (
-                <a
+                <A
                   tw="h-full"
                   href={github}
-                  aria-label="GitHub Link"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                  aria-label="GitHub Link">
                   <Icon name="GitHub" />
-                </a>
+                </A>
               )}
             </span>
             <h2 tw="inline-block">{title}</h2>
@@ -299,7 +294,7 @@ export default function Projects () {
   return (
     <Section id="projects" tw="min-h-full px-0 md:px-24">
       <Scroller ref={scrollerRef} tw="flex w-full flex-1 flex-col px-4 md:box-border md:h-full md:w-full md:justify-center md:overflow-visible md:px-0">
-        <h1 tw="mb-3 transition-[color] md:mb-7 lg:mb-10">Here is some of my work.</h1>
+        <h1 tw="mb-3 transition-[color] md:mb-7 lg:mb-10">Here&apos;s some of my work.</h1>
         <Grid
           onMouseMoveCapture={handleMouseMove}
           css={css`

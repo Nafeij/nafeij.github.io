@@ -1,4 +1,4 @@
-import { Section } from '@components'
+import { A, Section } from '@components'
 import qr from '@images/qr.png'
 import { links } from '@config'
 import { keyframes } from '@emotion/react'
@@ -348,16 +348,14 @@ export default function Contact () {
                 css={progress > 950 && tw`pointer-events-auto`}
               >
                 {links.map(({ name, url, desc }, i) => (
-                  <a
+                  <A
                     key={i}
                     href={url}
-                    target="_blank"
-                    rel="noreferrer"
                     tw="flex flex-initial flex-row items-center justify-between gap-2 md:gap-4 lg:gap-6"
                   >
                     <Icon name={name} />
                     <p>{desc ?? name}</p>
-                  </a>
+                  </A>
                 ))}
               </div>
               <div

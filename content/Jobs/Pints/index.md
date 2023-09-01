@@ -1,6 +1,6 @@
 ---
 date: '2023-05-08'
-title: 'Software Developer (Intern)'
+title: 'Intern Software Developer'
 company: 'Pints'
 location: 'Singapore'
 range: 'May - July 2023'

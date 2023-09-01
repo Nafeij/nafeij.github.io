@@ -107,6 +107,8 @@ const CustomStyles = css`
 
     --font-mono: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
 
+    --tab-height: 42px;
+
     --transition-duration: 1s;
 
     --transition-props: var(--transition-duration) var(--easing);
