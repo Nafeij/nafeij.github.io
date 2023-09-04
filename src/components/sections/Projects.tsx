@@ -233,8 +233,9 @@ export default function Projects () {
 
   const projInner = (node: any, i: number) => {
     const { frontmatter, html } = node
-    const { github, external, title, tech, big, cover } = frontmatter as {
+    const { github, external, title, tech, big, cover, date } = frontmatter as {
       github: string
+      date: string
       external: string
       title: string
       tech: string[]
@@ -252,26 +253,31 @@ export default function Projects () {
         >
           <div className="card-content">
             {(image != null) && <GatsbyImage image={image} alt={title} className="img" />}
-            <span tw="flex h-5 justify-end gap-4 md:h-6 lg:h-8">
-              {external?.length > 0 && (
-                <A
-                  tw="h-full"
-                  href={external}
-                  aria-label="External Link"
-                >
-                  <Icon name="External" />
-                </A>
-              )}
-              {github?.length > 0 && (
-                <A
-                  tw="h-full"
-                  href={github}
-                  aria-label="GitHub Link">
-                  <Icon name="GitHub" />
-                </A>
-              )}
+            <span tw="flex flex-row justify-between">
+              <h2 tw="inline-block">{title}</h2>
+              <span tw="flex h-5 justify-end gap-4 md:h-6 lg:h-8">
+                {external?.length > 0 && (
+                  <A
+                    tw="h-full"
+                    href={external}
+                    aria-label="External Link"
+                  >
+                    <Icon name="External" />
+                  </A>
+                )}
+                {github?.length > 0 && (
+                  <A
+                    tw="h-full"
+                    href={github}
+                    aria-label="GitHub Link">
+                    <Icon name="GitHub" />
+                  </A>
+                )}
+              </span>
             </span>
-            <h2 tw="inline-block">{title}</h2>
+            <code tw="inline-block text-sm opacity-75 md:text-base lg:text-lg">
+              &gt; {date}
+            </code>
             <p dangerouslySetInnerHTML={{ __html: html }} />
             {(tech.length > 0) && (
               <ul

@@ -29,12 +29,12 @@ export const links: link[] = [
   {
     name: 'LinkedIn',
     url: 'https://www.linkedin.com/in/wang-jiefan/'
-  },
-  {
+  }
+  /*, {
     name: 'LeetCode',
     url: 'https://leetcode.com/user5917bB/'
-  }
-  /* {
+  },
+  {
     name: "Reddit",
     url: "https://reddit.com/u/nafeij",
   },
