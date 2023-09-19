@@ -170,6 +170,10 @@ const Card = styled.div`
   }
 
   @media (min-width: 1024px) {
+    max-width: 650px;
+  }
+
+  @media (min-width: 1920px) {
     max-width: 800px;
   }
 

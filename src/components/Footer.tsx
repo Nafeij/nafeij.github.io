@@ -13,7 +13,7 @@ const StyledFooter = styled.div`
   min-width: 100%;
   margin-left: -100%;
   align-self: end;
-  margin-bottom: 5rem;
+  margin-bottom: 30%;
   text-align: center;
 
   a {
@@ -43,7 +43,16 @@ const StyledFooter = styled.div`
     margin-left: 0;
     translate: 0;
     align-self: center;
+    margin-bottom: 20%;
     width: auto;
+  }
+
+  @media (min-width: 1024px) {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 1920px) {
+    margin-bottom: 5%;
   }
 `
 

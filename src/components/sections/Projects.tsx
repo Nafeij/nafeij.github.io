@@ -29,6 +29,7 @@ const Grid = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  height: 100%;
 
   .card-outer {
     /* Workaround for Chrome mobil optimization */
