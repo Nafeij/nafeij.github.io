@@ -115,7 +115,7 @@ const H1Styled = styled.h1`
   height: 100%;
   box-sizing: border-box;
   line-height: 1.1 !important;
-  animation: ${glitchClip} 12s steps(100, end);
+  animation: ${glitchClip} 10s steps(100, end);
   clip-path: inset(50%);
   transition: color var(--transition-props);
 `

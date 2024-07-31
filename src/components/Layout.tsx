@@ -87,7 +87,7 @@ export default function Layout ({
         <Footer />
         <div
           id="fakeBg"
-          tw="pointer-events-none fixed left-0 top-0 h-full w-full transition-none"
+          tw="pointer-events-none fixed left-0 top-0 size-full transition-none"
           css={!animated && css`animation: none!important;`}
           onAnimationEnd={() => { setAnimating(false) }}
           key={isDark ? 'dark' : 'light'}

@@ -300,7 +300,7 @@ export default function Projects () {
 
   return (
     <Section id="projects" tw="min-h-full px-0 md:px-24">
-      <Scroller ref={scrollerRef} tw="flex w-full flex-1 flex-col px-4 md:box-border md:h-full md:w-full md:justify-center md:overflow-visible md:px-0">
+      <Scroller ref={scrollerRef} tw="flex w-full flex-1 flex-col px-4 md:box-border md:size-full md:justify-center md:overflow-visible md:px-0">
         <h1 tw="mb-3 transition-[color] md:mb-7 lg:mb-10">Here&apos;s some of my work.</h1>
         <Grid
           onMouseMoveCapture={handleMouseMove}

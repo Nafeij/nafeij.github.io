@@ -18,7 +18,7 @@ export default function Jobs () {
       {
         jobs: allMarkdownRemark(
             filter: {fileAbsolutePath: {regex: "/content/Jobs/"}}
-            sort: {frontmatter: {date: ASC}}
+            sort: {frontmatter: {date: DESC}}
         ) {
         edges {
             node {

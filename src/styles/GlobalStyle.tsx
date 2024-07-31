@@ -296,15 +296,15 @@ const CustomStyles = css`
     stroke-dashoffset: 800;
     stroke-linecap: round;
     stroke-linejoin: round;
-    animation: ${drawStroke} 12s linear forwards 0.3s;
+    animation: ${drawStroke} 10s linear forwards 0.3s;
   }
 
   svg#Amazing {
     opacity: 0;
-    animation: ${fadeInOut} 12s linear forwards 0.3s;
+    animation: ${fadeInOut} 10s linear forwards 0.3s;
 
     circle {
-      animation: ${bounceX} 12s linear infinite 0.3s, ${bounceY} 12s linear infinite 0.3s;
+      animation: ${bounceX} 10s linear infinite 0.3s, ${bounceY} 8s linear infinite 0.3s;
 
       ${genAnimStyles(8, 24)}
     }
@@ -341,11 +341,11 @@ const CustomStyles = css`
       fill-opacity: 1 !important;
       stroke-dashoffset: 0 !important;
       stroke-opacity: 0 !important;
-      animation: fade-in-out 12s linear forwards !important;
+      animation: fade-in-out 10s linear forwards !important;
     }
 
     svg#Amazing {
-      animation: fade-in-out 12s linear forwards !important;
+      animation: fade-in-out 10s linear forwards !important;
       opacity: 1 !important;
 
       circle {
@@ -355,7 +355,7 @@ const CustomStyles = css`
 
     h1#Exciting {
       clip-path: none !important;
-      animation: fade-in-out 12s linear forwards !important;
+      animation: fade-in-out 10s linear forwards !important;
     }
   }
 
