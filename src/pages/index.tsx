@@ -7,7 +7,7 @@ import { GlobalStyle } from '@styles'
 const IndexPage: FC<PageProps> = ({ location }) => {
   return (
     <>
-    <Head />
+      <Head />
       <GlobalStyle />
       <Layout location={location}>
         <Title />
