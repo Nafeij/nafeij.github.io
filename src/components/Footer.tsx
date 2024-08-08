@@ -71,7 +71,7 @@ export default function Footer () {
     fetch(repoAPI)
       .then(async (response) => await response.json())
       .then((json) => {
-        const { stargazers_count: stars, forks_count: forks } = json
+        const { stargazers_count: stars = '?', forks_count: forks = '?' } = json
         setGitHubInfo({
           stars,
           forks
