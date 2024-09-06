@@ -120,7 +120,7 @@ export default function Jobs () {
   }
 
   return (
-    <Section id="jobs">
+    <Section id="jobs" tw="pb-12 md:pb-0">
       <h1 tw="mb-5 transition-[color] md:mb-10 lg:mb-14">Here&apos;s what I&apos;ve been up to.</h1>
       <div tw={'flex h-[28rem] w-full flex-col md:h-[22rem] md:flex-row lg:h-72'}>
         <div tw='mb-5 flex w-full flex-initial flex-row justify-center md:mb-0 md:w-32 md:flex-col md:justify-start'>
