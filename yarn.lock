@@ -10426,13 +10426,12 @@ react-dev-utils@^12.0.1:
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
 
-react-dom@^18.2.0:
-  version "18.3.1"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.3.1.tgz#c2265d79511b57d479b3dd3fdfa51536494c5cb4"
-  integrity sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==
+react-dom@^0.0.0-experimental-4c58fce7-20240904:
+  version "0.0.0-experimental-4c58fce7-20240904"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-0.0.0-experimental-4c58fce7-20240904.tgz#b0ab1ed75a02897b9cafe90a22992af650aeb62b"
+  integrity sha512-Z+hTN4sGEVVXeRm84RVmfnq88RPIMCe16U6+oivDfl7rO4aHyr/s9OBRCuA6SoF/Cx4r/y8JVW/e8gkd/cqjrg==
   dependencies:
-    loose-envify "^1.1.0"
-    scheduler "^0.23.2"
+    scheduler "0.0.0-experimental-4c58fce7-20240904"
 
 react-error-overlay@^6.0.11:
   version "6.0.11"
@@ -10498,12 +10497,10 @@ react-use-draggable-scroll@^0.4.7:
   resolved "https://registry.yarnpkg.com/react-use-draggable-scroll/-/react-use-draggable-scroll-0.4.7.tgz#86e77caab921ca07b134e9e1d1bc1810aeee4916"
   integrity sha512-6gCxGPO9WV5dIsBaDrgUKBaac8CY07PkygcArfajijYSNDwAq0girDRjaBuF1+lRqQryoLFQfpVaV2u/Yh6CrQ==
 
-react@^18.2.0:
-  version "18.3.1"
-  resolved "https://registry.yarnpkg.com/react/-/react-18.3.1.tgz#49ab892009c53933625bd16b2533fc754cab2891"
-  integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
-  dependencies:
-    loose-envify "^1.1.0"
+react@^0.0.0-experimental-4c58fce7-20240904:
+  version "0.0.0-experimental-4c58fce7-20240904"
+  resolved "https://registry.yarnpkg.com/react/-/react-0.0.0-experimental-4c58fce7-20240904.tgz#ae1192101648f71dc2253b7393aaf959400db0f5"
+  integrity sha512-efqx4uUALi0OR+1sIEoAOt9E3w6jM+nR2Qrh0SGSCmRjUaJg+ILsZeHcHG+V3W4r2xS+QD/D9YfdHyr30zrDrQ==
 
 read-cache@^1.0.0:
   version "1.0.0"
@@ -11000,12 +10997,10 @@ sax@^1.2.4:
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.4.1.tgz#44cc8988377f126304d3b3fc1010c733b929ef0f"
   integrity sha512-+aWOz7yVScEGoKNd4PA10LZ8sk0A/z5+nXQG5giUO5rprX9jgYsTdov9qCchZiPIZezbZH+jRut8nPodFAX4Jg==
 
-scheduler@^0.23.2:
-  version "0.23.2"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.23.2.tgz#414ba64a3b282892e944cf2108ecc078d115cdc3"
-  integrity sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==
-  dependencies:
-    loose-envify "^1.1.0"
+scheduler@0.0.0-experimental-4c58fce7-20240904:
+  version "0.0.0-experimental-4c58fce7-20240904"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.0.0-experimental-4c58fce7-20240904.tgz#7ec2d975e739b531e67285c535874f514ca81135"
+  integrity sha512-WBAFaqVSbXIsd5JaQOw0NMce8fTgfWaXD1Tu6gRu2a18XcojN9atoWzf22y7m3UeLN2VWG6sZeJn7HsCUB4nHA==
 
 schema-utils@2.7.0:
   version "2.7.0"

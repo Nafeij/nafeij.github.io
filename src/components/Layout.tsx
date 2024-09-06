@@ -1,8 +1,7 @@
-import { Footer, Indicator, NavBar } from '@components'
+import { Footer, NavBar } from '@components'
 import { css } from '@emotion/react'
 import { type WindowLocation } from '@gatsbyjs/reach-router'
 import { ThemeContext } from '@styles'
-import { MediaContext } from '@util'
 import {
   createContext,
   useContext,
@@ -13,6 +12,7 @@ import {
   type RefObject
 } from 'react'
 import tw from 'twin.macro'
+import ClientLayout from './ClientLayout'
 
 export const ScrollContainerRefContext =
   createContext<RefObject<HTMLDivElement> | null>(null)
@@ -25,7 +25,6 @@ export default function Layout ({
   location: WindowLocation
 }) {
   const { isDark, setDark } = useContext(ThemeContext)
-  const { isMatch } = useContext(MediaContext)
   const [animating, setAnimating] = useState(false)
   const [animated, setAnimated] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -80,10 +79,9 @@ export default function Layout ({
         `}
         ref={scrollRef}
       >
-        <ScrollContainerRefContext.Provider value={scrollRef}>
-          {!isMatch('md') ? <Indicator bottom={false} scrollRef={scrollRef} /> : null}
+        <ClientLayout scrollRef={scrollRef}>
           {children}
-        </ScrollContainerRefContext.Provider>
+        </ClientLayout>
         <Footer />
         <div
           id="fakeBg"
