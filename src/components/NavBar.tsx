@@ -216,7 +216,7 @@ const DarkButton = ({ toggleDark }: { toggleDark: () => void }) => {
 }
 
 const Resume = () => (
-  <Button as="a" href="/Resume_Jiefan.pdf" className="resume-link" target="_blank" rel="noopener noreferrer">
+  <Button as="a" href="/Jiefan_Resume.pdf" className="resume-link" target="_blank" rel="noopener noreferrer">
     Resume
   </Button>
 )

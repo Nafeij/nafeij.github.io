@@ -20,7 +20,7 @@ export const links: link[] = [
   },
   {
     name: 'Resume',
-    url: '/Resume_Jiefan.pdf'
+    url: '/Jiefan_Resume.pdf'
   },
   {
     name: 'GitHub',

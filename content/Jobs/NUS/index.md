@@ -4,7 +4,7 @@ title: 'Tutor Assistant'
 company: 'National University of Singapore'
 companyShort: 'NUS'
 location: 'Singapore'
-range: 'August 2023 - May 2024'
+range: 'August 2023 - July 2025'
 url: 'https://www.comp.nus.edu.sg/cs/'
 ---
 
