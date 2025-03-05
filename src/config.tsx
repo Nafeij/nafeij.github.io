@@ -29,6 +29,10 @@ export const links: link[] = [
   {
     name: 'LinkedIn',
     url: 'https://www.linkedin.com/in/wang-jiefan/'
+  },
+  {
+    name: 'Spotify',
+    url: 'https://open.spotify.com/user/thingamarjig'
   }
   /*, {
     name: 'LeetCode',

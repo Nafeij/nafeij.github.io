@@ -7,8 +7,11 @@ import IconMail from './mail'
 import IconPhone from './phone'
 import IconReddit from './reddit'
 import IconResume from './resume'
+import IconSpotify from './spotify'
 import IconStar from './star'
 import IconStrava from './strava'
+
+// Sources:
 
 const Icon = ({ name }: { name: string }) => {
   switch (name) {
@@ -22,6 +25,8 @@ const Icon = ({ name }: { name: string }) => {
       return <IconReddit />
     case 'Strava':
       return <IconStrava />
+    case 'Spotify':
+      return <IconSpotify />
     case 'LeetCode':
       return <IconLeetCode />
     case 'Email':
