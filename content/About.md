@@ -2,19 +2,19 @@
 title: 'About Me'
 tech:
   - TypeScript
-  - React
-  - Node.js
-  - C++
+  - CUDA
+  - OpenMP
+  - C/C++
   - Rust
-  - Python
+  - Mental gymnastics
 ---
 
-# Hi, I'm Jiefan. AKA Nafeij.
+# Hi, I'm Jeff. AKA Jiefan. AKA Nafeij.
 
 ## I like to create things.
 
-What started in 2013 as a budding interest in designing [Reddit CSS themes](https://old.reddit.com/r/bannersaga/) and hacking Unity games became a passion for software engineering.
-For now, I'm a student at the [National University of Singapore](https://www.nus.edu.sg/).
+What started in 2013 as a budding interest in designing [Reddit CSS themes](https://old.reddit.com/r/bannersaga/) and hacking Unity games became a passion for systems programming and software development.
+For now, I'm looking to build things that are useful, fun, and a little bit weird.
 
 &nbsp;
 

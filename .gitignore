@@ -3,5 +3,5 @@ node_modules/
 public
 .DS_Store
 src/gatsby-types.d.ts
-/.vscode
-listing.txt
+.vscode/
+.yarn/install-state.gz

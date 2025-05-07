@@ -10,4 +10,9 @@ The source code of <a href="https://nafeij.me" target="_blank">nafeij.me</a>, bu
 
 </div>
 
+## Dependencies
+- [Node.js](https://nodejs.org/en/)
+- [Yarn](https://yarnpkg.com/)
+- [Gatsby CLI](https://www.gatsbyjs.org/docs/tutorial/part-zero/)
+
 <sup>Inspired by [brittanychiang.com](https://brittanychiang.com/)</sup>

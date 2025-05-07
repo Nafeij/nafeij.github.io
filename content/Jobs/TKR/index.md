@@ -8,5 +8,5 @@ range: 'June 2024 - July 2025'
 url: 'https://hpc.comp.nus.edu.sg/'
 ---
 
-- Lead NUS School of Computing's Student Cluster interest group.
-- Contested international HPC competitions (SC24 and ISC25), optimized and fine-tuned high-performance systems.
+- Headed NUS's Student Cluster Computing interest group.
+- Contested (ISC25 SCC) and won (SC24 IndySCC) international HPC competitions; optimized and fine-tuned high-performance distributed systems.
