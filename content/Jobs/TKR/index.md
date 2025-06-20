@@ -9,4 +9,4 @@ url: 'https://hpc.comp.nus.edu.sg/'
 ---
 
 - Headed NUS's Student Cluster Computing interest group.
-- Contested (ISC25 SCC) and won (SC24 IndySCC) international HPC competitions; optimized and fine-tuned high-performance distributed systems.
+- Contested and won (ISC25 SCC, SC24 IndySCC) international HPC competitions; optimized and fine-tuned high-performance distributed systems.
