@@ -326,7 +326,7 @@ export default function Contact () {
               }}
             >
               <h1>Wang Jiefan</h1>
-              <p>CS Undergraduate</p>
+              <p>Software Engineer</p>
               <div
                 className="shine"
                 style={{
