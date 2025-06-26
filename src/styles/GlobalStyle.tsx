@@ -1,6 +1,7 @@
 import { css, Global, keyframes } from '@emotion/react'
 import { Fonts, TransitionStyle } from '@styles'
 import { shuffle } from '@util'
+import { ReactElement } from 'react'
 import { GlobalStyles as BaseStyles } from 'twin.macro'
 
 const drawStroke = keyframes`
@@ -74,7 +75,6 @@ const genAnimStyles = (num = 5, max = 10) => {
   const coff = Math.random() * max / num
   const delays = Array.from({ length: num }, (_, i) => i * max / num + coff)
   shuffle(delays)
-  // console.log(coff, delays)
   let styles = ''
   for (let i = 0; i < num; i++) {
     styles += `
@@ -362,7 +362,7 @@ const CustomStyles = css`
   ${TransitionStyle}
 `
 
-export default function GlobalStyle (): JSX.Element {
+export default function GlobalStyle (): ReactElement {
   return (
     <>
       <BaseStyles />

@@ -8,7 +8,7 @@ import { ThemeContext } from '@styles'
 import { MediaContext, sr } from '@util'
 import { graphql, useStaticQuery } from 'gatsby'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState, RefObject } from 'react'
 import { useDraggable } from 'react-use-draggable-scroll'
 import tw from 'twin.macro'
 
@@ -212,7 +212,7 @@ export default function Projects () {
   const { isMatch } = useContext(MediaContext)
   const scrollerRef = useRef<HTMLDivElement>(null)
   const horiScrollerRef =
-    useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>
+    useRef<HTMLDivElement>(null) as RefObject<HTMLInputElement>
   const { events } = useDraggable(horiScrollerRef)
   const [isRevealed, setIsRevealed] = useState(prefersReducedMotion)
 

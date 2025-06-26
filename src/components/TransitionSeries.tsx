@@ -7,7 +7,7 @@ export const genDelays = (n: number, duration = DEFAULT_DURATION, delay = 0) => 
   const interval = duration / n
   const styles: Record<string, any> = {}
   for (let i = 0; i < n; i++) {
-    styles[`& > *:nth-child(${i + 1})`] = {
+    styles[`& > *:nth-of-type(${i + 1})`] = {
       transitionDelay: `${i * interval + delay}ms`
     }
   }
@@ -18,7 +18,7 @@ export const genDelayIntervals = (intvs: number[], duration = DEFAULT_DURATION, 
   const interval = duration / intvs.reduce((a, b) => a + b, 0)
   const styles: Record<string, any> = {}
   for (let i = 0; i < intvs.length; i++) {
-    styles[`& > *:nth-child(${i + 1})`] = {
+    styles[`& > *:nth-of-type(${i + 1})`] = {
       transitionDelay: `${intvs[i] * interval + delay}ms`
     }
   }
@@ -32,7 +32,7 @@ export default function TransitionSeries ({
   duration,
   trigger = false
 }: {
-  children: ReactNode[]
+  children: ReactElement[]
   classNames?:
   | string
   | {
