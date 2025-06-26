@@ -1,7 +1,7 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { random } from '@util'
-import { useState } from 'react'
+import { forwardRef, Ref, useState } from 'react'
 
 const Inspiring = ({ animCallback }: { animCallback: () => void }) => (
   <svg height="100%" id="Inspiring" tw="fill-[var(--text-primary)] stroke-[var(--text-primary)] transition-[fill,stroke]" viewBox="0 0 1040 260">
@@ -155,7 +155,7 @@ const Exciting = ({
   </H1Styled>
 )
 
-const FancyTitle = () => {
+const FancyTitle = forwardRef((_, ref : Ref<HTMLDivElement>) => {
   const [iter, setIter] = useState(random(0, 2))
   return (
     <div
@@ -163,6 +163,7 @@ const FancyTitle = () => {
         height: 'clamp(5rem,18vw,14rem)',
         aspectRatio: '970/239'
       }}
+      ref={ref}
     >
       {iter === 0 && (
         <Inspiring
@@ -187,6 +188,6 @@ const FancyTitle = () => {
       )}
     </div>
   )
-}
+})
 
 export default FancyTitle

@@ -7,7 +7,7 @@ import { useDebounce, usePrefersReducedMotion, useScrollDirection } from '@hooks
 import { ThemeContext } from '@styles'
 import { KEY_CODES, MediaContext } from '@util'
 import { Link } from 'gatsby'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState, Ref, forwardRef } from 'react'
 import { Helmet } from 'react-helmet'
 import tw from 'twin.macro'
 import Button from './Button'
@@ -195,7 +195,10 @@ const StyledLinks = styled.div`
   }
 `
 
-const DarkButton = ({ toggleDark }: { toggleDark: () => void }) => {
+const DarkButton = forwardRef(({ toggleDark }: {
+  toggleDark: () => void},
+  ref: Ref<HTMLButtonElement>
+) => {
   const { isDark } = useContext(ThemeContext)
   return (
     <button
@@ -204,6 +207,7 @@ const DarkButton = ({ toggleDark }: { toggleDark: () => void }) => {
         '& > svg': [tw`absolute inset-0 text-primary transition-[color]`]
       }}
       onClick={toggleDark}
+      ref={ref}
     >
       <SunIcon style={{
         visibility: isDark ? 'visible' : 'hidden'
@@ -213,7 +217,7 @@ const DarkButton = ({ toggleDark }: { toggleDark: () => void }) => {
       }}/>
     </button>
   )
-}
+})
 
 const Resume = () => (
   <Button as="a" href="/Jiefan_Resume.pdf" className="resume-link" target="_blank" rel="noopener noreferrer">

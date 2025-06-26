@@ -1,5 +1,6 @@
-import { type ReactNode, useState, useEffect, useRef } from 'react'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import { cloneElement, ReactElement, useEffect, useRef, useState } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { CSSTransitionProps } from 'react-transition-group/CSSTransition';
 
 const DEFAULT_DURATION = 500
 
@@ -23,6 +24,26 @@ export const genDelayIntervals = (intvs: number[], duration = DEFAULT_DURATION, 
     }
   }
   return styles
+}
+
+// https://github.com/reactjs/react-transition-group/issues/918#issuecomment-2653832792
+const CSSTransitionWithRef = ({
+  children,
+  ...props
+}: CSSTransitionProps & { children: ReactElement<any> }) => {
+  const ref = useRef<HTMLElement>(null);
+
+  const setRef = (node: HTMLElement | null) => {
+    ref.current = node;
+  }
+  return (
+    <CSSTransition
+      nodeRef={ref}
+      {...props}
+    >
+      {cloneElement(children, { ref: setRef })}
+    </CSSTransition>
+  )
 }
 
 export default function TransitionSeries ({
@@ -69,13 +90,13 @@ export default function TransitionSeries ({
   return (
     <TransitionGroup component={null}>
       {show && children.map((child, i) => (
-          <CSSTransition
+          <CSSTransitionWithRef
             key={i}
             classNames={classNames ?? 'fadedown'}
             timeout={d}
           >
             {child}
-          </CSSTransition>
+          </CSSTransitionWithRef>
       ))}
     </TransitionGroup>
   )
