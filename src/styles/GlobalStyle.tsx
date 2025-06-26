@@ -72,7 +72,7 @@ const fadeInOut = keyframes`
 const DIRECTIONS = ['alternate', 'alternate-reverse']
 
 const genAnimStyles = (num = 5, max = 10) => {
-  const coff = Math.random() * max / num
+  const coff = /* Math.random() */ 0.5 * max / num
   const delays = Array.from({ length: num }, (_, i) => i * max / num + coff)
   shuffle(delays)
   let styles = ''
