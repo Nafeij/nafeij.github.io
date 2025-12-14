@@ -7,5 +7,6 @@ range: 'since August 2025'
 url: 'https://lifeattiktok.com/'
 ---
 
-- Implemented performance optimizations, such as asynchronous querying and task scheduling policies, to business logic of the TikTok shop seller platform.
-- Triaged and fixed several vulnerabilities to TikTok's internal A/B testing platform.
+- Designed and developed features
+to enable merchants to seamlessly synchronize product properties and inventories across 11 EU countries through web and OpenAPI interfaces,
+resulting in a >25% increase in T+7 product listing rate over two months.
