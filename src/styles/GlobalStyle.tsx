@@ -50,6 +50,15 @@ const backgroundSpreadBelow = keyframes`
   }
 `
 
+const backgroundFade = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`
+
 const backgroundSpread = keyframes`
   from {
     clip-path: circle(0% at 100% 0%);
@@ -320,7 +329,8 @@ const CustomStyles = css`
       will-change: clip-path;
       background: var(--bg);
       z-index: -1;
-      animation: ${backgroundSpreadBelow} 1.4s ease-in-out forwards;
+      pointer-events: none;
+      animation: ${backgroundFade} 1s ease-in-out forwards;
 
       @media (min-width: 768px) {
         animation: ${backgroundSpread} 1.4s ease-in-out forwards;
